@@ -1,0 +1,189 @@
+<%- include('header'); -%>
+
+<nav class="navbar-expand-lg navbar navbar-light" style="background-color: #e3f2fd;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Home</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-mdb-toggle="collapse"
+      data-mdb-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="#">Features </a>
+        <a class="nav-link" href="#">FAQ</a>
+        <a class="nav-link" href="#">Contact</a>
+        <!-- <a class="nav-link disabled"
+          >Disabled</a
+        > -->
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div id="sectionHome">
+    <div class="bg-container d-flex flex-column justify-content-end ">
+
+        <!-- <p> Home</p>
+        <p>help</p>
+        <p>login/signup</p> -->
+        <div class="tourism-card">
+            <h1 class="main-heading">Quizzit: The Art of Interactive Learning</h1>
+            <!-- <p class="paragraph">
+                Dive into the world of Quizzit and revolutionize education. 
+                Create quizzes that captivate minds and challenge intellects, fostering an environment of fun and knowledge exploration.
+
+            </p> -->
+            <form class="one"  action="/admin-login" method="post">
+                <button class="button"> 
+                    Admin 
+                </button>
+            </form>
+
+           <form class="two"  action="/user-login" method="post">
+               <button class="button">
+                    User
+                </button>
+
+            </form>
+            
+            
+        </div>
+    </div>
+
+</div>
+<script src="index.js"></script>
+
+
+
+
+<!-- Footer -->
+<footer class="text-center text-lg-start bg-light text-muted">
+    <!-- Section: Social media -->
+    <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+      <!-- Left -->
+      <div class="me-5 d-none d-lg-block">
+        <span>Get connected with us on social networks:</span>
+      </div>
+      <!-- Left -->
+  
+      <!-- Right -->
+      <div>
+        <a href="" class="me-4 text-reset">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="" class="me-4 text-reset">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a href="" class="me-4 text-reset">
+          <i class="fab fa-google"></i>
+        </a>
+        <a href="" class="me-4 text-reset">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="" class="me-4 text-reset">
+          <i class="fab fa-linkedin"></i>
+        </a>
+        <a href="" class="me-4 text-reset">
+          <i class="fab fa-github"></i>
+        </a>
+      </div>
+      <!-- Right -->
+    </section>
+    <!-- Section: Social media -->
+  
+    <!-- Section: Links  -->
+    <section class="">
+      <div class="container text-center text-md-start mt-5">
+        <!-- Grid row -->
+        <div class="row mt-3">
+          <!-- Grid column -->
+          <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+            <!-- Content -->
+            <h6 class="text-uppercase fw-bold mb-4">
+              <i class="fas fa-gem me-3"></i>Hakuna Matata #95
+            </h6>
+            <p>
+             We have created a web page where you can create quizzes with the given features.This may help you in schools,
+             organizations,offices etc,. Thank you
+            </p>
+          </div>
+          <!-- Grid column -->
+  
+          <!-- Grid column -->
+          <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+            <!-- Links -->
+            <h6 class="text-uppercase fw-bold mb-4">
+              People
+            </h6>
+            <p>
+              <a href="#!" class="text-reset">A</a>
+            </p>
+            <p>
+              <a href="#!" class="text-reset">B</a>
+            </p>
+            <p>
+              <a href="#!" class="text-reset">C</a>
+            </p>
+            <!-- <p>
+              <a href="#!" class="text-reset">Laravel</a>
+            </p> -->
+          </div>
+          <!-- Grid column -->
+  
+          <!-- Grid column -->
+          <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+            <!-- Links -->
+            <h6 class="text-uppercase fw-bold mb-4">
+              Useful links
+            </h6>
+            <p>
+              <a href="#!" class="text-reset">FAQ</a>
+            </p>
+            <p>
+              <a href="#!" class="text-reset">Settings</a>
+            </p>
+            <p>
+              <a href="#!" class="text-reset">Help</a>
+            </p>
+            <!-- <p>
+              <a href="#!" class="text-reset">Help</a>
+            </p> -->
+          </div>
+          <!-- Grid column -->
+  
+          <!-- Grid column -->
+          <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+            <!-- Links -->
+            <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+            <p><i class="fas fa-home me-3"></i>M N N I T</p>
+            <p>
+              <i class="fas fa-envelope me-3"></i>
+              Tilak Hostel
+            </p>
+            <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
+            <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+          </div>
+          <!-- Grid column -->
+        </div>
+        <!-- Grid row -->
+      </div>
+    </section>
+    <!-- Section: Links  -->
+  
+    <!-- Copyright -->
+    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+      © 2021 Copyright:
+      <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+    </div>
+    <!-- Copyright -->
+  </footer>
+  <!-- Footer -->
+
+<%- include('footer'); -%>
