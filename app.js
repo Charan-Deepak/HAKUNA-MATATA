@@ -21,6 +21,8 @@ app.use(
     express.static(path.join(__dirname, "node_modules/mdb-ui-kit/js"))
 );
 
+
+
 app.get("/",function(req,res){
     res.render("HomePage.ejs");
 });
@@ -31,6 +33,14 @@ app.post("/admin-login",function(req,res){
 
 app.post("/user-login",function(req,res){
     res.render("user-login.ejs");
+});
+
+app.get("/features",function(req,res){
+    res.render("features.ejs")
+});
+
+app.get("/admin",function(req,res){
+    res.render("admin.ejs")
 });
 
 

@@ -2,7 +2,9 @@
 
 <nav class="navbar-expand-lg navbar navbar-light" style="background-color: #e3f2fd;">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/">Home</a>
+    <div id = "home">
+     <a class="navbar-brand" href="/"><u>Home</u></a>
+    </div>
     <button
       class="navbar-toggler"
       type="button"
@@ -16,8 +18,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="#">Features </a>
-        <a class="nav-link" href="#">FAQ</a>
+       <div id="features"> <a class="nav-link active" aria-current="page" href="/features">Features </a> </div>
+        <a class="nav-link" href="#">Report</a>
         <a class="nav-link" href="#">Contact</a>
         <!-- <a class="nav-link disabled"
           >Disabled</a
@@ -26,6 +28,7 @@
     </div>
   </div>
 </nav>
+
 
 <div id="sectionHome">
     <div class="bg-container d-flex flex-column justify-content-end ">
@@ -141,10 +144,10 @@
               Useful links
             </h6>
             <p>
-              <a href="#!" class="text-reset">FAQ</a>
+              <a href="/features" class="text-reset">Features</a>
             </p>
             <p>
-              <a href="#!" class="text-reset">Settings</a>
+              <a href="#!" class="text-reset">Report</a>
             </p>
             <p>
               <a href="#!" class="text-reset">Help</a>
@@ -182,5 +185,25 @@
     <!-- Copyright -->
   </footer>
   <!-- Footer -->
+
+  <script>
+    var p= document.getElementById("home").style.backgroundColor;
+    
+    home.addEventListener('mouseover',  function(){
+        document.getElementById("home").style.backgroundColor = "rgb(157 219 238)";
+       });
+     home.addEventListener('mouseout',function () {
+    document.getElementById("home").style.backgroundColor = p;
+    });
+    var f= document.getElementById("features").style.backgroundColor;
+    
+    features.addEventListener('mouseover',  function(){
+        document.getElementById("features").style.backgroundColor = "rgb(157 219 238)";
+       });
+     features.addEventListener('mouseout',function () {
+    document.getElementById("features").style.backgroundColor =f;
+    });
+    
+   </script>
 
 <%- include('footer'); -%>
