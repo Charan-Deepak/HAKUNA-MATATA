@@ -1,4 +1,22 @@
-<%- include('mdbheader'); -%>
+<%- include('partials/mdbheader'); -%>
+
+<style>
+  #home{
+      border-radius: 4px;
+      width:65px;
+      padding-left: 6px;
+  }
+  #features{
+      border-radius: 4px;
+      width:77px;
+      text-decoration: underline;
+      text-decoration-color: blue;
+      text-decoration-thickness: 2.2px;
+  }
+</style>
+</head>
+<body>
+<!-- Start your project here-->
 
 <nav class="navbar-expand-lg navbar navbar-light" style="background-color: #e3f2fd;">
     <div class="container-fluid">
@@ -17,7 +35,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <div id="features">  <a class="nav-link active" aria-current="page" href="/features"><u>Features </u></a> </div>
+            <div id="features">  <a class="nav-link active" aria-current="page" href="/features">Features</a> </div>
           <a class="nav-link" href="#">Report</a>
           <a class="nav-link" href="#">Contact</a>
           <!-- <a class="nav-link disabled"
@@ -122,4 +140,4 @@
     });
     
    </script>
-<%- include('mdbfooter'); -%>
+<%- include('partials/mdbfooter'); -%>

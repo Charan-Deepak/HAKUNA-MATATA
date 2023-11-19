@@ -1,9 +1,26 @@
-<%- include('header'); -%>
+<%- include('partials/header'); -%>
+
+<style>
+  #home{
+      border-radius: 4px;
+      width:65px;
+      padding-left: 6px;
+      text-decoration: underline;
+      text-decoration-color: blue;
+  }
+  #features{
+      border-radius: 4px;
+      width:77px;
+  }
+</style>
+</head>
+<body>
+<!-- Start your project here-->
 
 <nav class="navbar-expand-lg navbar navbar-light" style="background-color: #e3f2fd;">
   <div class="container-fluid">
     <div id = "home">
-     <a class="navbar-brand" href="/"><u>Home</u></a>
+     <a class="navbar-brand" href="/">Home</a>
     </div>
     <button
       class="navbar-toggler"
@@ -40,25 +57,25 @@
                 Create quizzes that captivate minds and challenge intellects, fostering an environment of fun and knowledge exploration.
 
             </p> -->
-            <form class="one"  action="/admin-login" method="post">
-                <button class="button"> 
+            
+                <a href="/admin-login"><button class="button"> 
                     Admin 
-                </button>
-            </form>
+                </button> </a>
+         
 
-           <form class="two"  action="/user-login" method="post">
-               <button class="button">
+           
+              <a href="/user-login"> <button class="button">
                     User
-                </button>
+                </button> </a>
 
-            </form>
+           
             
             
         </div>
     </div>
 
 </div>
-<script src="index.js"></script>
+
 
 
 
@@ -206,4 +223,4 @@
     
    </script>
 
-<%- include('footer'); -%>
+<%- include('partials/footer'); -%>
