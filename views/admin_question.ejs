@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* .questionblock {
+            height: 3rem;
+        } */
+
+        input[type="text"] {
+            border: none;
+            border-bottom: 1.5px solid rgb(47, 43, 50);
+        }
+
+        input[type="text"]:focus {
+            border: none;
+            border-bottom: 1.5px solid rgb(85, 82, 88);
+            background-color: rgb(85, 82, 88);
+        }
+
+        .more {
+            border: 1.5px solid green;
+        }
+
+        .add{
+            text-decoration: none;
+            display:inline-block;
+            width:30px;
+            height:30px;
+            background: #8b8b8b;
+            font-size: 2rem;
+            font-weight: bold;
+            color:#fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+        .delete{
+            text-decoration: none;
+            display:inline-block;
+            width:30px;
+            height:30px;
+            background: #e60808;
+            font-size: 2rem;
+            font-weight: bold;
+            color:#fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+    </style>
+    <title>Admin questions</title>
+</head>
+<body>
+   
+   
+    <div class="questionblock">
+   <form class="main_form" action="/admin_question" method="post">
+            <a href="#"class="add">&plus;</a>
+            <button class="button" type="submit" >ok</button>
+        </form>
+    </div>
+    <script>
+     //dynamic field creation with javascript
+     var i=0;
+    const questionblock=document.querySelector(".questionblock");
+    const addbtn=document.querySelector(".add");
+   //remome input
+   function removeInput(){
+    this.parentElement.remove();
+   }
+   
+   //functions for your options
+   
+//    function radio_answer(){
+    
+//     const your_options=document.querySelector("#your_options");
+//             const radio_1=document.createElement("div");
+//             radio_1.id="radio_1";
+//             const labelradio1=document.createElement("radio");
+//             labelradio1.innerHTML="Enter the options";
+//             const inputradio=document.createElement("input");
+//             inputradio.type="radio";
+//             inputradio.name="correct_radios";
+//             inputradio.value="1";
+//             const inputradio1=document.createElement("input");
+//             inputradio1.id="text_question";
+//             inputradio1.type="text";
+//             inputradio1.name="option1";
+//             inputradio1.required;
+//             const inputradio2=document.createElement("input");
+//             inputradio2.type="radio";
+//             inputradio2.name="correct_radios";
+//             inputradio2.value="2";
+//             const inputradio3=document.createElement("input");
+//             inputradio3.id="text_question";
+//             inputradio3.type="text";
+//             inputradio3.name="option2";
+//             inputradio3.required;
+//             const inputradio4=document.createElement("input");
+//             inputradio4.type="radio";
+//             inputradio4.name="correct_radios";
+//             inputradio4.value="3";
+//             const inputradio5=document.createElement("input");
+//             inputradio5.id="text_question";
+//             inputradio5.type="text";
+//             inputradio5.name="option3";
+//             inputradio5.required;
+//             const inputradio6=document.createElement("input");
+//             inputradio6.type="radio";
+//             inputradio6.name="correct_radios";
+//             inputradio6.value="4";
+//             const inputradio7=document.createElement("input");
+//             inputradio7.id="text_question";
+//             inputradio7.type="text";
+//             inputradio7.name="option4";
+//             inputradio7.required;
+//             const button_submit=document.createElement("button");
+//             button_submit.type="submit";
+//             button_submit.innerHTML="submit";
+            
+//             radio_1.appendChild(labelradio1);
+//             radio_1.appendChild(inputradio);
+//             radio_1.appendChild(inputradio1);
+//             radio_1.appendChild(inputradio2);
+//             radio_1.appendChild(inputradio3);
+//             radio_1.appendChild(inputradio4);
+//             radio_1.appendChild(inputradio5);
+//             radio_1.appendChild(inputradio6);
+//             radio_1.appendChild(inputradio7);
+//             radio_1.appendChild(button_submit); 
+//             // your_options.appendChild(radio_1);    
+//             const radiohtml = document.getElementById("radio_1").innerHTML;
+//             your_options.innerHTML =" radiohtml";
+
+    
+                  
+//     }
+
+//         function checkbox_answer(){
+//         const your_options=document.querySelector("#your_options");
+//             const checkbox=document.createElement("div");
+//             checkbox.ClassName="checkbox";
+//             const labelcheckbox1=document.createElement("label");
+//             labelcheckbox1.innerHTML="Enter the options";
+//             const inputcheckbox=document.createElement("input");
+//             inputcheckbox.type="checkbox";
+//             inputcheckbox.name="correct_checkboxes";
+//             inputcheckbox.value="1";
+//             const inputcheckbox1=document.createElement("input");
+//             inputcheckbox1.id="text_question";
+//             inputcheckbox1.type="text";
+//             inputcheckbox1.name="option1";
+//             inputcheckbox1.required;
+//             const inputcheckbox2=document.createElement("input");
+//             inputcheckbox2.type="checkbox";
+//             inputcheckbox2.name="correct_checkboxes";
+//             inputcheckbox2.value="2";
+//             const inputcheckbox3=document.createElement("input");
+//             inputcheckbox3.id="text_question";
+//             inputcheckbox3.type="text";
+//             inputcheckbox3.name="option2";
+//             inputcheckbox3.required;
+//             const inputcheckbox4=document.createElement("input");
+//             inputcheckbox4.type="checkbox";
+//             inputcheckbox4.name="correct_checkboxes";
+//             inputcheckbox4.value="3";
+//             const inputcheckbox5=document.createElement("input");
+//             inputcheckbox5.id="text_question";
+//             inputcheckbox5.type="text";
+//             inputcheckbox5.name="option3";
+//             inputcheckbox5.required;
+//             const inputcheckbox6=document.createElement("input");
+//             inputcheckbox6.type="checkbox";
+//             inputcheckbox6.name="correct_checkboxes";
+//             inputcheckbox6.value="4";
+//             const inputcheckbox7=document.createElement("input");
+//             inputcheckbox7.id="text_question";
+//             inputcheckbox7.type="text";
+//             inputcheckbox7.name="option4";
+//             inputcheckbox7.required;
+//             const button_submit=document.createElement("button");
+//             button_submit.type="submit";
+//             button_submit.innerHTML="submit";
+//             your_options.appendChild(checkbox);
+//             checkbox.appendChild(labelcheckbox1);
+//             checkbox.appendChild(inputcheckbox);
+//             checkbox.appendChild(inputcheckbox1);
+//             checkbox.appendChild(inputcheckbox2);
+//             checkbox.appendChild(inputcheckbox3);
+//             checkbox.appendChild(inputcheckbox4);
+//             checkbox.appendChild(inputcheckbox5);
+//             checkbox.appendChild(inputcheckbox6);
+//             checkbox.appendChild(inputcheckbox7);
+//             checkbox.appendChild(button_submit);     
+            
+//         }
+
+//         //text generation for answer
+//         function text_answer(){
+//             const your_options=document.querySelector("#your_options");
+//             const text=document.createElement("div");
+//             text.ClassName="text";
+//             const labeltext1=document.createElement("label");
+//             labeltext1.innerHTML="Enter the answer";
+//             labeltext1.htmlFor="inputtext"
+//             const inputtext=document.createElement("input");
+//             inputtext.type="text";
+//             inputtext.name="correct_text";
+//             inputtext.required;
+//             inputtext.id="inputtext"
+
+            
+//             const button_submit=document.createElement("button");
+//             button_submit.type="submit";
+//             button_submit.innerHTML="submit";
+//             your_options.appendChild(text);
+//             text.appendChild(labeltext1)
+//             text.appendChild(inputtext)
+//             text.appendChild(button_submit);     
+            
+
+//         }
+
+        //addinput question
+            function addinputquestion(i){ 
+             
+            //form
+            const form=document.createElement("form");
+            form.className="form";
+
+            //text
+            const label1=document.createElement("label");
+            label1.innerHTML="Enter the Question<br><br>";
+            label1.htmlFor="text_question";
+
+            //text 
+            const text=document.createElement("input");
+            text.type="text";
+            text.id="text_question";
+            text.name="text_question";
+            text.required;
+
+            //choose option
+            const label123=document.createElement("label");
+            label123.innerHTML="choose your options<br>";
+            label123.htmlFor="text_question1";
+
+            //select question
+            const label2=document.createElement("label");
+            label2.innerHTML="Select question type";
+            
+            //radio
+            const radio=document.createElement("input");
+            radio.type="radio";
+            radio.id="option_type_radio";
+            radio.name="option";
+            radio.value="1";
+            radio.required; 
+            const labelradio=document.createElement("label");
+            labelradio.innerHTML="Radio";
+            // radio.addEventListener("click",radio_answer);
+            radio.addEventListener("click", function() {
+            radio_answer(i);
+            });
+
+            //checkbox
+            const checkbox=document.createElement("input");
+            checkbox.type="radio";
+            checkbox.id="option_type_checkbox";
+            checkbox.name="option";
+            checkbox.value="2";
+            checkbox.required;
+            const labelcheckbox=document.createElement("label");
+            labelcheckbox.innerHTML="Checkbox";
+            // checkbox.addEventListener("click",checkbox_answer);
+            checkbox.addEventListener("click", function() {
+            checkbox_answer(i);
+            });
+
+
+            //text
+            const text1=document.createElement("input");
+            text1.type="radio";
+            text1.id="option_type_text";
+            text1.name="option";
+            text1.value="3";
+            text1.required;
+            const labeltext1=document.createElement("label");
+            labeltext1.innerHTML="text";
+            // text1.addEventListener("click",text_answer);
+            text1.addEventListener("click", function() {
+            text_answer(i);
+            });
+
+
+            //delete
+            const btn=document.createElement("a");
+            btn.className="delete";
+            btn.innerHTML="&times";
+            btn.type="button";
+            btn.addEventListener("click",removeInput);
+            
+
+            //div of your option
+            const your_options=document.createElement("div");
+            your_options.id="your_options"+i;
+            your_options.innerHTML="hello";
+            
+            //childappend
+            questionblock.appendChild(form);
+            form.appendChild(label1);
+            form.appendChild(text);
+            form.appendChild(label123);
+            form.appendChild(radio);
+            form.appendChild(labelradio);
+            form.appendChild(checkbox);
+            form.appendChild(labelcheckbox);
+            form.appendChild(text1);
+            form.appendChild(labeltext1);
+            form.appendChild(your_options);
+            form.appendChild(btn);
+            }
+            
+            // addbtn.addEventListener("click",addinputquestion(i));
+            addbtn.addEventListener("click", function() {
+            addinputquestion(i);
+            i++
+            });
+
+        //value=1 
+             function radio_answer(i){ 
+              
+               document.getElementById("your_options"+i).innerHTML = `
+                    <div class="radio">
+                        <br>
+                        <label for="radio">Enter the options</label>
+                        <br>
+                        <input type="radio" id="option_type_radio" name="correct" value="1" required>
+                        <input type="text" id="text_question" name="option_array" required>
+                        <br>
+                        <input type="radio" id="option_type_radio" name="correct" value="2" required>
+                        <input type="text" id="text_question" name="option_array" required>
+                        <br>
+                        <input type="radio" id="option_type_radio" name="correct" value="3" required>
+                        <input type="text" id="text_question" name="option_array" required>
+                        <br>
+                        <input type="radio" id="option_type_radio" name="correct" value="4" required>
+                        <input type="text" id="text_question" name="option_array" required>
+                        <br><br>
+                        
+                    </div>
+                `;
+             }
+
+            //  value=2
+             function checkbox_answer(i){ 
+               document.getElementById("your_options"+i).innerHTML = `
+                    <div class="checkbox">
+                        <br>
+                        <label for="option_type_checkbox">Enter the options</label>
+                        <br>
+                        <input type="checkbox" id="option_type_checkbox" name="correct_checkboxes" value="1">
+                        <input type="text" id="text_question" name="option_array" required>
+                        <br>
+                        <input type="checkbox" id="option_type_checkbox" name="correct_checkboxes" value="2">
+                        <input type="text" id="text_question" name="option_array" required>
+                        <br>
+                        <input type="checkbox" id="option_type_checkbox" name="correct_checkboxes" value="3">
+                        <input type="text" id="text_question" name="option_array" required>
+                        <br>
+                        <input type="checkbox" id="option_type_checkbox" name="correct_checkboxes" value="4">
+                        <input type="text" id="text_question" name="option_array" required>
+                        <br><br>
+
+                    </div>
+                    `;
+            } 
+
+            // value=3 
+             function text_answer(i){ 
+                document.getElementById("your_options"+i).innerHTML = `
+                    <div class="text">
+                        <br>
+                        <label for="option_type_text_1">Enter the answer in a single word</label>
+                        <br>
+                        <input type="text" id="option_type_text_1" name="answer_text" required>
+                        <br><br>
+                    </div>
+                    `;
+            } 
+
+        //   function  function_true(a){
+        //         a= true;
+        //     }
+    </script>
+</body>
+</html>

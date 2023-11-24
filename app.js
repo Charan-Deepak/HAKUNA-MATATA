@@ -56,7 +56,10 @@ const adminSchema=new mongoose.Schema({
     username:String,
     firstname:String,
     lastname:String,
-    emailId:String,
+    emailId:
+    {type:String,
+     lowercase:true     
+    },
     password:String,
     repassword:String
 });
@@ -65,9 +68,25 @@ const userSchema=new mongoose.Schema({
     username:String,
     firstname:String,
     lastname:String,
-    emailId:String,
+    emailId:
+    {type:String,
+     lowercase:true     
+    },
     password:String,
     repassword:String
+});
+
+const textSchema=new mongoose.Schema({
+   text:String,
+   type:Number,
+   option1:Array,
+   option1_answer_checkbox:Array,
+   correct_answer:Number,
+   text_answer:String
+});
+
+const formSchema=new mongoose.Schema({
+    form:[textSchema]
 });
 
 adminSchema.plugin(passportLocalMongoose);
@@ -75,7 +94,8 @@ userSchema.plugin(passportLocalMongoose);
 
 const Admin = new mongoose.model("Admin",adminSchema);
 const User = new mongoose.model("User",userSchema);
-
+const Test = new mongoose.model("Test",textSchema);
+const Form=new mongoose.model("Form",formSchema);
 
 // Configure Passport for User authentication
 passport.use('user', User.createStrategy());
@@ -232,7 +252,7 @@ app.post("/register-admin", async function(req,res){
     }catch(e){
         console.log(e.message)
     }
-
+   
     
 
 
@@ -276,6 +296,7 @@ app.post("/register-admin", async function(req,res){
           
     });
 
+
  app.post("/admin-login",function(req,res){
 
         const admin = new Admin({
@@ -288,10 +309,12 @@ app.post("/register-admin", async function(req,res){
             }
             else{
                 passport.authenticate("admin")(req,res,function(){
-                    res.redirect("/admin");
+                    res.render("admin_question.ejs");
                 })
             }
         })
+
+        app.get("/")
 //     const username = req.body.username;
 //     const password = md5(req.body.password);
 
@@ -577,6 +600,25 @@ app.post("/add-ques",function(req,res){
 //     }
 // });
 
+app.post("/admin_question",function(req,res){
+
+    const question=new Test({
+        text:req.body.text_question,
+        type:req.body.option,//radio,checkbox,text
+        option1:req.body.option_array,
+        option1_answer_checkbox:req.body.correct_checkboxes,
+        correct_answer_radio:req.body.correct,
+        text_answer:req.body.answer_text
+    });
+    question.save();
+    const form=new Form({
+        form:Test
+    });
+    res.send("success");
+
+
+
+});
 
 
 
