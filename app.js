@@ -12,6 +12,8 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 // const LocalStrategy = require('passport-local').Strategy;
 
+
+
 const app = express();
 
 
@@ -423,8 +425,24 @@ app.post("/register-admin", async function(req,res){
     })
 });
 
+let posts = [];
 
+app.post("/create-quiz",function(req,res){
+    res.render("quiz");
+});
 
+app.post("/add-ques",function(req,res){
+    const post = {
+      ques : req.body.question,
+      ans : req.body.answer,
+      marks : req.body.mark
+    };
+    posts.push(post);
+   
+    //console.log(req.body.matter);
+    // res.redirect("/");
+  });
+  
 
 
 
