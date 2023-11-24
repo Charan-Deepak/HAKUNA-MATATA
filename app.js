@@ -309,7 +309,7 @@ app.post("/register-admin", async function(req,res){
             }
             else{
                 passport.authenticate("admin")(req,res,function(){
-                    res.render("admin_question.ejs");
+                    res.render("admin.ejs");
                 })
             }
         })
