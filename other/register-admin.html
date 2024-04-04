@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .box1{
+          margin:auto;
+           /* height:100vh; */
+            display: flex;
+         background-image:linear-gradient(180deg,  #8f00ff, #ff00cc); 
+            padding: 8vh 0vw 8vh 9vw;
+            height:141vh;
+           
+        }
+        .box2{
+            border-radius: 30px;
+            width:82vw;
+            display:flex;
+            background-image:url('flower.jpg') ;
+            padding:6vh 0vw;
+            opacity: 0.9;
+        }
+        .createclass{
+            text-align: center;
+            color: rgb(0, 157, 255);
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        /* .box3{
+            width:48vw;
+        } */
+        form {
+            opacity: 1;
+            margin: auto;
+            width: 24vw;
+            padding: 0.5vw;
+            background-color: black;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            /* color: rgb(13, 175, 89); */
+            color: rgb(79, 160, 211);
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: rgb(79, 160, 211);
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+            /* color: rgb(0, 60, 255); */
+        }
+       
+    </style>
+</head>
+<body>
+    <div class="box1">
+        <div class="box2">
+           
+          <form >
+            <h1 class="createclass">Create account</h1>
+            <br>
+            <label for="username">User name:</label>
+            <input type="text" id="username" name="username"  required>
+    
+            <label for="firstname">First name:</label>
+            <input type="text" id="firstname" name="firstname" required>
+    
+            <label for="lastname">Last name:</label>
+            <input type="text" id="lastname" name="lastname" required>
+    
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+    
+            <label for="password">New Password:</label>
+            <input type="password" id="password" name="password" required>
+    
+            <label for="repassword">Re-enter Password:</label>
+            <input type="password" id="repassword" name="repassword" required>
+            <br>
+            <button type="submit">Register</button>
+        </form>
+            <!-- </div> -->
+        </div>
+    </div>
+</body>
+</html>

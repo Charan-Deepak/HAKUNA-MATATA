@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* .questionblock {
+            height: 3rem;
+        } */
+
+        input[type="text"] {
+            border: none;
+            border-bottom: 1.5px solid rgb(47, 43, 50);
+        }
+
+        input[type="text"]:focus {
+            border: none;
+            border-bottom: 1.5px solid rgb(85, 82, 88);
+            background-color: rgb(85, 82, 88);
+        }
+
+        .more {
+            border: 1.5px solid green;
+        }
+
+        .add{
+            text-decoration: none;
+            display:inline-block;
+            width:30px;
+            height:30px;
+            background: #8b8b8b;
+            font-size: 2rem;
+            font-weight: bold;
+            color:#fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+        .delete{
+            text-decoration: none;
+            display:inline-block;
+            width:30px;
+            height:30px;
+            background: #e60808;
+            font-size: 2rem;
+            font-weight: bold;
+            color:#fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+    </style>
+    <title>Admin questions</title>
+</head>
+<body>
+   
+   
+    <div class="questionblock">
+   <form class="main_form" action="/admin_question_new"  method="post">
+   <h1><%= username %></h1> 
+            <a href="#"class="add">&plus;</a>  <!--created button for increment of questions -->
+            <button class="submit"  type="button"  >DONE</button> 
+            <button class="done"  type="submit" name="productData"  >submit</button><!-- submiting the data -->
+        
+        </form>
+    </div>
+    <script>
+     //dynamic field creation with javascript
+     var i=0;
+   //  let window={};
+    const questionblock=document.querySelector(".questionblock");
+    const addbtn=document.querySelector(".add");
+   //remome input
+   function removeInput(){
+    this.parentElement.remove();
+    i--;
+   }
+   
+  
+        //addinput question
+            function addinputquestion(i){ 
+             
+            //form
+            const form=document.createElement("form");//creating form 
+            form.className="form"+i;//i is for different forms of class name like form1,form2...
+           
+            //text
+            const label1=document.createElement("label");
+            label1.innerHTML="Enter the Question<br><br>";
+            label1.htmlFor="text_question";
+
+            //text 
+            const text=document.createElement("input");
+            text.type="text";
+            text.id="text_question"+i;
+            text.name="text_question";
+            text.required;//for must entry
+
+            //marks label
+            const label_marks=document.createElement("label");
+            label_marks.innerHTML="Enter marks of Question:<br><br>";
+            label_marks.htmlFor="question_marks";
+            //marks input
+            const marks=document.createElement("input");
+            marks.type="number";
+            marks.id="marks"+i;
+            marks.name="question_marks";
+            marks.required=true;//for must entry
+
+            //choose option
+            const label123=document.createElement("label");
+            label123.innerHTML="choose your options<br>";
+            label123.htmlFor="text_question1";
+
+            //select question
+            const label2=document.createElement("label");
+            label2.innerHTML="Select question type";
+            
+            //radio
+            const radio=document.createElement("input");
+            radio.type="radio";
+            radio.id="option_type"+i;
+            radio.name="option"+i;
+            radio.value="1";
+            radio.required; 
+            const labelradio=document.createElement("label");
+            labelradio.innerHTML="Radio";
+            // radio.addEventListener("click",radio_answer);
+            radio.addEventListener("click", function() {
+            radio_answer(i); //radio button for to add radio type answers
+            });
+
+             //checkbox
+             const checkbox=document.createElement("input");
+             checkbox.type="radio";
+             checkbox.id="option_type"+i;
+             checkbox.name="option"+i;
+             checkbox.value="2";
+             checkbox.required;
+             const labelcheckbox=document.createElement("label");
+             labelcheckbox.innerHTML="Checkbox";
+             // checkbox.addEventListener("click",checkbox_answer);
+             checkbox.addEventListener("click", function() {
+             checkbox_answer(i);//for addition of checkbox answers
+             });
+
+
+           //text
+           const text1=document.createElement("input");
+           text1.type="radio";
+           text1.id="option_type"+i;
+           text1.name="option"+i;
+           text1.value="3";
+           text1.required;
+           const labeltext1=document.createElement("label");
+           labeltext1.innerHTML="text";
+           // text1.addEventListener("click",text_answer);
+           text1.addEventListener("click", function() {
+           text_answer(i);//for addition of text answer
+           });
+
+
+            //delete
+            const btn=document.createElement("a");
+            btn.className="delete";
+            btn.innerHTML="&times";
+            btn.type="button";
+            btn.addEventListener("click",removeInput);
+            
+
+            //div of your option
+            const your_options=document.createElement("div");
+            your_options.id="your_options"+i;
+            your_options.innerHTML="hello";
+            
+            //childappend
+            questionblock.appendChild(form);//adding the inside of question block
+            form.appendChild(label1);//adding the inside of form
+            form.appendChild(text);//adding the inside of form after label1
+            form.appendChild(label_marks);
+            form.appendChild(marks);
+            form.appendChild(label123);
+            form.appendChild(radio);
+            form.appendChild(labelradio);
+            form.appendChild(checkbox);
+            form.appendChild(labelcheckbox);
+            form.appendChild(text1);
+            form.appendChild(labeltext1);
+            form.appendChild(your_options);
+            form.appendChild(btn);
+            window['form' + i] = form;
+            }
+            
+          
+
+        //value=1 
+             function radio_answer(i){ 
+              
+                document.getElementById("your_options"+i).innerHTML = `
+                <div class="radio">
+                    <br>
+                    <label for="radio">Enter the options</label>
+                    <br>
+                    <input type="radio" id="option_correct_radio_${i}" name="correct${i}" value=1 required>
+                    <input type="text" id="text_question1${i}" name="option_array" required>
+                    <br>
+                    <input type="radio" id="option_correct_radio_${i}" name="correct${i}" value=2 required>
+                    <input type="text" id="text_question2${i}" name="option_array" required>
+                    <br>
+                    <input type="radio" id="option_correct_radio_${i}" name="correct${i}" value=3 required>
+                    <input type="text" id="text_question3${i}" name="option_array" required>
+                    <br>
+                    <input type="radio" id="option_correct_radio_${i}" name="correct${i}" value=4 required>
+                    <input type="text" id="text_question4${i}"name="option_array" required>
+                    <br><br>
+                    
+                </div>
+            `;
+         }
+
+            //  value=2
+            function checkbox_answer(i){ 
+                document.getElementById("your_options"+i).innerHTML = `
+                     <div class="checkbox">
+                         <br>
+                         <label for="option_type_checkbox">Enter the options</label>
+                         <br>
+                         <input type="checkbox" id="text_answer_checkbox1${i}" name="correct_checkboxes1${i}" value="1">
+                         <input type="text" id="text_question1${i}" name="option_array" required>
+                         <br>
+                         <input type="checkbox" id="text_answer_checkbox2${i}" name="correct_checkboxes2${i}" value="2">
+                         <input type="text" id="text_question2${i}" name="option_array" required>
+                         <br>
+                         <input type="checkbox" id="text_answer_checkbox3${i}" name="correct_checkboxes3${i}" value="3">
+                         <input type="text" id="text_question3${i}" name="option_array" required>
+                         <br>
+                         <input type="checkbox" id="text_answer_checkbox4${i}" name="correct_checkboxes4${i}" value="4">
+                         <input type="text" id="text_question4${i}" name="option_array" required>
+                         <br><br>
+ 
+                     </div>
+                     `;
+             } 
+
+            // value=3 
+            function text_answer(i){ 
+                document.getElementById("your_options"+i).innerHTML = `
+                    <div class="text">
+                        <br>
+                        <label for="option_type_text_1">Enter the answer in a single word</label>
+                        <br>
+                        <input type="text" id="option_type_text${i}" name="answer_text" required>
+                        <br><br>
+                    </div>
+                    `;
+            }
+           
+            var productData = []; // Array to store product data
+
+            function submit_form(j) {
+                var text_answers_checkbox = [];
+                var text_options = [];
+                var text_a;
+                var option_correct_radio;
+                console.log(j);
+                // Accessing the form
+                var final_form = window["form" + j];
+                if (final_form) { // If form exists
+                    var text_question_var = final_form.querySelector("#text_question" + j).value; // Get text question value
+                    var marks=final_form.querySelector("#marks"+j).value;
+                    let option_type_read = final_form.querySelector(`input[name='option${j}']:checked`);
+                    var option_type = option_type_read ? option_type_read.value : "";
+            
+                    if (option_type == 1) {
+                        // Add event listeners to each radio button
+                        let radioBtns = final_form.querySelectorAll(`input[name='correct${j}']`);
+            
+                        // Define a function to find the selected radio button
+                        let findSelected = () => {
+                            let selected = final_form.querySelector(`input[name='correct${j}']:checked`);
+                            if (selected) {
+                                option_correct_radio = selected.value;
+                            } else {
+                                option_correct_radio = ""; // Handle case where no radio button is checked
+                            }
+                        };
+            
+                        // Add event listeners to each radio button
+                        radioBtns.forEach(radioBtn => {
+                            radioBtn.addEventListener("change", findSelected);
+                        });
+            
+                        // Call the function initially to set the default value
+                        findSelected();
+            
+                        // Get options for radio type
+                        for (var k = 1; k <= 4; k++) {
+                            var option = final_form.querySelector("#text_question" + k + j);
+                            if (option) {
+                                text_options.push(option.value);
+                            }
+                        }
+                    } else if (option_type == 2) {
+            
+                        for (var k = 1; k <= 4; k++) {
+                            var option = final_form.querySelector("#text_question" + k + j);
+                            if (option) {
+                                text_options.push(option.value);
+                            }
+                        }
+                        console.log(text_options);
+                        // Get options for checkbox type
+            
+                        for (var k = 1; k <= 4; k++) {
+                            let option_answer = final_form.querySelector(`input[name='correct_checkboxes${k}${j}']:checked`); // Corrected selector syntax
+                            if (option_answer) {
+                                text_answers_checkbox.push(option_answer.value);
+                            }
+            
+                        }
+                    } else if (option_type == 3) {
+            
+                        text_a = final_form.querySelector("#option_type_text" + j)?final_form.querySelector("#option_type_text" + j).value:""; // Get text answer
+                    }
+            
+            
+                    // Construct data object
+                    var data = {
+                        question_no: j,
+                        text: text_question_var,
+                        marks:marks,
+                        type: parseInt(option_type), // radio, checkbox, text
+                        option1: text_options,
+                        option1_answer_checkbox: text_answers_checkbox,
+                        correct_answer: parseInt(option_correct_radio),
+                        text_answer: text_a
+                    };
+            
+                    productData.push(data); // Push data object to productData array
+                }
+                console.log(productData); // Log productData for debugging
+            
+            }
+            
+            // addbtn.addEventListener("click",addinputquestion(i));
+            addbtn.addEventListener("click", function() {
+                i++;
+                addinputquestion(i);
+            });
+            
+            // Now you can use the productData as needed
+            // var submit = document.querySelector('.submit');
+            document.querySelector('.submit').addEventListener("click", async function() {
+                for (var j = 1; j <= i; j++) {
+                    await submit_form(j); //control to sumbit the form
+                   console.log(j);
+                }
+                document.querySelector(".main_form").value = JSON.stringify(productData); // Set value of submit button
+            });
+
+           
+
+
+        // Function to submit the form data
+
+       async function submitFormData() {
+            const form1 = document.querySelector('.main_form');
+            form1.addEventListener('submit', async (e) => {
+                e.preventDefault();//prevent the submition of form
+                
+                console.log(100000,i)
+                console.log(JSON.stringify({productData}))
+                // Assuming productData is defined somewhere in your code
+                try {
+                    const quizName='<%=quiz_name %>';
+                    const username='<%=username%>';
+                    // Make a POST request to submit the data
+                    const response =await fetch('/admin_question_new', {//posting the object of productData to server
+                        method: 'POST',                        
+                          body:JSON.stringify({productData,quizName,username}),
+                          headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                
+                    // Handle successful response from the server
+                    const responseData = await response.json(); // Assuming server sends back a text response
+                    console.log(responseData); // Log the response from the server
+                    const url = `${responseData.url}?message=${encodeURIComponent(JSON.stringify(responseData.test))}&user_name=${encodeURIComponent(username)}`;
+                    window.location.href = url; // Redirect to the submission page
+                   // const responseDataString = JSON.stringify(responseData);
+                    // Convert the object to a JSON string
+                   // const responseDataString = JSON.stringify(responseData.test);
+                   // console.log(responseDataString);
+      
+                  // const url = `http://127.0.0.1:5500/views/submittionpage.html?message=${encodeURIComponent(responseDataString)}`;
+
+                    //const filename = '/submittionpage.html'; // Name of the file in the same folder
+                  //const url = `${req.protocol}://${req.get('host')}${filename}?message=${encodeURIComponent(responseDataString)}`;
+
+                } catch (error) {
+                    console.error('There was a problem with the fetch operation:', error);
+                }
+            }); 
+        }
+        
+       
+
+        // Event listener for the "DONE" button
+        document.querySelector('.done').addEventListener('click', submitFormData);
+  
+
+            
+    </script>
+</body>
+</html>
+
