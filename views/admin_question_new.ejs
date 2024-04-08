@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        
         /* .questionblock {
             height: 3rem;
         } */
-
+           
         input[type="text"] {
             border: none;
             border-bottom: 1.5px solid rgb(47, 43, 50);
@@ -59,8 +60,9 @@
    
     <div class="questionblock">
    <form class="main_form" action="/admin_question_new"  method="post">
-   <h1><%= username %></h1> 
-            <a href="#"class="add">&plus;</a>  <!--created button for increment of questions -->
+   <h1><%=quiz_name %></h1> 
+   <div >Time:<input id="timer" name="timer" type="number"  required="true"> minutes</div>
+            <a href="#" class="add">&plus; </a>  <!--created button for increment of questions -->
             <button class="submit"  type="button"  >DONE</button> 
             <button class="done"  type="submit" name="productData"  >submit</button><!-- submiting the data -->
         
@@ -96,7 +98,7 @@
             text.type="text";
             text.id="text_question"+i;
             text.name="text_question";
-            text.required;//for must entry
+            text.required=true;//for must entry
 
             //marks label
             const label_marks=document.createElement("label");
@@ -107,7 +109,7 @@
             marks.type="number";
             marks.id="marks"+i;
             marks.name="question_marks";
-            marks.required=true;//for must entry
+            marks.required="true";//for must entry
 
             //choose option
             const label123=document.createElement("label");
@@ -124,7 +126,7 @@
             radio.id="option_type"+i;
             radio.name="option"+i;
             radio.value="1";
-            radio.required; 
+            radio.required="true"; 
             const labelradio=document.createElement("label");
             labelradio.innerHTML="Radio";
             // radio.addEventListener("click",radio_answer);
@@ -138,7 +140,7 @@
              checkbox.id="option_type"+i;
              checkbox.name="option"+i;
              checkbox.value="2";
-             checkbox.required;
+             checkbox.required="true";
              const labelcheckbox=document.createElement("label");
              labelcheckbox.innerHTML="Checkbox";
              // checkbox.addEventListener("click",checkbox_answer);
@@ -153,7 +155,7 @@
            text1.id="option_type"+i;
            text1.name="option"+i;
            text1.value="3";
-           text1.required;
+           text1.required="true";
            const labeltext1=document.createElement("label");
            labeltext1.innerHTML="text";
            // text1.addEventListener("click",text_answer);
@@ -204,16 +206,16 @@
                     <label for="radio">Enter the options</label>
                     <br>
                     <input type="radio" id="option_correct_radio_${i}" name="correct${i}" value=1 required>
-                    <input type="text" id="text_question1${i}" name="option_array" required>
+                    <input type="text" id="text_question1${i}" name="option_array" required="true">
                     <br>
                     <input type="radio" id="option_correct_radio_${i}" name="correct${i}" value=2 required>
-                    <input type="text" id="text_question2${i}" name="option_array" required>
+                    <input type="text" id="text_question2${i}" name="option_array" required="true">
                     <br>
                     <input type="radio" id="option_correct_radio_${i}" name="correct${i}" value=3 required>
-                    <input type="text" id="text_question3${i}" name="option_array" required>
+                    <input type="text" id="text_question3${i}" name="option_array" required="true">
                     <br>
                     <input type="radio" id="option_correct_radio_${i}" name="correct${i}" value=4 required>
-                    <input type="text" id="text_question4${i}"name="option_array" required>
+                    <input type="text" id="text_question4${i}"name="option_array" required="true">
                     <br><br>
                     
                 </div>
@@ -228,16 +230,16 @@
                          <label for="option_type_checkbox">Enter the options</label>
                          <br>
                          <input type="checkbox" id="text_answer_checkbox1${i}" name="correct_checkboxes1${i}" value="1">
-                         <input type="text" id="text_question1${i}" name="option_array" required>
+                         <input type="text" id="text_question1${i}" name="option_array" required="true">
                          <br>
                          <input type="checkbox" id="text_answer_checkbox2${i}" name="correct_checkboxes2${i}" value="2">
-                         <input type="text" id="text_question2${i}" name="option_array" required>
+                         <input type="text" id="text_question2${i}" name="option_array" required="true">
                          <br>
                          <input type="checkbox" id="text_answer_checkbox3${i}" name="correct_checkboxes3${i}" value="3">
-                         <input type="text" id="text_question3${i}" name="option_array" required>
+                         <input type="text" id="text_question3${i}" name="option_array" required="true">
                          <br>
                          <input type="checkbox" id="text_answer_checkbox4${i}" name="correct_checkboxes4${i}" value="4">
-                         <input type="text" id="text_question4${i}" name="option_array" required>
+                         <input type="text" id="text_question4${i}" name="option_array" required="true">
                          <br><br>
  
                      </div>
@@ -251,7 +253,7 @@
                         <br>
                         <label for="option_type_text_1">Enter the answer in a single word</label>
                         <br>
-                        <input type="text" id="option_type_text${i}" name="answer_text" required>
+                        <input type="text" id="option_type_text${i}" name="answer_text" required="true">
                         <br><br>
                     </div>
                     `;
@@ -353,6 +355,10 @@
             // Now you can use the productData as needed
             // var submit = document.querySelector('.submit');
             document.querySelector('.submit').addEventListener("click", async function() {
+                            // Display an alert
+           // alert("Are you sure you want to submit the form?");
+
+
                 for (var j = 1; j <= i; j++) {
                     await submit_form(j); //control to sumbit the form
                    console.log(j);
@@ -370,16 +376,19 @@
             form1.addEventListener('submit', async (e) => {
                 e.preventDefault();//prevent the submition of form
                 
+                //timer
+                const time=document.getElementById("timer").value;
                 console.log(100000,i)
                 console.log(JSON.stringify({productData}))
                 // Assuming productData is defined somewhere in your code
                 try {
                     const quizName='<%=quiz_name %>';
                     const username='<%=username%>';
+                    
                     // Make a POST request to submit the data
                     const response =await fetch('/admin_question_new', {//posting the object of productData to server
                         method: 'POST',                        
-                          body:JSON.stringify({productData,quizName,username}),
+                          body:JSON.stringify({productData,quizName,username,time}),
                           headers: {
                             'Content-Type': 'application/json'
                         }
@@ -392,7 +401,7 @@
                     // Handle successful response from the server
                     const responseData = await response.json(); // Assuming server sends back a text response
                     console.log(responseData); // Log the response from the server
-                    const url = `${responseData.url}?message=${encodeURIComponent(JSON.stringify(responseData.test))}&user_name=${encodeURIComponent(username)}`;
+                    const url = `${responseData.url}?message=${encodeURIComponent(JSON.stringify(responseData.test))}&user_name=${encodeURIComponent(username)}&quizName=${encodeURIComponent('<%=quiz_name %>')}`;
                     window.location.href = url; // Redirect to the submission page
                    // const responseDataString = JSON.stringify(responseData);
                     // Convert the object to a JSON string

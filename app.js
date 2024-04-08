@@ -64,14 +64,50 @@ const formSchema=new mongoose.Schema({ //schema for form that get for sumbit opt
 });
 
 const testSchema=new mongoose.Schema({
+    time:Number,
     quiz_name:String,
     random:String,
     form:[formSchema] //array forms
 });
 
+const answerSchema=new mongoose.Schema({ //schema for form that get for sumbit option in admin quetion
+    mark:Number,
+    type:Number,
+    option1_answer_checkbox:['Number'],//for array of numbers
+    correct_answer:Number,
+    text_answer:String
+});
+
+const test_answerSchema=new mongoose.Schema({
+    totalmarks:Number,
+    totalmarksget:Number,
+    quiz_code:String,
+    form:[answerSchema] //array forms
+});
+
+
 const Test = new mongoose.model("Test",testSchema);//model
 const Form=new mongoose.model("Form",formSchema);//model
+const Answer = new mongoose.model("Answer",answerSchema);//model
+const  Test_answer= new mongoose.model("Test_answer",test_answerSchema);//model
+const userSchema=new mongoose.Schema({
+    username:String,
+    firstname:String,
+    lastname:String,
+    emailId:
+    {type:String,
+     lowercase:true     
+    },
+    password:String,
+    repassword:String,
+    test_answer:[test_answerSchema]
+});
 
+const test_studentSchema=new mongoose.Schema({
+   test_code:String,
+   students_attended:['String'],
+
+});
 const adminSchema=new mongoose.Schema({
     username:String,
     firstname:String,
@@ -82,27 +118,18 @@ const adminSchema=new mongoose.Schema({
     },
     password:String,
     repassword:String,
-    test:[testSchema]
-});
-
-const userSchema=new mongoose.Schema({
-    username:String,
-    firstname:String,
-    lastname:String,
-    emailId:
-    {type:String,
-     lowercase:true     
-    },
-    password:String,
-    repassword:String
+    test:[testSchema],
+    students:[test_studentSchema]
 });
 
 
-adminSchema.plugin(passportLocalMongoose);
 userSchema.plugin(passportLocalMongoose);
+adminSchema.plugin(passportLocalMongoose);
 
-const Admin = new mongoose.model("Admin",adminSchema);
 const User = new mongoose.model("User",userSchema);
+const Test_student=new mongoose.model("Test_student",test_studentSchema);
+const Admin = new mongoose.model("Admin",adminSchema);
+
 
 
 // Configure Passport for User authentication
@@ -231,7 +258,9 @@ app.post("/register-admin", async function(req,res){
 
  app.get("/user",function(req,res){
     if(req.isAuthenticated){
-        res.render("user");
+        const user_name =req.query.user_name;
+        console.log(user_name);
+        res.render("user",{username:user_name});
     }
     else{
         req.redirect("/user-login");
@@ -305,7 +334,9 @@ app.get("/submittionpage",function(req,res){
         }
         else{
             passport.authenticate("user")(req,res,function(){
-                res.redirect("/user");
+
+                res.render("user",{username:req.body.username});
+                
             })
         }
     })
@@ -375,27 +406,33 @@ app.post("/add-ques", function(req,res){
     
             // Assuming you have a Test model with a 'questions' field
             const test = new Test({
+                time:req.body.time,
                 quiz_name:req.body.quizName,
                 random:randomString,
                form: questions
             });
-    
+            
+            const test_student=new Test_student({
+                test_code:randomString
+               
+            })
+
             console.log(4);
            await test.save();//save the array of forms that is test
             console.log(5);
+            await test_student.save();
             // Construct the URL on the server-side
-            const user = await Admin.findOne({ username: req.body.username });
+            const admin = await Admin.findOne({ username: req.body.username });
 
-            if (user) {
+            if (admin) {
                 // If the user exists, update the test array for that user
-                user.test.push(test); // Assuming newTestObject is the object you want to push to the test array
+               admin.students.push(test_student);
+                admin.test.push(test); // Assuming newTestObject is the object you want to push to the test array
                 // You can also use user.test = [...user.test, newTestObject]; if you want to create a new array instead of mutating the existing one
-
-                // Save the updated user data back to the database
-                await user.save();
+                await admin.save();
             } else {
                 // Handle the case where the user does not exist
-                console.log('User not found.');
+                console.log('admin not found.');
             }
 
          const filename ="/submittionpage"; // Name of the file in the same folder
@@ -409,8 +446,108 @@ app.post("/add-ques", function(req,res){
             res.status(500).send("Internal Server Error");
         }
     });
-    
+   
+    app.post("/question_paper",async function(req,res){
+      
+        const admin = await Admin.findOne({ random: req.body.quizcode});
+        const test=await Test.findOne({ random: req.body.quizcode});
+        console.log(JSON.stringify(test));
+      res.render(__dirname+"/views/question_paper",{quiz_code:req.body.quizcode,username:req.body.username,test:JSON.stringify(test)});
+    });
 
+    app.post("/marks_page", async function(req, res,next) {
+    
+        console.log("first")
+         console.log("second")
+    
+            try {
+                
+              let answerData=req.body.answerData; //requesting the array
+                // Assuming you have a Question model
+                let questions = [];
+               
+               
+                for (var i=0;i<answerData.length-2;i++) {
+                    const answer = new Answer({
+                        mark:answerData[i].mark,
+                        type: answerData[i].type,
+                        correct_answer: answerData[i].correct_answer,//radio
+                        option1_answer_checkbox:answerData[i].option1_answer_checkbox,
+                        text_answer: answerData[i].text_answer
+                    });
+                 
+    
+                  await answer.save();//save the form    
+                    questions.push(answer);//push the form into questions
+                }
+                
+             
+        
+                // Assuming you have a Test_answer model with a 'questions' field
+                const test_answer = new Test_answer({
+                    totalmarks:answerData[answerData.length-2],
+                    totalmarksget:answerData[answerData.length-1],
+                    quiz_code:req.body.quiz_code,
+                   form: questions
+                });
+        
+               await test_answer.save();//save the array of forms that is test
+               const user = await User.findOne({ username: req.body.username });
+    
+                if (user) {
+                    user.test_answer.push(test_answer); 
+                    await user.save();     
+                } else {
+                    // Handle the case where the user does not exist
+                    console.log('User not found.');
+                }
+
+                const test_student=await Test_student.findOne({test_code:req.body.quiz_code});
+                
+                if(test_student){
+                test_student.students_attended.push(req.body.username);
+                await test_student.save();
+                }else{
+                console.log('Test student not found.');
+                }
+
+                console.log("start");
+                const admin = await  Admin.findOne({ 'students.test_code': req.body.quiz_code });
+                console.log(admin);
+                if(admin){
+                const studentsArray = admin.students;
+
+                // Find the student object within the students array by test_code
+                const student = studentsArray.find(student => student.test_code === req.body.quiz_code);
+                if (student) {
+                    // Push the username into the students_attended array
+                    student.students_attended.push(req.body.username);
+                    await admin.save();
+                }else{
+                    console.log("student not found");
+                }
+                
+                
+                }else{
+                console.log('admin not found.');}
+
+                console.log("end");
+             const test_=req.body.message;
+             const filename ="/marks_page"; // Name of the file in the same folder
+           const url = `${req.protocol}://${req.get('host')}${filename}`;
+           res.json({test_, url,test_answer });
+               //res.json(test)
+    
+        
+            } catch (error) {  
+                console.error(error);
+                res.status(500).send("Internal Server Error");
+            }
+        });
+   
+        app.get("/marks_page",function(req,res){
+            res.render("marks_page.ejs")
+        });
 
 app.listen(1000, function() {
     console.log("Server started on port 1000");
