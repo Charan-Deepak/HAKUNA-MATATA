@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        
         /* .questionblock {
             height: 3rem;
         } */
-           
+
         input[type="text"] {
             border: none;
             border-bottom: 1.5px solid rgb(47, 43, 50);
@@ -24,7 +23,7 @@
             border: 1.5px solid green;
         }
 
-        .add{
+        /* .add{
             text-decoration: none;
             display:inline-block;
             width:30px;
@@ -37,7 +36,7 @@
             justify-content: center;
             align-items: center;
 
-        }
+        } */
         .delete{
             text-decoration: none;
             display:inline-block;
@@ -54,23 +53,294 @@
         
     </style>
     <title>Admin questions</title>
+     <%- include('partials/mdbheader'); -%> 
 </head>
 <body>
-   
-   
+ 
+    <style>
+        body {
+  background-color: #fbfbfb;
+}
+
+@media (min-width: 991.98px) {
+  main {
+    padding-left: 240px;
+  }
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  padding: 58px 0 0; /* Height of navbar */
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+  width: 240px;
+  z-index: 600;
+}
+
+@media (max-width: 991.98px) {
+  .sidebar {
+    width: 100%;
+  }
+}
+.sidebar .active {
+  border-radius: 5px;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}
+
+.sidebar-sticky {
+  position: relative;
+  top: 0;
+  height: calc(100vh - 48px);
+  padding-top: 0.5rem;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+    </style>
+
+    <!--Main Navigation-->
+<header>
+    <!-- Sidebar -->
+    <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
+      <div class="position-sticky">
+        <div class="list-group list-group-flush mx-3 mt-4">
+          <a
+            href="#"
+            class="list-group-item list-group-item-action py-2 ripple"
+            aria-current="true"
+          >
+            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Main dashboard</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action py-2 ripple active">
+            <i class="fas fa-chart-area fa-fw me-3"></i><span>Create quizz</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action py-2 ripple"
+            ><i class="fas fa-lock fa-fw me-3"></i><span>000000</span></a
+          >
+          <a href="#" class="list-group-item list-group-item-action py-2 ripple"
+            ><i class="fas fa-chart-line fa-fw me-3"></i><span>000000</span></a
+          >
+          <a href="#" class="list-group-item list-group-item-action py-2 ripple">
+            <i class="fas fa-chart-pie fa-fw me-3"></i><span>000000</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action py-2 ripple"
+            ><i class="fas fa-chart-bar fa-fw me-3"></i><span>000000</span></a
+          >
+          <!-- <a href="#" class="list-group-item list-group-item-action py-2 ripple"
+            ><i class="fas fa-globe fa-fw me-3"></i><span>International</span></a
+          >
+          <a href="#" class="list-group-item list-group-item-action py-2 ripple"
+            ><i class="fas fa-building fa-fw me-3"></i><span>Partners</span></a
+          >
+          <a href="#" class="list-group-item list-group-item-action py-2 ripple"
+            ><i class="fas fa-calendar fa-fw me-3"></i><span>Calendar</span></a
+          >
+          <a href="#" class="list-group-item list-group-item-action py-2 ripple"
+            ><i class="fas fa-users fa-fw me-3"></i><span>Users</span></a
+          >
+          <a href="#" class="list-group-item list-group-item-action py-2 ripple"
+            ><i class="fas fa-money-bill fa-fw me-3"></i><span>Sales</span></a
+          > -->
+        </div>
+      </div>
+    </nav>
+    <!-- Sidebar -->
+  
+    <!-- Navbar -->
+    <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+      <!-- Container wrapper -->
+      <div class="container-fluid">
+        <!-- Toggle button -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-mdb-toggle="collapse"
+          data-mdb-target="#sidebarMenu"
+          aria-controls="sidebarMenu"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <i class="fas fa-bars"></i>
+        </button>
+  
+        <!-- Brand -->
+        <a class="navbar-brand" href="#">
+          <img
+            src="pic16.jpg"
+            height="40"
+            alt="MDB Logo"
+            loading="lazy"
+          />
+        </a>
+        <!-- Search form -->
+        <form class="d-none d-md-flex input-group w-auto my-auto">
+          <input
+            autocomplete="off"
+            type="search"
+            class="form-control rounded"
+            placeholder='Search (ctrl + "/" to focus)'
+            style="min-width: 225px;"
+          />
+          <span class="input-group-text border-0"><i class="fas fa-search"></i></span>
+        </form>
+  
+        <!-- Right links -->
+        <ul class="navbar-nav ms-auto d-flex flex-row">
+          <!-- Notification dropdown -->
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link me-3 me-lg-0 dropdown-toggle hidden-arrow"
+              href="#"
+              id="navbarDropdownMenuLink"
+              role="button"
+              data-mdb-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="fas fa-bell"></i>
+              <span class="badge rounded-pill badge-notification bg-danger">1</span>
+            </a>
+            <ul
+              class="dropdown-menu dropdown-menu-end"
+              aria-labelledby="navbarDropdownMenuLink"
+            >
+              <li>
+                <a class="dropdown-item" href="#">Some news</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Another news</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </li>
+            </ul>
+          </li>
+  
+          <!-- Icon -->
+          <li class="nav-item">
+            <a class="nav-link me-3 me-lg-0" href="#">
+              <i class="fas fa-fill-drip"></i>
+            </a>
+          </li>
+          <!-- Icon -->
+          <li class="nav-item me-3 me-lg-0">
+            <a class="nav-link" href="#">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+  
+          <!-- Icon dropdown -->
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link me-3 me-lg-0 dropdown-toggle hidden-arrow"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-mdb-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="united kingdom flag m-0"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <li>
+                <a class="dropdown-item" href="#"
+                  ><i class="united kingdom flag"></i>English
+                  <i class="fa fa-check text-success ms-2"></i
+                ></a>
+              </li>
+              <li><hr class="dropdown-divider" /></li>
+              <li>
+                <a class="dropdown-item" href="#"><i class="poland flag"></i>Polski</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#"><i class="china flag"></i>中文</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#"><i class="japan flag"></i>日本語</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#"><i class="germany flag"></i>Deutsch</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#"><i class="france flag"></i>Français</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#"><i class="spain flag"></i>Español</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#"><i class="russia flag"></i>Русский</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#"><i class="portugal flag"></i>Português</a>
+              </li>
+            </ul>
+          </li>
+  
+          <!-- Avatar -->
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle hidden-arrow d-flex align-items-center"
+              href="#"
+              id="navbarDropdownMenuLink"
+              role="button"
+              data-mdb-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img
+                src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp"
+                class="rounded-circle"
+                height="22"
+                alt="Avatar"
+                loading="lazy"
+              />
+            </a>
+            <ul
+              class="dropdown-menu dropdown-menu-end"
+              aria-labelledby="navbarDropdownMenuLink"
+            >
+              <li>
+                <a class="dropdown-item" href="#">My profile</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Settings</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Logout</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+  </header>
+  <!-- Main Navigation -->
+   <!--Main layout-->
+  <main style="margin-top: 58px; margin-bottom: 100px;">
     <div class="questionblock">
    <form class="main_form" action="/admin_question_new"  method="post">
-   <h1><%=quiz_name %></h1> 
-   <div >Time:<input id="timer" name="timer" type="number"  required="true"> minutes</div>
-            <a href="#" class="add">&plus; </a>  <!--created button for increment of questions -->
-            <button class="submit"  type="button"  >DONE</button> 
-            <button class="done"  type="submit" name="productData"  >submit</button><!-- submiting the data -->
+    <br>
+    <h1 class="display-6"><%= quiz_name %></h1>
+            <a href="#"class="add"><button type="button" class="btn btn-info" data-mdb-ripple-init>ADD</button></a>  
+            <!-- <i class="fa-solid fa-plus"></i> -->
+            <!-- onclick="document.location='default.asp'" -->
+            <!-- <button type="button" class="btn btn-info" data-mdb-ripple-init>ADD</button> -->
+            
+            <button type="button" class="btn btn-warning submit" data-mdb-ripple-init>DONE</button>
+            <!-- <button class="submit"  type="button"  >DONE</button>  -->
+            <button type="submit" class="btn btn-success done" name="productData" data-mdb-ripple-init>SUBMIT</button>
+            <!-- <button class="done"  type="submit" name="productData"  >submit</button>submiting the data -->
         
         </form>
     </div>
     <script>
+        // import { Input, initMDB } from "mdb-ui-kit";
      //dynamic field creation with javascript
      var i=0;
+     const brEl =  document.createElement("br");
+    //  const brE2 =  document.createElement("&nbsp");
    //  let window={};
     const questionblock=document.querySelector(".questionblock");
     const addbtn=document.querySelector(".add");
@@ -90,30 +360,73 @@
            
             //text
             const label1=document.createElement("label");
-            label1.innerHTML="Enter the Question<br><br>";
+            // label1.innerHTML="<h4> Enter your question </h4>";
+            label1.textContent="1.Enter the question";
+            label1.className="h6";
             label1.htmlFor="text_question";
 
-            //text 
-            const text=document.createElement("input");
-            text.type="text";
-            text.id="text_question"+i;
-            text.name="text_question";
-            text.required=true;//for must entry
+            const div_test = document.createElement("div");
+            // div_test.className = "form-outline";
+            div_test.setAttribute("data-mdb-input-init", "");
+
+            // Create textarea element
+            const text = document.createElement("textarea");
+            text.className = "form-control";
+            text.id = "text_question"+i; // Set the id attribute
+            text.rows = "3"; // Set the rows attribute
+            text.columns = "4";
+            text.name = "text_question"; // Set the name attribute
+            text.required = true; // Set the required attribute
+
+            // Create label element
+            const label_div = document.createElement("label");
+            label_div.className = "form-label";
+            label_div.setAttribute("for", "textAreaExample"); // Set the for attribute
+            // label_div.textContent = "Message"; // Set label text content
+
+
+
+
+            // const div_test=document.createElement("div");
+            // div_test.className = "form-outline";
+            // div_test.setAttribute("data-mdb-input-init","");
+
+            //  //text 
+            // const text=document.createElement("textarea");
+            // text.textContent="message";
+          
+            // text.id="text_question"+i;
+            // text.name="text_question";
+            // text.required;//for must entry
+            // text.className="form-control";
+            // text.rows="4";
 
             //marks label
+            // const label_marks=document.createElement("label");
+            // label_marks.innerHTML="Enter marks of Question:<br>";
+            // label_marks.htmlFor="question_marks";
+
             const label_marks=document.createElement("label");
-            label_marks.innerHTML="Enter marks of Question:<br><br>";
+            // label1.innerHTML="<h4> Enter your question </h4>";
+            label_marks.innerHTML="<h6>&nbsp 2.Input marks of the question &nbsp </h6>";
+            // label_marks.className="h6";
             label_marks.htmlFor="question_marks";
+            
             //marks input
             const marks=document.createElement("input");
             marks.type="number";
             marks.id="marks"+i;
             marks.name="question_marks";
-            marks.required="true";//for must entry
+            marks.required=true;//for must entry
 
             //choose option
+            // const label123=document.createElement("label");
+            // label123.innerHTML="Choose your options";
+            // label123.htmlFor="text_question1";
             const label123=document.createElement("label");
-            label123.innerHTML="choose your options<br>";
+            // label1.innerHTML="<h4> Enter your question </h4>";
+            label123.innerHTML="<h6>&nbsp 3.Choose your options &nbsp </h6>";
+            label123.className="h6";
             label123.htmlFor="text_question1";
 
             //select question
@@ -126,9 +439,9 @@
             radio.id="option_type"+i;
             radio.name="option"+i;
             radio.value="1";
-            radio.required="true"; 
+            radio.required=true; 
             const labelradio=document.createElement("label");
-            labelradio.innerHTML="Radio";
+            labelradio.innerHTML="<p>&nbsp Single correct &nbsp</p>";
             // radio.addEventListener("click",radio_answer);
             radio.addEventListener("click", function() {
             radio_answer(i); //radio button for to add radio type answers
@@ -140,9 +453,9 @@
              checkbox.id="option_type"+i;
              checkbox.name="option"+i;
              checkbox.value="2";
-             checkbox.required="true";
+             checkbox.required=true;
              const labelcheckbox=document.createElement("label");
-             labelcheckbox.innerHTML="Checkbox";
+             labelcheckbox.innerHTML="<p>&nbsp Multi correct &nbsp</p>";
              // checkbox.addEventListener("click",checkbox_answer);
              checkbox.addEventListener("click", function() {
              checkbox_answer(i);//for addition of checkbox answers
@@ -155,9 +468,9 @@
            text1.id="option_type"+i;
            text1.name="option"+i;
            text1.value="3";
-           text1.required="true";
+           text1.required=true;
            const labeltext1=document.createElement("label");
-           labeltext1.innerHTML="text";
+           labeltext1.innerHTML="<p>&nbsp Single word&nbsp</p>";
            // text1.addEventListener("click",text_answer);
            text1.addEventListener("click", function() {
            text_answer(i);//for addition of text answer
@@ -165,24 +478,44 @@
 
 
             //delete
-            const btn=document.createElement("a");
-            btn.className="delete";
-            btn.innerHTML="&times";
-            btn.type="button";
+            // const btn=document.createElement("a");
+            // btn.className="delete";
+            // btn.innerHTML="&times";
+            // btn.type="button";
+            // btn.addEventListener("click",removeInput);
+
+            // Create a button element
+            const btn = document.createElement("button");
+
+            // Set button attributes
+            btn.type = "button";
+            btn.className = "btn btn-danger";
+            btn.setAttribute("data-mdb-ripple-init", "");
+
+            // Set button inner HTML content
+            btn.innerHTML = "DELETE";
             btn.addEventListener("click",removeInput);
+
+
             
 
             //div of your option
             const your_options=document.createElement("div");
             your_options.id="your_options"+i;
-            your_options.innerHTML="hello";
+            // your_options.innerHTML="hello";
             
             //childappend
             questionblock.appendChild(form);//adding the inside of question block
             form.appendChild(label1);//adding the inside of form
-            form.appendChild(text);//adding the inside of form after label1
+            form.appendChild(brEl);
+            form.appendChild(div_test);//adding the inside of form after label1
+            div_test.appendChild(text);
+            div_test.appendChild(label_div);
             form.appendChild(label_marks);
+            form.appendChild(brEl);
+            form.appendChild(brEl);
             form.appendChild(marks);
+            form.appendChild(brEl);
             form.appendChild(label123);
             form.appendChild(radio);
             form.appendChild(labelradio);
@@ -201,60 +534,90 @@
              function radio_answer(i){ 
               
                 document.getElementById("your_options"+i).innerHTML = `
-                <div class="radio">
-                    <br>
-                    <label for="radio">Enter the options</label>
-                    <br>
-                    <input type="radio" id="option_correct_radio_${i}" name="correct${i}" value=1 required>
-                    <input type="text" id="text_question1${i}" name="option_array" required="true">
-                    <br>
-                    <input type="radio" id="option_correct_radio_${i}" name="correct${i}" value=2 required>
-                    <input type="text" id="text_question2${i}" name="option_array" required="true">
-                    <br>
-                    <input type="radio" id="option_correct_radio_${i}" name="correct${i}" value=3 required>
-                    <input type="text" id="text_question3${i}" name="option_array" required="true">
-                    <br>
-                    <input type="radio" id="option_correct_radio_${i}" name="correct${i}" value=4 required>
-                    <input type="text" id="text_question4${i}"name="option_array" required="true">
-                    <br><br>
-                    
-                </div>
+                <div class="radio"> 
+                    <div class="form-check" style="margin-bottom: 10px;">
+                      <input class="form-check-input" type="radio" id="option_correct_radio_${i}" name="correct${i}" value=1 required checked/>
+                        <div class="form-outline" data-mdb-input-init>
+                        <input type="text" id="text_question1${i}" class="form-control" name="option_array" required=true style="background-color: #F0F8FE; color: black; width:500px ; " required/>
+                        <label class="form-label" for="typeText">Option 1</label>
+                          </div>
+                    </div>
+
+                    <div class="form-check" style="margin-bottom: 10px;">
+                      <input class="form-check-input" type="radio" id="option_correct_radio_${i}" name="correct${i}" value=2 required/>
+                        <div class="form-outline" data-mdb-input-init>
+                        <input type="text" id="text_question2${i}" class="form-control" name="option_array" required=true style="background-color: #F0F8FE; color: black; width:500px ; " required/>
+                        <label class="form-label" for="typeText">Option 2</label>
+                          </div>
+                    </div>
+
+                    <div class="form-check" style="margin-bottom: 10px;">
+                      <input class="form-check-input" type="radio" id="option_correct_radio_${i}" name="correct${i}" value=3 required/>
+                        <div class="form-outline" data-mdb-input-init>
+                        <input type="text" id="text_question3${i}" class="form-control" name="option_array" required=true style="background-color: #F0F8FE; color: black; width:500px ; " required/>
+                        <label class="form-label" for="typeText">Option 3</label>
+                          </div>
+                    </div>
+
+                    <div class="form-check" style="margin-bottom: 10px;">
+                      <input class="form-check-input" type="radio" id="option_correct_radio_${i}" name="correct${i}" value=4 required/>
+                        <div class="form-outline" data-mdb-input-init>
+                        <input type="text" id="text_question4${i}" class="form-control" name="option_array" required=true style="background-color: #F0F8FE; color: black; width:500px ; " required/>
+                        <label class="form-label" for="typeText">Option 4</label>
+                          </div>
+                    </div>
+
+                  </div>
+                
             `;
          }
 
             //  value=2
             function checkbox_answer(i){ 
                 document.getElementById("your_options"+i).innerHTML = `
-                     <div class="checkbox">
-                         <br>
-                         <label for="option_type_checkbox">Enter the options</label>
-                         <br>
-                         <input type="checkbox" id="text_answer_checkbox1${i}" name="correct_checkboxes1${i}" value="1">
-                         <input type="text" id="text_question1${i}" name="option_array" required="true">
-                         <br>
-                         <input type="checkbox" id="text_answer_checkbox2${i}" name="correct_checkboxes2${i}" value="2">
-                         <input type="text" id="text_question2${i}" name="option_array" required="true">
-                         <br>
-                         <input type="checkbox" id="text_answer_checkbox3${i}" name="correct_checkboxes3${i}" value="3">
-                         <input type="text" id="text_question3${i}" name="option_array" required="true">
-                         <br>
-                         <input type="checkbox" id="text_answer_checkbox4${i}" name="correct_checkboxes4${i}" value="4">
-                         <input type="text" id="text_question4${i}" name="option_array" required="true">
-                         <br><br>
- 
-                     </div>
+                   
+                     <div class="form-check" style="margin-bottom: 10px;">
+                      <input class="form-check-input" type="checkbox" id="text_answer_checkbox1${i}" name="correct_checkboxes1${i}" value=1 />
+                        <div class="form-outline" data-mdb-input-init>
+                        <input type="text" id="text_question1${i}" class="form-control" name="option_array" style="background-color: #F0F8FE; color: black; width:500px ; " required/>
+                        <label class="form-label" for="typeText">Option 1</label>
+                          </div>
+                    </div>
+
+                    <div class="form-check" style="margin-bottom: 10px;">
+                      <input class="form-check-input" type="checkbox" id="text_answer_checkbox2${i}" name="correct_checkboxes2${i}" value=2 />
+                        <div class="form-outline" data-mdb-input-init>
+                        <input type="text" id="text_question2${i}" class="form-control" name="option_array" style="background-color: #F0F8FE; color: black; width:500px ; " required/>
+                        <label class="form-label" for="typeText">Option 2</label>
+                          </div>
+                    </div>
+
+                    <div class="form-check" style="margin-bottom: 10px;">
+                      <input class="form-check-input" type="checkbox" id="text_answer_checkbox3${i}" name="correct_checkboxes3${i}" value=3 />
+                        <div class="form-outline" data-mdb-input-init>
+                        <input type="text" id="text_question3${i}" class="form-control" name="option_array" style="background-color: #F0F8FE; color: black; width:500px ; " required/>
+                        <label class="form-label" for="typeText">Option 3</label>
+                          </div>
+                    </div>
+
+                     <div class="form-check" style="margin-bottom: 10px;">
+                      <input class="form-check-input" type="checkbox" id="text_answer_checkbox4${i}" name="correct_checkboxes4${i}" value=4 />
+                        <div class="form-outline" data-mdb-input-init>
+                        <input type="text" id="text_question4${i}" class="form-control" name="option_array" style="background-color: #F0F8FE; color: black; width:500px ; " required/>
+                        <label class="form-label" for="typeText">Option 4</label>
+                          </div>
+                    </div>
                      `;
              } 
 
             // value=3 
             function text_answer(i){ 
                 document.getElementById("your_options"+i).innerHTML = `
-                    <div class="text">
-                        <br>
-                        <label for="option_type_text_1">Enter the answer in a single word</label>
-                        <br>
-                        <input type="text" id="option_type_text${i}" name="answer_text" required="true">
-                        <br><br>
+
+                    <div class="form-outline text" data-mdb-input-init style="margin-bottom: 10px;">
+                      <input type="text" id="option_type_text${i}" name="answer_text" class="form-control" data-mdb-showcounter="true" maxlength="20" style="background-color: #F0F8FE; color: black;width:250px ; " required/>
+                      <label class="form-label" for="form16">Answer</label>
+                      <div class="form-helper"></div>
                     </div>
                     `;
             }
@@ -355,10 +718,6 @@
             // Now you can use the productData as needed
             // var submit = document.querySelector('.submit');
             document.querySelector('.submit').addEventListener("click", async function() {
-                            // Display an alert
-           // alert("Are you sure you want to submit the form?");
-
-
                 for (var j = 1; j <= i; j++) {
                     await submit_form(j); //control to sumbit the form
                    console.log(j);
@@ -376,19 +735,16 @@
             form1.addEventListener('submit', async (e) => {
                 e.preventDefault();//prevent the submition of form
                 
-                //timer
-                const time=document.getElementById("timer").value;
                 console.log(100000,i)
                 console.log(JSON.stringify({productData}))
                 // Assuming productData is defined somewhere in your code
                 try {
                     const quizName='<%=quiz_name %>';
                     const username='<%=username%>';
-                    
                     // Make a POST request to submit the data
                     const response =await fetch('/admin_question_new', {//posting the object of productData to server
                         method: 'POST',                        
-                          body:JSON.stringify({productData,quizName,username,time}),
+                          body:JSON.stringify({productData,quizName,username}),
                           headers: {
                             'Content-Type': 'application/json'
                         }
@@ -401,7 +757,7 @@
                     // Handle successful response from the server
                     const responseData = await response.json(); // Assuming server sends back a text response
                     console.log(responseData); // Log the response from the server
-                    const url = `${responseData.url}?message=${encodeURIComponent(JSON.stringify(responseData.test))}&user_name=${encodeURIComponent(username)}&quizName=${encodeURIComponent('<%=quiz_name %>')}`;
+                    const url = `${responseData.url}?message=${encodeURIComponent(JSON.stringify(responseData.test))}&user_name=${encodeURIComponent(username)}&quizName=${encodeURIComponent('<%=quiz_name %>')} `;
                     window.location.href = url; // Redirect to the submission page
                    // const responseDataString = JSON.stringify(responseData);
                     // Convert the object to a JSON string
@@ -419,14 +775,11 @@
             }); 
         }
         
-       
-
-        // Event listener for the "DONE" button
-        document.querySelector('.done').addEventListener('click', submitFormData);
-  
-
+       document.querySelector('.done').addEventListener('click',submitFormData);
             
     </script>
+     
 </body>
+<%- include('partials/mdbfooter'); -%>
 </html>
 

@@ -50,19 +50,18 @@
         <div class="row d-flex justify-content-center">
           <div class="col-lg-8">
             <h2 class="fw-bold mb-5">Are you ready?</h2>
-            <form action="/question_paper" method="post">
+            <form>
               <!-- 2 column grid layout with text inputs for the first and last names -->
               <div class="row">
-                <!-- <div class="col-md-6 mb-4">
+                <div class="col-md-6 mb-4">
                   <div class="form-outline">
                     <input type="text" id="form3Example1" class="form-control" />
                     <label class="form-label" for="form3Example1">Quiz name</label>
                   </div>
-                </div> -->
+                </div>
                 <div class="col-md-6 mb-4">
-                  <div class="form-outline" id="form1">
-                    
-                    <input type="text" id="form3Example2" class="form-control" name="quizcode" />
+                  <div class="form-outline">
+                    <input type="text" id="form3Example2" class="form-control" />
                     <label class="form-label" for="form3Example2">Quiz code</label>
                   </div>
                 </div>
@@ -81,19 +80,5 @@
     </div>
   </section>
   <!-- Section: Design Block -->
-  <script>
-    // Create a div element
-    const username = document.createElement("input");
-    username.type="hidden";
-    // Set attributes using setAttribute method
-    username.name="username";
-    username.value = '<%=username%>'; // Set text content, not value
-
-    // Find the element with id "quiz_name"
-    const quiz_code = document.getElementById("form1");
-
-    // Append the username div as a child of the quiz_name element
-    quiz_code.appendChild(username); // adding the username div inside of the quiz_name block
-  </script>
 
   <%- include('partials/mdbfooter'); -%>
