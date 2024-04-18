@@ -262,13 +262,14 @@ async function submitFormData() {
     }); 
 }
 
-
+document.querySelector('.submit').addEventListener('click', submitFormData);
 //timer
 
 document.addEventListener('DOMContentLoaded', function(){
     const timerDisplay=document.getElementById('timer');
     const submitBtn=document.getElementById('submit');
     let timeRemaining=message.time*60;
+    if(timeRemaining!=0){
     const timerInterval = setInterval(updateTimer, 1000);
      // Handle click event on the submit button
      document.querySelector('.submit').addEventListener('click', function(){
@@ -277,7 +278,7 @@ document.addEventListener('DOMContentLoaded', function(){
        submitFormData();
 
 });
-   
+
     async function  updateTimer(){
         const hours=Math.floor(timeRemaining/(60*60));
         const minutes=Math.floor((timeRemaining%(60*60))/60);
@@ -296,6 +297,7 @@ document.addEventListener('DOMContentLoaded', function(){
     }
    
 
+}
     
 
 });

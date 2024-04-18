@@ -61,11 +61,15 @@
     <div class="questionblock">
    <form class="main_form" action="/admin_question_new"  method="post">
    <h1><%=quiz_name %></h1> 
-   <div >Time:<input id="timer" name="timer" type="number"  required="true"> minutes</div>
+   <span><h5>Do you need timer:
+   <select name="timer_op" id="timer_op">
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+</select></h5></span>
+   <div id="timerSection"  >Time:<input id="timer" name="timer" type="number"   required="true"> minutes</div>
             <a href="#" class="add">&plus; </a>  <!--created button for increment of questions -->
             <button class="submit"  type="button"  >DONE</button> 
             <button class="done"  type="submit" name="productData"  >submit</button><!-- submiting the data -->
-        
         </form>
     </div>
     <script>
@@ -423,7 +427,18 @@
 
         // Event listener for the "DONE" button
         document.querySelector('.done').addEventListener('click', submitFormData);
-  
+        document.getElementById('timer_op').addEventListener('change', function() {
+            var selectedValue = this.value;
+            var timerSection = document.getElementById('timerSection');
+    
+            if (selectedValue === 'yes') {
+                timerSection.style.display = 'block'; // Show the timerSection
+            } else {
+                timerSection.style.display = 'none';  // Hide the timerSection
+                const timerInput = document.getElementById('timer');
+                timerInput.value = 0;
+            }
+        });
 
             
     </script>
