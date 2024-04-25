@@ -259,8 +259,9 @@ app.post("/register-admin", async function(req,res){
  app.get("/user",function(req,res){
     if(req.isAuthenticated){
         const user_name =req.query.user_name;
+        const code=req.query.code;
         console.log(user_name);
-        res.render("user",{username:user_name});
+        res.render("user",{username:user_name,code:code});
     }
     else{
         req.redirect("/user-login");
@@ -334,8 +335,8 @@ app.get("/submittionpage",function(req,res){
         }
         else{
             passport.authenticate("user")(req,res,function(){
-
-                res.render("user",{username:req.body.username});
+                const code=0;
+                res.render("user",{username:req.body.username,code:code});
                 
             })
         }
@@ -450,11 +451,24 @@ app.post("/add-ques", function(req,res){
     app.post("/question_paper",async function(req,res){
       
         const admin = await Admin.findOne({ random: req.body.quizcode});
+        const student = await Admin.findOne({  "students": {
+            $elemMatch: {
+                "students_attended": req.body.username,
+                "test_code": req.body.quizcode
+            }
+        } });
+        if(!student){
         const test=await Test.findOne({ random: req.body.quizcode});
         console.log(JSON.stringify(test));
-      res.render(__dirname+"/views/question_paper",{quiz_code:req.body.quizcode,username:req.body.username,test:JSON.stringify(test)});
+      res.render(__dirname+"/views/question_paper",{quiz_code:req.body.quizcode,username:req.body.username,test:JSON.stringify(test)});}
+      else{
+          const code=1;
+          res.render("user",{username:req.body.username,code:code});
+      }
     });
-
+   app.get("/logout",function(req,res){
+    res.render("HomePage.ejs");
+   })
     app.post("/marks_page", async function(req, res,next) {
     
         console.log("first")

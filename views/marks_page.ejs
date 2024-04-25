@@ -13,7 +13,7 @@
 </head>
 <body>
     <a class="homepage" href="/">Homepage</a>
-    <a id="create-quiz" class="create-quiz" name="user_name">profile</a>
+    <a id="create-quiz" class="create-quiz" name="user_name" >profile</a>
     <div id="total_marks"></div>
     <div id="total_marks_get"></div>
     <div id="parent">       
@@ -39,7 +39,10 @@
 
         // Display the message wherever needed in your HTML
         document.getElementById('code').textContent ="This Quiz Code: "+ code;
-        document.getElementById("create-quiz").href='/user?user_name='+user_name;
+        //alert
+        const code_=0;
+        const url = `/user?user_name=${encodeURIComponent(user_name)}&code=${encodeURIComponent(code_)}`;
+        document.getElementById("create-quiz").href=url;
         document.getElementById('total_marks').textContent ="Total marks in test: "+ test_answer.totalmarks;
         document.getElementById('total_marks_get').textContent ="Total marks get: "+ test_answer.totalmarksget;
         //console.log(document.getElementById("create-quiz").href);

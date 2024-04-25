@@ -1,0 +1,35 @@
+import streamlit as st
+
+# Define custom CSS styles using st.markdown() to modify the slider appearance
+st.markdown(
+    """
+    <style>
+    /* Target the slider track */
+    .st-eg .stSlider .de1n3ex .ant-slider-track {
+        background-color: #ff5733; /* Set the background color of the slider track */
+    }
+
+    /* Target the slider handle */
+    .st-eg .stSlider .de1n3ex .ant-slider-handle {
+        background-color: #ff5733; /* Set the background color of the slider handle */
+        border-color: #ff5733; /* Set the border color of the slider handle */
+    }
+
+    /* Target the slider handle on hover */
+    .st-eg .stSlider .de1n3ex .ant-slider-handle:hover {
+        background-color: #ff5733; /* Set the background color of the slider handle on hover */
+        border-color: #ff5733; /* Set the border color of the slider handle on hover */
+    }
+
+    /* Target the slider tooltip */
+    .st-eg .stSlider .de1n3ex .ant-slider-tooltip {
+        background-color: #ff5733; /* Set the background color of the slider tooltip */
+        color: #ffffff; /* Set the text color of the slider tooltip */
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Display the slider with custom styles
+year = st.slider('Car Manufactured Year', 1994, 2024, class_='st-eg')

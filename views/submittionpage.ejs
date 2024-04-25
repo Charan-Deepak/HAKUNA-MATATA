@@ -1,427 +1,34 @@
-<%- include('partials/mdbheader'); -%>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: black;
+            color: rgb(250, 250, 249);
+        }
+    </style>
 </head>
 <body>
-
-    <style>
-        body {
-  background-color: #fbfbfb;
-}
-@media (min-width: 991.98px) {
-  main {
-    padding-left: 240px;
-  }
-}
-
-/* Sidebar */
-.sidebar {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  padding: 58px 0 0; /* Height of navbar */
-  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
-  width: 240px;
-  z-index: 600;
-}
-
-@media (max-width: 991.98px) {
-  .sidebar {
-    width: 100%;
-  }
-}
-.sidebar .active {
-  border-radius: 5px;
-  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
-}
-
-.sidebar-sticky {
-  position: relative;
-  top: 0;
-  height: calc(100vh - 48px);
-  padding-top: 0.5rem;
-  overflow-x: hidden;
-  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-}
-
-.content {
-  margin-top: 50px; /* Adjust based on topnav height */
-}
-
-/* Style for the mask */
-.mask {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  height: calc(100vh - 50px); /* Adjust based on topnav height */
-}
-
-/* Style for the background image */
-.bg-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  opacity: 0.7; 
-}
-
-/* Style for the text overlay */
-/* .text-overlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  color: rgb(0, 0, 0);
-} */
-
-.text-overlay {
-  /* position: absolute; */
-  /* top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); */
-  /* text-align: center; */
-  color: black;
-  overflow-y: auto; /* Enable vertical scrolling */
-  max-height: 100%; /* Set maximum height to allow scrolling */
-}
-
-
-/* Additional styles for text */
-.text-overlay h1 {
-  font-size: 3em;
-  margin-bottom: 10px;
-}
-
-.text-overlay p {
-  font-size: 1.5em;
-}
-
-/* .question-paper {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-} */
-
-
-.question {
-  margin-bottom: 20px;
-  margin-left: 5px;
-}
-
-.question-text {
-  font-weight: bold;
-}
-
-.options {
-  list-style-type: none;
-}
-
-.options li {
-  margin-bottom: 10px;
-}
-
-.marks {
-  font-style: italic;
-}
-
-.answer {
-  margin-left: 5px;
-}
-
-
-
-
-    </style>
-
-    <!--Main Navigation-->
-<header>
-    <!-- Sidebar -->
-    <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
-      <div class="position-sticky">
-        <div class="list-group list-group-flush mx-3 mt-4">
-          <a
-            href="#"
-            class="list-group-item list-group-item-action py-2 ripple"
-            aria-current="true"
-          >
-            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Main dashboard</span>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action py-2 ripple active">
-            <i class="fas fa-chart-area fa-fw me-3"></i><span>Create quizz</span>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action py-2 ripple"
-            ><i class="fas fa-lock fa-fw me-3"></i><span>000000</span></a
-          >
-          <a href="#" class="list-group-item list-group-item-action py-2 ripple"
-            ><i class="fas fa-chart-line fa-fw me-3"></i><span>000000</span></a
-          >
-          <a href="#" class="list-group-item list-group-item-action py-2 ripple">
-            <i class="fas fa-chart-pie fa-fw me-3"></i><span>000000</span>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action py-2 ripple"
-            ><i class="fas fa-chart-bar fa-fw me-3"></i><span>000000</span></a
-          >
-          <!-- <a href="#" class="list-group-item list-group-item-action py-2 ripple"
-            ><i class="fas fa-globe fa-fw me-3"></i><span>International</span></a
-          >
-          <a href="#" class="list-group-item list-group-item-action py-2 ripple"
-            ><i class="fas fa-building fa-fw me-3"></i><span>Partners</span></a
-          >
-          <a href="#" class="list-group-item list-group-item-action py-2 ripple"
-            ><i class="fas fa-calendar fa-fw me-3"></i><span>Calendar</span></a
-          >
-          <a href="#" class="list-group-item list-group-item-action py-2 ripple"
-            ><i class="fas fa-users fa-fw me-3"></i><span>Users</span></a
-          >
-          <a href="#" class="list-group-item list-group-item-action py-2 ripple"
-            ><i class="fas fa-money-bill fa-fw me-3"></i><span>Sales</span></a
-          > -->
-        </div>
-      </div>
-    </nav>
-    <!-- Sidebar -->
-  
-    <!-- Navbar -->
-    <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
-      <!-- Container wrapper -->
-      <div class="container-fluid">
-        <!-- Toggle button -->
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-mdb-toggle="collapse"
-          data-mdb-target="#sidebarMenu"
-          aria-controls="sidebarMenu"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <i class="fas fa-bars"></i>
-        </button>
-  
-        <!-- Brand -->
-        <a class="navbar-brand" href="#">
-          <img
-            src="pic16.jpg"
-            height="40"
-            alt="MDB Logo"
-            loading="lazy"
-          />
-        </a>
-        <!-- Search form -->
-        <form class="d-none d-md-flex input-group w-auto my-auto">
-          <input
-            autocomplete="off"
-            type="search"
-            class="form-control rounded"
-            placeholder='Search (ctrl + "/" to focus)'
-            style="min-width: 225px;"
-          />
-          <span class="input-group-text border-0"><i class="fas fa-search"></i></span>
-        </form>
-  
-        <!-- Right links -->
-        <ul class="navbar-nav ms-auto d-flex flex-row">
-          <!-- Notification dropdown -->
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link me-3 me-lg-0 dropdown-toggle hidden-arrow"
-              href="#"
-              id="navbarDropdownMenuLink"
-              role="button"
-              data-mdb-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <i class="fas fa-bell"></i>
-              <span class="badge rounded-pill badge-notification bg-danger">1</span>
-            </a>
-            <ul
-              class="dropdown-menu dropdown-menu-end"
-              aria-labelledby="navbarDropdownMenuLink"
-            >
-              <li>
-                <a class="dropdown-item" href="#">Some news</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Another news</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </li>
-            </ul>
-          </li>
-  
-          <!-- Icon -->
-          <li class="nav-item">
-            <a class="nav-link me-3 me-lg-0" href="#">
-              <i class="fas fa-fill-drip"></i>
-            </a>
-          </li>
-          <!-- Icon -->
-          <li class="nav-item me-3 me-lg-0">
-            <a class="nav-link" href="#">
-              <i class="fab fa-github"></i>
-            </a>
-          </li>
-  
-          <!-- Icon dropdown -->
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link me-3 me-lg-0 dropdown-toggle hidden-arrow"
-              href="#"
-              id="navbarDropdown"
-              role="button"
-              data-mdb-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <i class="united kingdom flag m-0"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <li>
-                <a class="dropdown-item" href="#"
-                  ><i class="united kingdom flag"></i>English
-                  <i class="fa fa-check text-success ms-2"></i
-                ></a>
-              </li>
-              <li><hr class="dropdown-divider" /></li>
-              <li>
-                <a class="dropdown-item" href="#"><i class="poland flag"></i>Polski</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#"><i class="china flag"></i>中文</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#"><i class="japan flag"></i>日本語</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#"><i class="germany flag"></i>Deutsch</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#"><i class="france flag"></i>Français</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#"><i class="spain flag"></i>Español</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#"><i class="russia flag"></i>Русский</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#"><i class="portugal flag"></i>Português</a>
-              </li>
-            </ul>
-          </li>
-  
-          <!-- Avatar -->
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle hidden-arrow d-flex align-items-center"
-              href="#"
-              id="navbarDropdownMenuLink"
-              role="button"
-              data-mdb-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <img
-                src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp"
-                class="rounded-circle"
-                height="22"
-                alt="Avatar"
-                loading="lazy"
-              />
-            </a>
-            <ul
-              class="dropdown-menu dropdown-menu-end"
-              aria-labelledby="navbarDropdownMenuLink"
-            >
-              <li>
-                <a class="dropdown-item" href="#">My profile</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Settings</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Logout</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-      <!-- Container wrapper -->
-    </nav>
-    <!-- Navbar -->
-  </header>
-  <!--Main Navigation-->
-     
-  <!--Main layout-->
-  <main style="margin-top: 58px;">
-    <!-- Section: Design Block -->
- <section class="">
-   <!-- Jumbotron -->
-
-
-   <div class="content">
-    <div class="mask">
-      <img src="pic28.jpg" alt="Background Image" class="bg-image">
-      <div class="text-overlay" >
-
-        <!-- <h1>Welcome to My Website</h1>
-        <p>This is a description of my website.</p> -->
-        <div style="margin-top: 15px; margin-left: 5px; margin-bottom: 15px;">
-           
-            
-            <button type="button" class="btn btn-light" data-mdb-ripple-init data-mdb-ripple-color="dark"><a class="homepage" href="/">Go to Dashboard</a></button>
-            <a id="create-quiz" class="create-quiz" name="user_name"><button type="button" class="btn btn-dark" data-mdb-ripple-init>Profile</button></a>
-         </div>
-            <!-- <h3><div id ="quiz_name" style="text-transform: capitalize;">hello</div></h3> -->
-            <h1 class="display-6" id ="quiz_name" style="text-transform: capitalize;">hello</h1>
-            <div id="parent">
-                <div id="code"></div>
-                <div id="message"></div> 
-            </div>
-      </div>
-    </div>
-  </div>
-   <!-- <div class="bg-image">
-    <img src="pic21.jpg" class="w-100" alt="Louvre Museum">
-    <div class="mask" style="background-color: hsla(0, 0%, 98%, 0.5)">
-        <div class="content-wrapper">
-            <a class="homepage" href="/">Homepage</a>
-            <a id="create-quiz" class="create-quiz" name="user_name">Profile</a>
-            <h3><div id ="quiz_name" style="text-transform: capitalize;">hello</div></h3>
-            <div id="parent">
-                <div id="code"></div>
-                <div id="message"></div> 
-            </div>
-        </div>
-    </div>
-</div> -->
-
-<!--    
+    
     <a class="homepage" href="/">Homepage</a>
     <a id="create-quiz" class="create-quiz" name="user_name">profile</a>
-    <h3><div id ="quiz_name" style="text-transform: capitalize;">hello</div></h3>
+    <h3><div id="quiz_name" style=" text-transform: capitalize;"></div></h3>
     <div id="parent">
-        <div id="code"></div>
-       <div id="message"></div> 
-        </div>
-   -->
-  <!--Main layout-->
-  <main style="margin-top: 70px; margin-left: 5px; ">
-   <!-- Section: Design Block -->
+    <div id="code"></div>
+    <div id="message"></div> </div>
+  
+</body>
+<script>
 
-   
-
-  <script>
-      
     // Extract the query parameter from the URL
     const params = new URLSearchParams(window.location.search);//to get the test code from admin_question_new
     const message =JSON.parse( params.get('message'));
     const user_name=params.get('user_name');
     const quiz_name=params.get('quizName');
-    console.log(quiz_name);
+    console.log(user_name);
     message_length=message.form.length
 
    // Convert the object to a string representation
@@ -429,14 +36,10 @@
     const code=JSON.stringify(message.random).replace(/"/g, '');
 
         // Display the message wherever needed in your HTML
-      
-        document.getElementById('code').innerHTML = `<span class="badge rounded-pill badge-danger" >Quiz Code: ${code}</span>`;
-        document.getElementById('code').style.fontSize = '20px';
-        document.getElementById('code').style.padding = '10px';
-          // document.getElementById('code').textContent ="Quiz Code: "+ code;
-        document.getElementById('quiz_name').textContent = quiz_name ;
+        document.getElementById('code').textContent ="This Quiz Code: "+ code;
+        document.getElementById('quiz_name').textContent = quiz_name;
         document.getElementById("create-quiz").href='/admin?user_name='+user_name;
-        console.log(document.getElementById("create-quiz").href);
+        //console.log(document.getElementById("create-quiz").href);
         function testpaper(){
 
         const div=document.createElement("div");//creating div
@@ -449,113 +52,65 @@
        
         if(message.form[i].type==3){
         divs.innerHTML=`
-        <div class="question">
-              <div id="question${i+1}">
-          <p class="question-text" id="question${i+1}_p">${i+1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}</p> </div>
-
-          <div style="text-align: right; margin-right:30px;">
-          <button type="button" class="btn btn-success" data-mdb-ripple-init >
-            Marks<span class="badge badge-success ms-2"> ${JSON.stringify(message.form[i].marks).replace(/"/g, '')} </span>
-          </button>  </div>
-
-          <span class="answer lead" > A.${JSON.stringify(message.form[i].text_answer).replace(/"/g, '')}</span>
-        </div>`
-      
-      }else if(message.form[i].type==1){
+        <div id="question${i+1}">
+            <h4 id="question${i+1}_p" style="display: flex; justify-content: space-between;">${i+1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}<span style="margin-right:20vw;">Marks:${JSON.stringify(message.form[i].marks).replace(/"/g, '')}</span></h4>
+          <span>A. <span> <span id=text${i+1} style="text-decoration: underline; "> ${JSON.stringify(message.form[i].text_answer).replace(/"/g, '')}</span>
+        </div>
+        `}else if(message.form[i].type==1){
             divs.innerHTML=`
-    
-            <div class="question">
-              <div id="question${i+1}">
-          <p class="question-text" id="question${i+1}_p">${i+1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}</p> </div>  
-           
-          <div style="text-align: right; margin-right:30px;">
-          <button type="button" class="btn btn-success" data-mdb-ripple-init >
-            Marks<span class="badge badge-success ms-2"> ${JSON.stringify(message.form[i].marks).replace(/"/g, '')} </span>
-          </button>  </div>
-
-            <div class="options lead">
-              <div class="option">
-                ${message.form[i].correct_answer == 1 ?
-                        ` <input type="radio" id="option1${i}" name="options" value="1" checked onclick="return false ;">`
-                        : `<input type="radio" id="option1${i}" name="options" value="1" disabled>`
+            <div id="question${i+1}">
+                <h4 id="question${i+1}_p" style="display: flex; justify-content: space-between;">${i+1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}<span style="margin-right:20vw;">Marks:${JSON.stringify(message.form[i].marks).replace(/"/g, '')}</span></h4>
+                    ${message.form[i].correct_answer == 1 ?
+                        ` <input type="radio" id="option1${i}" name="options${i}" value="1" checked onclick="return false;">`
+                        : `<input type="radio" id="option1${i}" name="options${i}" value="1" disabled>`
                     }
-                    <label for="option1${i}" > ${JSON.stringify(message.form[i].option1[0]).replace(/"/g, '')}</label>
-              </div>
-              <div class="option">
-                ${message.form[i].correct_answer == 2 ?
-                        ` <input type="radio" id="option2${i}" name="options" value="2" checked onclick="return false ;">`
-                        : `<input type="radio" id="option2${i}" name="options" value="2" disabled>`
+                    <label for="option1${i}" > ${JSON.stringify(message.form[i].option1[0]).replace(/"/g, '')}</label><br>
+                     
+                     ${message.form[i].correct_answer == 2 ?
+                        ` <input type="radio" id="option2${i}" name="options${i}" value="2" checked onclick="return false;">`
+                        : `<input type="radio" id="option2${i}" name="options${i}" value="2" disabled>`
                     }
-                    <label for="option2${i}" > ${JSON.stringify(message.form[i].option1[1]).replace(/"/g, '')}</label>
-              </div>
-              <div class="option">
-                ${message.form[i].correct_answer == 3 ?
-                        ` <input type="radio" id="option3${i}" name="options" value="3" checked onclick="return false ;">`
-                        : `<input type="radio" id="option3${i}" name="options" value="3" disabled>`
+                    <label for="option2${i}" > ${JSON.stringify(message.form[i].option1[1]).replace(/"/g, '')}</label><br>
+                    ${message.form[i].correct_answer == 3 ?
+                        ` <input type="radio" id="option3${i}" name="options${i}" value="3" checked onclick="return false;">`
+                        : `<input type="radio" id="option3${i}" name="options${i}" value="3" disabled>`
                     }
-                    <label for="option3${i}" > ${JSON.stringify(message.form[i].option1[2]).replace(/"/g, '')}</label>
-              </div>
-              <div class="option">
-                ${message.form[i].correct_answer == 4 ?
-                        ` <input type="radio" id="option4${i}" name="options" value="4" checked checked onclick="return false ;">`
-                        : `<input type="radio" id="option4${i}" name="options" value="4" disabled>`
+                    <label for="option3${i}" > ${JSON.stringify(message.form[i].option1[2]).replace(/"/g, '')}</label><br>
+                    ${message.form[i].correct_answer == 4 ?
+                        ` <input type="radio" id="option4${i}" name="options${i}" value="4" checked onclick="return false;">`
+                        : `<input type="radio" id="option4${i}" name="options${i}" value="4" disabled>`
                     }
                     <label for="option4${i}" > ${JSON.stringify(message.form[i].option1[3]).replace(/"/g, '')}</label>
-              </div>
-            </div>
-            
-                 
-        
-       </div> 
-              
-            
-            `
+                   
+            </div> `
         }else if(message.form[i].type==2){
-            divs.innerHTML=`                                    
-          <div class="question">
-              <div id="question${i+1}">
-          <p class="question-text" id="question${i+1}_p">${i+1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}</p> </div> 
-            
-                 <div style="text-align: right; margin-right:30px;">
-          <button type="button" class="btn btn-success" data-mdb-ripple-init >
-            Marks<span class="badge badge-success ms-2"> ${JSON.stringify(message.form[i].marks).replace(/"/g, '')} </span>
-          </button>  </div>
+            divs.innerHTML=`
+            <div id="question${i+1}">
+                <h4 id="question${i+1}_p" style="display: flex; justify-content: space-between;">${i+1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}<span style="margin-right:20vw;">Marks:${JSON.stringify(message.form[i].marks).replace(/"/g, '')}</span></h4>
 
-            <div class="options">
-              <div class="option">
-                ${message.form[i].option1_answer_checkbox.includes(1) ?
-                        ` <input type="checkbox" id="option_checkbox1${i}" name="options_checkbox" value="1" checked onclick="return false ;">`
+                    ${message.form[i].option1_answer_checkbox.includes(1) ?
+                        ` <input type="checkbox" id="option_checkbox1${i}" name="options_checkbox" value="1" checked>`
                         : `<input type="checkbox" id="option_checkbox1${i}" name="options_checkbox" value="1" disabled>`
                     }
-                    <label for="option_checkbox1${i}" > ${JSON.stringify(message.form[i].option1[0]).replace(/"/g, '')}</label>
-              </div>
-              <div class="option">
-                ${message.form[i].option1_answer_checkbox.includes(2) ?
-                        ` <input type="checkbox" id="option_checkbox2${i}" name="options_checkbox" value="2" checked onclick="return false ;">`
+                    <label for="option_checkbox1${i}" > ${JSON.stringify(message.form[i].option1[0]).replace(/"/g, '')}</label><br>
+                    
+                     ${message.form[i].option1_answer_checkbox.includes(2) ?
+                        ` <input type="checkbox" id="option_checkbox2${i}" name="options_checkbox" value="2" checked>`
                         : `<input type="checkbox" id="option_checkbox2${i}" name="options_checkbox" value="2" disabled>`
                     }
-                    <label for="option_checkbox2${i}" > ${JSON.stringify(message.form[i].option1[1]).replace(/"/g, '')}</label>
-              </div>
-              <div class="option">
-                ${message.form[i].option1_answer_checkbox.includes(3) ?
-                        ` <input type="checkbox" id="option_checkbox3${i}" name="options_checkbox" value="3" checked onclick="return false ;">`
+                    <label for="option_checkbox2${i}" > ${JSON.stringify(message.form[i].option1[1]).replace(/"/g, '')}</label><br>
+                    ${message.form[i].option1_answer_checkbox.includes(3) ?
+                        ` <input type="checkbox" id="option_checkbox3${i}" name="options_checkbox" value="3" checked>`
                         : `<input type="checkbox" id="option_checkbox3${i}" name="options_checkbox" value="3" disabled>`
                     }
-                    <label for="option_checkbox3${i}" > ${JSON.stringify(message.form[i].option1[2]).replace(/"/g, '')}</label>
-              </div>
-              <div class="option">
-                ${message.form[i].option1_answer_checkbox.includes(4) ?
-                        ` <input type="checkbox" id="option_checkbox4${i}" name="options_checkbox" value="4" checked onclick="return false ;">`
+                    <label for="option_checkbox3${i}" > ${JSON.stringify(message.form[i].option1[2]).replace(/"/g, '')}</label><br>
+                    ${message.form[i].option1_answer_checkbox.includes(4)?
+                        ` <input type="checkbox" id="option_checkbox4${i}" name="options_checkbox" value="4" checked>`
                         : `<input type="checkbox" id="option_checkbox4${i}" name="options_checkbox" value="4" disabled>`
                     }
                     <label for="option_checkbox4${i}" > ${JSON.stringify(message.form[i].option1[3]).replace(/"/g, '')}</label>
-              </div>
-             
-              
-
-            </div>
-                        
-            `
+                   
+            </div> `
         }
       
         div.appendChild(divs);//adding the inside of div
@@ -572,12 +127,7 @@
     
     }
     testpaper();//calling the function
+   
 
-  </script>
-  <!-- Jumbotron -->
-    </section>
-<!-- Section: Design Block -->
-  </main>
-  <!--Main layout-->
-
-    <%- include('partials/mdbfooter'); -%>
+ </script>
+  </html>

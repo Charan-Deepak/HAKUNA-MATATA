@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centered Alert</title>
+    <style>
+        /* Styling for the alert overlay */
+        .alert-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        /* Styling for the alert box */
+        .alert-box {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        
+        /* Styling for the OK button */
+        .alert-button {
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="alert-overlay" id="alertOverlay">
+    <div class="alert-box">
+        <p>This is a centered alert message!</p>
+        <button class="alert-button" onclick="hideAlert()">OK</button>
+    </div>
+</div>
+
+<script>
+    // Function to show the alert
+    function showAlert() {
+        document.getElementById('alertOverlay').style.display = 'flex';
+    }
+
+    // Function to hide the alert
+    function hideAlert() {
+        document.getElementById('alertOverlay').style.display = 'none';
+    }
+</script>
+
+<!-- Button to trigger the alert -->
+<button onclick="showAlert()">Show Alert</button>
+
+</body>
+</html>
