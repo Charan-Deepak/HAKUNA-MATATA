@@ -146,6 +146,7 @@ app.get("/",function(req,res){
     res.render("HomePage.ejs");
 });
 
+
 app.get("/admin-login",function(req,res){
    res.render("admin-login.ejs");
 });
@@ -198,7 +199,7 @@ app.post("/register-admin", async function(req,res){
         if(user!=null)
        { 
         var text="Username  already exists";
-        var text2="You already registered.emailId already exists ";
+        var text2="You already registered / EmailId already exists ";
         if(email!=null)
        {
         res.render("register-admin",{unavailable:text,accountexists:text2});
@@ -209,7 +210,7 @@ app.post("/register-admin", async function(req,res){
     }else{
         if(email!=null)
         {
-            var text2="You already registered.emailId already exists";
+            var text2="You already registered / EmailId already exists";
             res.render("register-admin",{accountexists:text2}); }
        else{
             if(md5(req.body.password)===md5(req.body.repassword))
@@ -267,6 +268,8 @@ app.post("/register-admin", async function(req,res){
         req.redirect("/user-login");
     }
 });
+
+
 
  app.post("/register-user",async function(req,res){
         const newuser = new User({
@@ -342,6 +345,12 @@ app.get("/submittionpage",function(req,res){
         }
     })
 });
+
+
+app.get("/create",function(req,res){
+    res.render("createquiz1.ejs");
+});
+
 
 let posts = [];
 
