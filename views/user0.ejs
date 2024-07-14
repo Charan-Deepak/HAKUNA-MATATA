@@ -1,0 +1,189 @@
+<%- include('partials/mdbheader'); -%>
+<style>
+  /* Styling for the alert overlay */
+  .alert-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+  }
+  
+  /* Styling for the alert box */
+  .alert-box {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      text-align: center;
+  }
+  
+  /* Styling for the OK button */
+  .alert-button {
+      padding: 10px 20px;
+      margin-top: 20px;
+      background-color: #007bff;
+      color: #ffffff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+  <nav id="main-navbar" data-mdb-navbar-init class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Home</a>
+      <button
+        data-mdb-collapse-init
+        class="navbar-toggler"
+        type="button"
+        data-mdb-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link active" aria-current="page" href="/user">Main Dashboard</a>
+          <a class="nav-link" href="#">Take a quiz</a>
+          <a class="nav-link" href="#">FAQ</a>
+          <!-- <a class="nav-link disabled"
+            >Logout</a
+          > -->
+        </div>
+      </div>
+
+ <!-- Avatar -->
+ 
+  <a
+    class="nav-link dropdown-toggle hidden-arrow d-flex align-items-center"
+    href="#"
+    id="navbarDropdownMenuLink"
+    role="button"
+    data-mdb-toggle="dropdown"
+    aria-expanded="false"
+  >
+    <img
+      src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp"
+      class="rounded-circle"
+      height="22"
+      alt="Avatar"
+      loading="lazy"
+    />
+  </a>
+  <ul
+    class="dropdown-menu dropdown-menu-end"
+    aria-labelledby="navbarDropdownMenuLink"
+  >
+    <li>
+      <a class="dropdown-item" href="#">My profile</a>
+    </li>
+    <li>
+      <a class="dropdown-item" href="#">Settings</a>
+    </li>
+    <li>
+      <a class="dropdown-item" href="/user-login">Logout</a>
+    </li>
+  </ul>
+
+
+
+    </div>
+  </nav>
+
+
+
+  <!-- Section: Design Block -->
+<section class="text-center">
+    <!-- Background image -->
+    <div class="p-5 bg-image" style="
+          background-image: url('pic29.jpg');
+          height: 300px;
+          "></div>
+    <!-- Background image -->
+  
+    <div class="card mx-4 mx-md-5 shadow-5-strong" style="
+          margin-top: -100px;
+          background: hsla(0, 0%, 100%, 0.8);
+          backdrop-filter: blur(30px);
+          ">
+      <div class="card-body py-5 px-md-5">
+  
+        <div class="row d-flex justify-content-center">
+          <div class="col-lg-8">
+            <h2 class="fw-bold mb-5">Are you ready?</h2>
+            <form action="/question_paper" method="post">
+              <!-- 2 column grid layout with text inputs for the first and last names -->
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <div class="form-outline">
+                    <input type="text" id="form3Example1" class="form-control" />
+                    <label class="form-label" for="form3Example1">Quiz name</label>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                  <div class="form-outline" id="form1">
+                    
+                    <input type="text" id="form3Example2" class="form-control" name="quizcode" />
+                    <label class="form-label" for="form3Example2">Quiz code</label>
+                  </div>
+                </div>
+              </div>
+
+  
+              <!-- Submit button -->
+              <button type="submit" class="btn btn-primary btn-block mb-4">
+                Dive into the quiz
+              </button>
+  
+              <div class="alert-overlay" id="alertOverlay">
+                <div class="alert-box">
+                    <p>YOU ALREADY RESPONSED!</p>
+                    <a class="alert-button" onclick="hideAlert()">OK</a>
+                </div>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Section: Design Block -->
+  <script>
+    function showAlert() {
+      document.getElementById('alertOverlay').style.display = 'flex';
+  }
+
+  // Function to hide the alert
+  function hideAlert() {
+    document.getElementById('alertOverlay').style.display = 'none';
+  }
+     const code2='<%=code%>';
+
+    if(code2==1) 
+    showAlert();
+    // Create a div element
+    const username = document.createElement("input");
+    username.type="hidden";
+    // Set attributes using setAttribute method
+    username.name="username";
+    username.value = '<%=username%>'; // Set text content, not value
+
+    // Find the element with id "quiz_name"
+    const quiz_code = document.getElementById("form1");
+
+    // Append the username div as a child of the quiz_name element
+    quiz_code.appendChild(username); // adding the username div inside of the quiz_name block
+  </script>
+
+  <%- include('partials/mdbfooter'); -%>

@@ -57,7 +57,7 @@
               <a href="#" id = "createquiz1" class="list-group-item list-group-item-action py-2 active" data-mdb-ripple-init>
                 <i class="fas fa-chart-area fa-fw me-3"></i><span>Create quizz </span>
               </a>
-              <a href="#" class="list-group-item list-group-item-action py-2" data-mdb-ripple-init><i
+              <a href="/temp" class="list-group-item list-group-item-action py-2" data-mdb-ripple-init><i
                   class="fas fa-lock fa-fw me-3"></i><span>Password</span></a>
               <a href="#" class="list-group-item list-group-item-action py-2" data-mdb-ripple-init><i
                   class="fas fa-chart-line fa-fw me-3"></i><span>Analytics</span></a>
@@ -150,70 +150,3 @@
      <!-- Navbar -->
       </header>
   <!--Main Navigation-->
-  
-  <!--Main layout-->
-  <main style="margin-top: 58px;">
-   <!-- Section: Design Block -->
-<section class="">
-  <!-- Jumbotron -->
-  <div class="bg-image px-4 py-5 px-md-5 text-center text-lg-start" style="background-color: hsl(0, 0%, 96%); background-image: url('pic10.jpg'); height: 100vh;">
-    <div class="container">
-      <div class="row gx-lg-5 align-items-center">
-        <div class="col-lg-6 mb-5 mb-lg-0">
-          <h1 class="my-5 display-3 fw-bold ls-tight">
-            The best platform <br />
-            <span class="text-primary">for making quizzes</span>
-          </h1>
-          <p style="color: hsl(217, 10%, 50.8%)">
-            
-          </p>
-        </div>
-
-        <div class="col-lg-5 mb-5 mb-lg-0">
-          <div class="card" >
-            <div class="card-body py-5 px-md-5">
-              <form action="/create-quiz" method="POST">
-                
-                <div id="quiz_name" class="form-outline mb-4">
-                  <input type="text" id="form3Example3" class="form-control" name="quizName"/>
-                  <label class="form-label" for="form3Example3">Name of quiz</label>
-                </div>
-              
-                
-            
-                <!-- Submit button -->
-                <button type="submit" class="btn btn-primary btn-block mb-4" style="opacity: 100%;">
-                  Create quiz
-                </button>
-
-              
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <script>
-            // Create a div element
-        const username = document.createElement("input");
-        username.type="hidden";
-        // Set attributes using setAttribute method
-        username.name="username";
-        username.value = '<%=user_name%>'; // Set text content, not value
-
-        // Find the element with id "quiz_name"
-        const quiz_name = document.getElementById("quiz_name");
-
-        // Append the username div as a child of the quiz_name element
-        quiz_name.appendChild(username); // adding the username div inside of the quiz_name block
-
-        
-  </script>
-  <!-- Jumbotron -->
-</section>
-<!-- Section: Design Block -->
-  </main>
-  <!--Main layout-->
-
-    <%- include('partials/mdbfooter'); -%>

@@ -170,6 +170,10 @@ app.get("/register-user",function(req,res){
 });
 
 
+app.get("/temp",function(req,res){
+    res.render("temp.ejs");
+});
+
 app.get("/admin",function(req,res){
     if(req.isAuthenticated){
         const user_name =req.query.user_name;
@@ -347,8 +351,12 @@ app.get("/submittionpage",function(req,res){
 });
 
 
-app.get("/create",function(req,res){
-    res.render("createquiz1.ejs");
+app.post("/create",function(req,res){
+    
+    const user_name =req.body.user_name;
+    console.log(user_name);
+    res.render("createquiz1",{user_name:user_name});
+
 });
 
 
@@ -357,7 +365,7 @@ let posts = [];
 app.post("/create-quiz",function(req,res){
     let quiz_name=req.body.quizName;
     let username=req.body.username;
-    res.render("admin_question_new",{quiz_name:quiz_name,username:username});
+    res.render("quiz.ejs",{quiz_name:quiz_name,username:username});
    
 });
 

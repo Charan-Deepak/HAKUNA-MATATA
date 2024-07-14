@@ -1,326 +1,45 @@
-<%- include('partials/mdbheader'); -%>
+<%- include('adminhead'); -%>
 
-</head>
-<body>
 
-    <style>
-        body {
-  background-color: #fbfbfb;
-}
-@media (min-width: 991.98px) {
-  main {
-    padding-left: 240px;
-  }
-}
-
-/* Sidebar */
-.sidebar {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  padding: 58px 0 0; /* Height of navbar */
-  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
-  width: 240px;
-  z-index: 600;
-}
-
-@media (max-width: 991.98px) {
-  .sidebar {
-    width: 100%;
-  }
-}
-.sidebar .active {
-  border-radius: 5px;
-  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
-}
-
-.sidebar-sticky {
-  position: relative;
-  top: 0;
-  height: calc(100vh - 48px);
-  padding-top: 0.5rem;
-  overflow-x: hidden;
-  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-}
-        /* input[type="text"]:focus {
-            border: none;
-            border-bottom: 1.5px solid rgb(47, 43, 50);
-        } */
-
-        /* input[type="text"] {
-            border: none;
-            border-bottom: 1.5px solid rgb(85, 82, 88);
-            background-color: rgb(85, 82, 88);
-        } */
-
-        .more {
-            border: 1.5px solid green;
-        }
-
-        /* .add{
-            text-decoration: none;
-            display:inline-block;
-            width:30px;
-            height:30px;
-            background: #8b8b8b;
-            font-size: 2rem;
-            font-weight: bold;
-            color:#fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-        } */
-        .delete{
-            text-decoration: none;
-            display:inline-block;
-            width:30px;
-            height:30px;
-            background: #e60808;
-            font-size: 2rem;
-            font-weight: bold;
-            color:#fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .textbox{
-          height:40px;
-          width: 400px;
-        }
-        
-    </style>
-   
-   <header>
-    <!-- Sidebar -->
-    <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
-      <div class="position-sticky">
-        <div class="list-group list-group-flush mx-3 mt-4">
-          <a
-            href="#"
-            class="list-group-item list-group-item-action py-2 ripple"
-            aria-current="true"
-          >
-            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Main dashboard</span>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action py-2 ripple active">
-            <i class="fas fa-chart-area fa-fw me-3"></i><span>Create quizz</span>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action py-2 ripple"
-            ><i class="fas fa-lock fa-fw me-3"></i><span>Password</span></a
-          >
-          <a href="#" class="list-group-item list-group-item-action py-2 ripple"
-            ><i class="fas fa-chart-line fa-fw me-3"></i><span>Analytics</span></a
-          >
-          <a href="#" class="list-group-item list-group-item-action py-2 ripple">
-            <i class="fas fa-chart-pie fa-fw me-3"></i><span>SEO</span>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action py-2 ripple"
-            ><i class="fas fa-chart-bar fa-fw me-3"></i><span>Orders</span></a
-          >
-          <a href="#" class="list-group-item list-group-item-action py-2 ripple"
-            ><i class="fas fa-globe fa-fw me-3"></i><span>International</span></a
-          >
-          <a href="#" class="list-group-item list-group-item-action py-2 ripple"
-            ><i class="fas fa-building fa-fw me-3"></i><span>Partners</span></a
-          >
-          <a href="#" class="list-group-item list-group-item-action py-2 ripple"
-            ><i class="fas fa-calendar fa-fw me-3"></i><span>Calendar</span></a
-          >
-          <a href="#" class="list-group-item list-group-item-action py-2 ripple"
-            ><i class="fas fa-users fa-fw me-3"></i><span>Users</span></a
-          >
-          <a href="#" class="list-group-item list-group-item-action py-2 ripple"
-            ><i class="fas fa-money-bill fa-fw me-3"></i><span>Sales</span></a
-          >
-        </div>
-      </div>
-    </nav>
-    <!-- Sidebar -->
-  
-    <!-- Navbar -->
-    <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
-      <!-- Container wrapper -->
-      <div class="container-fluid">
-        <!-- Toggle button -->
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-mdb-toggle="collapse"
-          data-mdb-target="#sidebarMenu"
-          aria-controls="sidebarMenu"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <i class="fas fa-bars"></i>
-        </button>
-  
-        <!-- Brand -->
-        <a class="navbar-brand" href="#">
-          <img
-            src="pic16.jpg"
-            height="40"
-            alt="MDB Logo"
-            loading="lazy"
-          />
-        </a>
-        <!-- Search form -->
-        <form class="d-none d-md-flex input-group w-auto my-auto">
-          <input
-            autocomplete="off"
-            type="search"
-            class="form-control rounded"
-            placeholder='Search (ctrl + "/" to focus)'
-            style="min-width: 225px;"
-          />
-          <span class="input-group-text border-0"><i class="fas fa-search"></i></span>
-        </form>
-  
-        <!-- Right links -->
-        <ul class="navbar-nav ms-auto d-flex flex-row">
-          <!-- Notification dropdown -->
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link me-3 me-lg-0 dropdown-toggle hidden-arrow"
-              href="#"
-              id="navbarDropdownMenuLink"
-              role="button"
-              data-mdb-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <i class="fas fa-bell"></i>
-              <span class="badge rounded-pill badge-notification bg-danger">1</span>
-            </a>
-            <ul
-              class="dropdown-menu dropdown-menu-end"
-              aria-labelledby="navbarDropdownMenuLink"
-            >
-              <li>
-                <a class="dropdown-item" href="#">Some news</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Another news</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </li>
-            </ul>
-          </li>
-  
-          <!-- Icon -->
-          <li class="nav-item">
-            <a class="nav-link me-3 me-lg-0" href="#">
-              <i class="fas fa-fill-drip"></i>
-            </a>
-          </li>
-          <!-- Icon -->
-          <li class="nav-item me-3 me-lg-0">
-            <a class="nav-link" href="#">
-              <i class="fab fa-github"></i>
-            </a>
-          </li>
-  
-          <!-- Icon dropdown -->
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link me-3 me-lg-0 dropdown-toggle hidden-arrow"
-              href="#"
-              id="navbarDropdown"
-              role="button"
-              data-mdb-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <i class="united kingdom flag m-0"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <li>
-                <a class="dropdown-item" href="#"
-                  ><i class="united kingdom flag"></i>English
-                  <i class="fa fa-check text-success ms-2"></i
-                ></a>
-              </li>
-              <li><hr class="dropdown-divider" /></li>
-              <li>
-                <a class="dropdown-item" href="#"><i class="poland flag"></i>Polski</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#"><i class="china flag"></i>中文</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#"><i class="japan flag"></i>日本語</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#"><i class="germany flag"></i>Deutsch</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#"><i class="france flag"></i>Français</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#"><i class="spain flag"></i>Español</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#"><i class="russia flag"></i>Русский</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#"><i class="portugal flag"></i>Português</a>
-              </li>
-            </ul>
-          </li>
-  
-          <!-- Avatar -->
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle hidden-arrow d-flex align-items-center"
-              href="#"
-              id="navbarDropdownMenuLink"
-              role="button"
-              data-mdb-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <img
-                src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp"
-                class="rounded-circle"
-                height="22"
-                alt="Avatar"
-                loading="lazy"
-              />
-            </a>
-            <ul
-              class="dropdown-menu dropdown-menu-end"
-              aria-labelledby="navbarDropdownMenuLink"
-            >
-              <li>
-                <a class="dropdown-item" href="#">My profile</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Settings</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Logout</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-      <!-- Container wrapper -->
-    </nav>
-    <!-- Navbar -->
-  </header>
   <!--Main Navigation-->
   
   <!--Main layout-->
-  <main style="margin-top: 58px;">
-   
+  <main style="margin-top: 58px;">   
     <div class="questionblock"  style="padding: 25px;">
    <form class="main_form" action="/quiz" method="post">
-    <button type="button" class="btn btn-dark add" data-mdb-ripple-init>ADD</button>
-    <br> <br>
+    <h1 class="display-5"><%=quiz_name %></h1>
+    <hr>
+    
+
+
+
+<div class="col-lg-4 col-md-12 mb-4">
+  <div class="card">
+    <div class="card-body">
+          <!-- Default switch -->
+<div class="form-check form-switch">
+  
+  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" />
+  <label class="form-check-label" for="flexSwitchCheckDefault"><p class="h6">Click for timer</p></label>
+</div>
+
+
+<div class="form-outline" id="timerSection" data-mdb-input-init>
+  <input id="timer" name="timer" type="number"   required="true"  class="form-control" />
+  <label class="form-label" for="typeNumber">Time in minutes</label>
+</div>
+    </div>
+  </div>
+</div>
+
+    <button type="button" class="btn btn-success add" data-mdb-ripple-init>ADD</button> 
     <!-- <button type="submit" class="btn btn-primary btn-floating" data-mdb-ripple-init>
       <i class="fa fa-check" aria-hidden="true"></i>
     </button> -->
-    <button type="submit" class="btn btn-success" data-mdb-ripple-init>DONE</button>
+
+    <button type="button" class="btn btn-dark submit" style="float: right; margin-left: 10px;" data-mdb-ripple-init>DONE</button>
+    <button type="submit" name="productData" class="btn btn-info done right" style="float: right; margin-right: 10px;" data-mdb-ripple-init>SUBMIT</button>
+
         </form>
     </div>
 
@@ -329,114 +48,200 @@
     <script>
      //dynamic field creation with javascript
      var i=0;
+   //  let window={};
     const questionblock=document.querySelector(".questionblock");
     const addbtn=document.querySelector(".add");
    //remome input
    function removeInput(){
     this.parentElement.remove();
+    i--;
    }
-   
   
         //addinput question
             function addinputquestion(i){ 
              
             //form
-            const form=document.createElement("form");
-            form.className="form";
+            // const form=document.createElement("form");
+            // form.className="form"+i;
 
-            //label
-            const qInputLabel=document.createElement("label");
-            qInputLabel.innerHTML="<br> <h4>Enter the Question: </h4> \n" ;
-            qInputLabel.style="font-family: Times New Roman ";
-            // qInput.style="font-size: 20px";
-            qInputLabel.htmlFor="text_question";
+            // //label
+            // const qInputLabel=document.createElement("label");
+            // qInputLabel.innerHTML="<br> <h4>Enter the Question: </h4> \n" ;
+            // qInputLabel.style="font-family: Times New Roman ";
+            // // qInput.style="font-size: 20px";
+            // qInputLabel.htmlFor="text_question";
 
-            //textarea
-            const qInput=document.createElement("textarea");
-            qInput.type="textarea";
-            qInput.id="exampleFormControlTextarea5";
-            qInput.className="form-control";
-            qInput.rows="3";
-            qInput.name="question";
-            qInput.required;
+            // //textarea
+            // const qInput=document.createElement("textarea");
+            // qInput.type="textarea";
+            // qInput.id="text_question"+i;
+            // qInput.className="form-control";
+            // qInput.rows="3";
+            // qInput.name="text_question";
+            // qInput.required = "true";
 
-            // //choose option
-            // const label123=document.createElement("label");
-            // label123.innerHTML="\n <h3>Choose your options</h3> <br>";
-            // label123.htmlFor="text_question1";
+            // //markslabel
+            // const label_marks=document.createElement("label");
+            // label_marks.innerHTML="<br> <h5>Enter the marks: </h5> \n" ;
+            // label_marks.style="font-family: Times New Roman ";
+            // // qInput.style="font-size: 20px";
+            // label_marks.htmlFor="question_marks";
 
-            //select question type
-            const qType=document.createElement("label");
-            qType.innerHTML="\n <br><h5> Select question type </h5> <br>\n";
-            
-            //radio == single
-            const radio=document.createElement("button");
-            // radio.type="button";
-            radio.id="single";
-            radio.className="btn btn-primary btn-rounded";
-            radio.name="option";
-            radio.value="1";
-            radio.ripple="data-mdb-ripple-init";
-            radio.required;
-            radio.innerHTML="SINGLE CORRECT"; 
-            // const labelradio=document.createElement("label");
-            // labelradio.innerHTML="Radio";
-            // radio.addEventListener("click",radio_answer);
-            radio.addEventListener("click", function() {
-            radio_answer(i);
-            });
-
-            //checkbox
-            const checkbox=document.createElement("button");
-            // checkbox.type="radio";
-            checkbox.id="multi";
-            checkbox.className="btn btn-secondary btn-rounded";
-            checkbox.name="option";
-            checkbox.value="2";
-            checkbox.ripple="data-mdb-ripple-init";
-            checkbox.required;
-            checkbox.innerHTML="MULTI CORRECT";
-            // const labelcheckbox=document.createElement("label");
-            // labelcheckbox.innerHTML="Checkbox";
-            // checkbox.addEventListener("click",checkbox_answer);
-            checkbox.addEventListener("click", function() {
-            checkbox_answer(i);
-            });
+            // //markstextarea
+            // const marks=document.createElement("textarea");
+            // marks.type="textarea";
+            // marks.id="marks"+i;
+            // marks.className="form-control";
+            // marks.rows="2";
+            // // marks.rows="1";
+            // marks.name="question_marks";
+            // marks.required = "true";
 
 
-            //short-text
-            const s_text=document.createElement("button");
-            // text1.type="radio";
-            s_text.id="word";
-            s_text.className="btn btn-warning btn-rounded";
-            s_text.name="option";
-            s_text.value="3";
-            s_text.ripple="data-mdb-ripple-init";
-            s_text.required;
-            s_text.innerHTML="SINGLE WORD";
-            // const labeltext1=document.createElement("label");
-            // labeltext1.innerHTML="text";
-            // text1.addEventListener("click",text_answer);
-            s_text.addEventListener("click", function() {
-            s_text_answer(i);
-            });
 
-            
-
-            //delete
-            const del=document.createElement("a");
-            del.className="btn btn-danger";
-            del.innerHTML="DELETE";
-            del.type="button";
-            del.addEventListener("click",removeInput);
-
-             //add
-            const add=document.createElement("submit");
-            add.innerHTML=`<br> <i class="fa fa-check" aria-hidden="true"> </i>`;
-            add.className="btn btn-success btn-floating";
-            // add.addEventListener("click",function(){
-            //   add(i);
+            // // Create a heading element
+            // const marksheading = document.createElement("label");
+            // marksheading.innerHTML = "<h4>Select the type of question: </h4>"
+            // marksheading.style="font-family: Times New Roman ";
+            // // Create the buttons
+            // const radio = document.createElement("button");
+            // radio.type = "button";
+            // radio.id="option_type"+i;
+            // radio.name="option"+i;
+            // radio.className = "btn btn-primary btn-rounded";
+            // radio.value="1";
+            // radio.required="true";
+            // radio.setAttribute("data-mdb-ripple-init", "");
+            // radio.textContent = "SINGLE CORRECT";
+            // radio.addEventListener("click", function() {
+            // radio_answer(i); //radio button for to add radio type answers
             // });
+
+            // const checkbox = document.createElement("button");
+            // checkbox.type = "button";
+            // checkbox.id="option_type"+i;
+            // checkbox.name="option"+i;
+            // checkbox.className = "btn btn-secondary btn-rounded";
+            // checkbox.value="2";
+            // checkbox.required="true";
+            // checkbox.setAttribute("data-mdb-ripple-init", "");
+            // checkbox.textContent = "MULTI CORRECT";
+            // checkbox.addEventListener("click", function() {
+            // checkbox_answer(i);//for addition of checkbox answers
+            // });
+
+            // const text1 = document.createElement("button");
+            // text1.type = "button";
+            // text1.id="option_type"+i;
+            // text1.name="option"+i;
+            // text1.className = "btn btn-warning btn-rounded";
+            // text1.value="3";
+            // text1.required="true";
+            // text1.setAttribute("data-mdb-ripple-init", "");
+            // text1.textContent = "SINGLE WORD";
+            // text1.addEventListener("click", function() {
+            // text_answer(i);//for addition of text answer
+            // });
+
+
+            // Create form element
+            const form = document.createElement("form");
+            form.style.width = "40rem";
+            form.className="form"+i;
+
+            const headingQuestion = document.createElement("h4");
+            headingQuestion.style.fontFamily = "Times New Roman";
+            headingQuestion.textContent = "Enter your question:";
+
+            const divTextarea = document.createElement("div");
+            divTextarea.className = "mb-4";
+            divTextarea.setAttribute("data-mdb-input-init", "");
+
+            // Create the textarea
+            const textarea = document.createElement("textarea");
+            textarea.type = "text-area" ;
+            textarea.className = "form-control";
+            textarea.id = "text_question"+i ;
+            textarea.rows = "4";
+            textarea.name = "text_question" ;
+            textarea.required="true";//for must entry
+
+            divTextarea.appendChild(textarea);
+
+            // Create the second heading
+            const headingMarks = document.createElement("h4");
+            headingMarks.style.fontFamily = "Times New Roman";
+            headingMarks.textContent = "Enter the marks:";
+
+            const divNumber = document.createElement("div");
+            divNumber.className = "";
+            divNumber.setAttribute("data-mdb-input-init", "");
+
+            // Create the number input
+            const inputNumber = document.createElement("input");
+            inputNumber.type = "number";
+            inputNumber.id = "marks"+i;
+            inputNumber.className = "form-control";
+            inputNumber.name ="question_marks";
+            inputNumber.required="true";
+
+            // Append the number input to the div
+            divNumber.appendChild(inputNumber);
+
+            // Create the third heading
+            const headingType = document.createElement("h4");
+            headingType.style.fontFamily = "Times New Roman";
+            headingType.textContent = "Select the type of question:";
+
+            // Create the buttons for question type selection
+            const buttonSingleCorrect = document.createElement("button");
+            buttonSingleCorrect.type = "button";
+            buttonSingleCorrect.className = "btn btn-secondary";
+            buttonSingleCorrect.setAttribute("data-mdb-ripple-init", "");
+            buttonSingleCorrect.id="option_type"+i;
+            buttonSingleCorrect.name="option"+i;
+            buttonSingleCorrect.value="1";
+            buttonSingleCorrect.required="true";
+            buttonSingleCorrect.textContent = "SINGLE CORRECT";
+            buttonSingleCorrect.style.marginRight = "10px";
+            buttonSingleCorrect.addEventListener("click", function() {
+            radio_answer(i); //radio button for to add radio type answers
+            });
+
+            const buttonMultiCorrect = document.createElement("button");
+            buttonMultiCorrect.type = "button";
+            buttonMultiCorrect.className = "btn btn-primary";
+            buttonMultiCorrect.setAttribute("data-mdb-ripple-init", "");
+            buttonMultiCorrect.id="option_type"+i;
+            buttonMultiCorrect.name="option"+i;
+            buttonMultiCorrect.value="2";
+            buttonMultiCorrect.required="true";
+            buttonMultiCorrect.textContent = "MULTI CORRECT";
+            buttonMultiCorrect.style.marginRight = "10px";
+            buttonMultiCorrect.addEventListener("click", function() {
+            checkbox_answer(i);//for addition of checkbox answers
+            });
+
+            const buttonSingleWord = document.createElement("button");
+            buttonSingleWord.type = "button";
+            buttonSingleWord.className = "btn btn-warning";
+            buttonSingleWord.setAttribute("data-mdb-ripple-init", "");
+            buttonSingleWord.id="option_type"+i;
+            buttonSingleWord.name="option"+i;
+            buttonSingleWord.value="3";
+            buttonSingleWord.required="true";
+            buttonSingleWord.textContent = "SINGLE WORD";
+            buttonSingleWord.addEventListener("click", function() {
+            text_answer(i);//for addition of text answer
+            });
+
+
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "btn btn-danger btn-rounded delete";
+            btn.setAttribute("data-mdb-ripple-init", "");
+            btn.textContent = "DELETE";
+            btn.addEventListener("click",removeInput);
 
             //div of your option
             const your_options=document.createElement("div");
@@ -444,21 +249,35 @@
             your_options.innerHTML="";
             
             //childappend
-            questionblock.appendChild(form);
-            form.appendChild(qInputLabel);
-            form.appendChild(qInput);
-            // form.appendChild(label123);
-            form.appendChild(qType);
-            form.appendChild(radio);
-            // form.appendChild(labelradio);
-            form.appendChild(checkbox);
-            // form.appendChild(labelcheckbox);
-            form.appendChild(s_text);
+            // questionblock.appendChild(form);
+            // form.appendChild(qInputLabel);
+            // form.appendChild(qInput);
+            // form.appendChild(label_marks);
+            // form.appendChild(marks);
+            // form.appendChild(marksheading);
+            // form.appendChild(radio);
+            // // form.appendChild(labelradio);
+            // form.appendChild(checkbox);
+            // // form.appendChild(labelcheckbox);
+            // form.appendChild(text1);
           
-            // form.appendChild(labeltext1);
+            // // form.appendChild(labeltext1);
+            // Append the elements to the form
+            questionblock.appendChild(form);
+            form.appendChild(document.createElement("br"));
+            form.appendChild(headingQuestion);
+            form.appendChild(divTextarea);
+            form.appendChild(headingMarks);
+            form.appendChild(divNumber);
+            form.appendChild(document.createElement("br"));
+            form.appendChild(headingType);
+            form.appendChild(buttonSingleCorrect);
+            form.appendChild(buttonMultiCorrect);
+            form.appendChild(buttonSingleWord);
             form.appendChild(your_options);
-            form.appendChild(del);form.append("\n\n");
-            form.appendChild(add);
+            form.appendChild(document.createElement("br"));
+            form.appendChild(btn);
+            window['form' + i] = form;
             }
             
             // addbtn.addEventListener("click",addinputquestion(i));
@@ -471,64 +290,287 @@
              function radio_answer(i){ 
               
                document.getElementById("your_options"+i).innerHTML = `
-                    <div class="radio">
-                        <br>
-                        <label for="radio"><h5> Enter the options </h5></label>
-                        <br>
-                        <input type="radio" id="option_type_radio" name="correct" value="1"  required>
-                        <input type="text" id="text_question" class="textbox" name="radio_1" required>
-                        <br> <br>
-                        <input type="radio" id="option_type_radio" name="correct" value="2"  required>
-                        <input type="text" id="text_question" class="textbox" name="radio_2" required>
-                        <br> <br>
-                        <input type="radio" id="option_type_radio" name="correct" value="3"  required>
-                        <input type="text" id="text_question" class="textbox" name="radio_3" required>
-                        <br> <br>
-                        <input type="radio" id="option_type_radio" name="correct" value="4"  required>
-                        <input type="text" id="text_question" class="textbox" name="radio_4" required>
-                        <br><br>
-                        
-                    </div>
+
+
+              <div class="form-check radio">
+                <br>
+
+                <p class="lead">
+                  Enter the options
+                </p>
+
+                <div  class= "mb-4">
+                <input class="form-check-input" type="radio" name="correct${i}" id="option_correct_radio_${i}" value=1 required/>
+                <div data-mdb-input-init>
+                <input type="text" class="form-control"  id="text_question1${i}" name="option_array" required="true"/>
+                </div>
+                </div>
+                
+                <div  class="mb-4">
+                <input class="form-check-input" type="radio" id="option_correct_radio_${i}" name="correct${i}" value=2 required/>
+                <div data-mdb-input-init>
+                <input type="text" class="form-control" id="text_question2${i}" name="option_array" required="true"/>
+                </div>
+                </div>
+
+                <div  class="mb-4">
+                <input class="form-check-input" type="radio" id="option_correct_radio_${i}" name="correct${i}" value=3 required/>
+                <div data-mdb-input-init>
+                <input type="text" class="form-control" id="text_question3${i}" name="option_array" required="true"/>
+                </div>
+                </div>
+
+                <div  class="mb-4">
+                <input class="form-check-input" type="radio" id="option_correct_radio_${i}" name="correct${i}" value=4 required/>
+                <div data-mdb-input-init>
+                <input type="text" class="form-control" id="text_question4${i}" name="option_array" required="true"/>
+                </div>
+                </div>
+               
+
+              </div>
+
+
                 `;
              }
 
             //  value=2
              function checkbox_answer(i){ 
                document.getElementById("your_options"+i).innerHTML = `
-                    <div class="checkbox">
-                        <br>
-                        <label for="option_type_checkbox"><h5> Enter the options </h5></label>
-                        <br>
-                        <input type="checkbox" id="option_type_checkbox" name="correct_checkboxes" value="1">
-                        <input type="text" id="text_question" class="textbox" name="checkbox_1" required>
-                        <br> <br>
-                        <input type="checkbox" id="option_type_checkbox" name="correct_checkboxes" value="2">
-                        <input type="text" id="text_question" class="textbox" name="checkbox_2" required>
-                        <br><br>
-                        <input type="checkbox" id="option_type_checkbox" name="correct_checkboxes" value="3">
-                        <input type="text" id="text_question" class="textbox" name="checkbox_3" required>
-                        <br><br>
-                        <input type="checkbox" id="option_type_checkbox" name="correct_checkboxes" value="4">
-                        <input type="text" id="text_question" class="textbox" name="checkbox_4" required>
-                        <br><br>
+                    <div class="form-check checkbox">
+                <br>
 
-                    </div>
+                <p class="lead">
+                  Enter the options
+                </p>
+
+                <div  class= "mb-4">
+                <input class="form-check-input" type="checkbox" id="text_answer_checkbox1${i}" name="correct_checkboxes1${i}" value="1"/>
+                <div data-mdb-input-init>
+                <input type="text" class="form-control"   id="text_question1${i}" name="option_array" required="true"/>
+                </div>
+                </div>
+                
+                <div  class="mb-4">
+                <input class="form-check-input" type="checkbox" id="text_answer_checkbox2${i}" name="correct_checkboxes2${i}" value="2"/>
+                <div data-mdb-input-init>
+                <input type="text" class="form-control" id="text_question2${i}" name="option_array" required="true"/>
+                </div>
+                </div>
+
+                <div  class="mb-4">
+                <input class="form-check-input" type="checkbox" id="text_answer_checkbox3${i}" name="correct_checkboxes3${i}" value="3"/>
+                <div data-mdb-input-init>
+                <input type="text" class="form-control" id="text_question3${i}" name="option_array" required="true"/>
+                </div>
+                </div>
+
+                <div  class="mb-4">
+                <input class="form-check-input" type="checkbox" id="text_answer_checkbox4${i}" name="correct_checkboxes4${i}" value="4"/>
+                <div data-mdb-input-init>
+                <input type="text" class="form-control" id="text_question4${i}" name="option_array" required="true"/>
+                </div>
+                </div>
+               
+
+              </div>
+
                     `;
             } 
 
             // value=3 
-             function s_text_answer(i){ 
+             function text_answer(i){ 
                 document.getElementById("your_options"+i).innerHTML = `
                     <div class="text">
-                        <br>
-                        <label for="option_type_text_1"><h5>Enter the answer in a single word</h5></label>
-                        <br>
+                      <br>
+                        <p class="lead">
+                          Enter the answer (at max in 3 words) 
+                        </p>
                         
-                        <input type="text" id="option_type_text_1" class="textbox" name="text_ans" required>
-                        <br><br>
+                        <div class="mb-4" data-mdb-input-init>
+                          <input type="text" id="option_type_text${i}" name="answer_text" required="true" class="form-control" />
+                        </div>
                     </div>
                     `;
             } 
+
+            var productData = []; // Array to store product data
+
+            function submit_form(j) {
+                var text_answers_checkbox = [];
+                var text_options = [];
+                var text_a;
+                var option_correct_radio;
+                console.log(j);
+                // Accessing the form
+                var final_form = window["form" + j];
+                if (final_form) { // If form exists
+                    var text_question_var = final_form.querySelector("#text_question" + j).value; // Get text question value
+                    var marks=final_form.querySelector("#marks"+j).value;
+                    let option_type_read = final_form.querySelector(`input[name='option${j}']:checked`);
+                    var option_type = option_type_read ? option_type_read.value : "";
+            
+                    if (option_type == 1) {
+                        // Add event listeners to each radio button
+                        let radioBtns = final_form.querySelectorAll(`input[name='correct${j}']`);
+            
+                        // Define a function to find the selected radio button
+                        let findSelected = () => {
+                            let selected = final_form.querySelector(`input[name='correct${j}']:checked`);
+                            if (selected) {
+                                option_correct_radio = selected.value;
+                            } else {
+                                option_correct_radio = ""; // Handle case where no radio button is checked
+                            }
+                        };
+            
+                        // Add event listeners to each radio button
+                        radioBtns.forEach(radioBtn => {
+                            radioBtn.addEventListener("change", findSelected);
+                        });
+            
+                        // Call the function initially to set the default value
+                        findSelected();
+            
+                        // Get options for radio type
+                        for (var k = 1; k <= 4; k++) {
+                            var option = final_form.querySelector("#text_question" + k + j);
+                            if (option) {
+                                text_options.push(option.value);
+                            }
+                        }
+                    } else if (option_type == 2) {
+            
+                        for (var k = 1; k <= 4; k++) {
+                            var option = final_form.querySelector("#text_question" + k + j);
+                            if (option) {
+                                text_options.push(option.value);
+                            }
+                        }
+                        console.log(text_options);
+                        // Get options for checkbox type
+            
+                        for (var k = 1; k <= 4; k++) {
+                            let option_answer = final_form.querySelector(`input[name='correct_checkboxes${k}${j}']:checked`); // Corrected selector syntax
+                            if (option_answer) {
+                                text_answers_checkbox.push(option_answer.value);
+                            }
+            
+                        }
+                    } else if (option_type == 3) {
+            
+                        text_a = final_form.querySelector("#option_type_text" + j)?final_form.querySelector("#option_type_text" + j).value:""; // Get text answer
+                    }
+            
+            
+                    // Construct data object
+                    var data = {
+                        question_no: j,
+                        text: text_question_var,
+                        marks:marks,
+                        type: parseInt(option_type), // radio, checkbox, text
+                        option1: text_options,
+                        option1_answer_checkbox: text_answers_checkbox,
+                        correct_answer: parseInt(option_correct_radio),
+                        text_answer: text_a
+                    };
+            
+                    productData.push(data); // Push data object to productData array
+                }
+                console.log(productData); // Log productData for debugging
+            
+            }
+            
+            // addbtn.addEventListener("click",addinputquestion(i));
+            addbtn.addEventListener("click", function() {
+                i++;
+                addinputquestion(i);
+            });
+            
+            // Now you can use the productData as needed
+            // var submit = document.querySelector('.submit');
+            document.querySelector('.submit').addEventListener("click", async function() {
+                            // Display an alert
+           // alert("Are you sure you want to submit the form?");
+
+
+                for (var j = 1; j <= i; j++) {
+                    await submit_form(j); //control to sumbit the form
+                   console.log(j);
+                }
+                document.querySelector(".main_form").value = JSON.stringify(productData); // Set value of submit button
+            });
+
+           
+
+
+        // Function to submit the form data
+
+       async function submitFormData() {
+            const form1 = document.querySelector('.main_form');
+            form1.addEventListener('submit', async (e) => {
+                e.preventDefault();//prevent the submition of form
+                
+                //timer
+                const time=document.getElementById("timer").value;
+                console.log(100000,i)
+                console.log(JSON.stringify({productData}))
+                // Assuming productData is defined somewhere in your code
+                try {
+                    const quizName='<%=quiz_name %>';
+                    const username='<%=username%>';
+                    
+                    // Make a POST request to submit the data
+                    const response =await fetch('/admin_question_new', {//posting the object of productData to server
+                        method: 'POST',                        
+                          body:JSON.stringify({productData,quizName,username,time}),
+                          headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                
+                    // Handle successful response from the server
+                    const responseData = await response.json(); // Assuming server sends back a text response
+                    console.log(responseData); // Log the response from the server
+                    const url = `${responseData.url}?message=${encodeURIComponent(JSON.stringify(responseData.test))}&user_name=${encodeURIComponent(username)}&quizName=${encodeURIComponent('<%=quiz_name %>')}`;
+                    window.location.href = url; // Redirect to the submission page
+                   // const responseDataString = JSON.stringify(responseData);
+                    // Convert the object to a JSON string
+                   // const responseDataString = JSON.stringify(responseData.test);
+                   // console.log(responseDataString);
+      
+                  // const url = `http://127.0.0.1:5500/views/submittionpage.html?message=${encodeURIComponent(responseDataString)}`;
+
+                    //const filename = '/submittionpage.html'; // Name of the file in the same folder
+                  //const url = `${req.protocol}://${req.get('host')}${filename}?message=${encodeURIComponent(responseDataString)}`;
+
+                } catch (error) {
+                    console.error('There was a problem with the fetch operation:', error);
+                }
+            }); 
+        }
+        
+       
+
+        // Event listener for the "DONE" button
+        document.querySelector('.done').addEventListener('click', submitFormData);
+        document.getElementById('timer_op').addEventListener('change', function() {
+            var selectedValue = this.value;
+            var timerSection = document.getElementById('timerSection');
+    
+            if (selectedValue === 'yes') {
+                timerSection.style.display = 'block'; // Show the timerSection
+            } else {
+                timerSection.style.display = 'none';  // Hide the timerSection
+                const timerInput = document.getElementById('timer');
+                timerInput.value = 0;
+            }
+        });
+
 
     </script>
   </main>
