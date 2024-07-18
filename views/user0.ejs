@@ -54,7 +54,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="/user">Main Dashboard</a>
+          <a class="nav-link active" aria-current="page" id="user" href="#">Main Dashboard</a>
           <a class="nav-link" href="#">Take a quiz</a>
           <a class="nav-link" href="#">FAQ</a>
           <!-- <a class="nav-link disabled"
@@ -122,7 +122,7 @@
         <div class="row d-flex justify-content-center">
           <div class="col-lg-8">
             <h2 class="fw-bold mb-5">Are you ready?</h2>
-            <form action="/question_paper" method="post">
+            <form id="form1" action="/question_paper" method="post">
               <!-- 2 column grid layout with text inputs for the first and last names -->
               <div class="row">
                 <div class="col-md-6 mb-4">
@@ -173,17 +173,42 @@
     if(code2==1) 
     showAlert();
     // Create a div element
-    const username = document.createElement("input");
-    username.type="hidden";
+    const user_name = document.createElement("input");
+    user_name.type="hidden";
     // Set attributes using setAttribute method
-    username.name="username";
-    username.value = '<%=username%>'; // Set text content, not value
+    user_name.name="user_name";
+    user_name.value = '<%=user_name%>'; // Set text content, not value
 
     // Find the element with id "quiz_name"
     const quiz_code = document.getElementById("form1");
 
     // Append the username div as a child of the quiz_name element
-    quiz_code.appendChild(username); // adding the username div inside of the quiz_name block
+    quiz_code.appendChild(user_name); // adding the username div inside of the quiz_name block
+      
+    //for homepage
+      document.getElementById('user').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default anchor click behavior
+    
+        // Create a form element
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = 'user';
+    
+        // Create the hidden input element for username
+        const user_name = document.createElement('input');
+        user_name.type = 'hidden';
+        user_name.name = 'user_name';
+        user_name.value = '<%= user_name %>'; // Assuming this is a server-side templating variable
+        
+        // Append the form to the body (required to submit it)
+        document.body.appendChild(form);
+        form.appendChild(user_name);
+
+        // Submit the form
+        form.submit();
+    });
+    
+  
   </script>
 
   <%- include('partials/mdbfooter'); -%>

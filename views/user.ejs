@@ -101,7 +101,7 @@
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
               <a class="nav-link active" aria-current="page" href="/user">Main Dashboard</a>
-              <a class="nav-link" href="/newuser">Take a quiz</a>
+              <a class="nav-link" id="new-user_to_take_quiz" href="#">Take a quiz</a>
               <a class="nav-link" href="#">FAQ</a>
               <!-- <a class="nav-link disabled"
                 >Logout</a
@@ -565,6 +565,32 @@
       </section>
       <!--Section: Statistics with subtitles-->
     </div>
+    <script>
+      console.log('<%= user_name %>');
+      document.getElementById('new-user_to_take_quiz').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default anchor click behavior
+    
+        // Create a form element
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = 'new-user_to_take_quiz';
+    
+        // Create the hidden input element for username
+        const user_name = document.createElement('input');
+        //user_name.type = 'hidden';
+        user_name.name = 'user_name';
+        user_name.value = '<%= user_name %>'; // Assuming this is a server-side templating variable
+         // Create the hidden input element for username
+        
+        // Append the form to the body (required to submit it)
+        document.body.appendChild(form);
+        form.appendChild(user_name);
+
+        // Submit the form
+        form.submit();
+    });
+    
+   </script>
   </main>
   <!--Main layout-->
 

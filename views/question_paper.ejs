@@ -13,8 +13,8 @@
 </head>
 <body>
     <form class="main_form" action="/marks_page" method="post">
-    <a style="color:rgb(255, 111, 0)" class="homepage" href="/">Homepage</a>
-    <a style="color:rgb(255, 111, 0)" id="create-quiz" class="user" name="user_name">profile</a>
+    <!-- <a style="color:rgb(255, 111, 0)" class="homepage" href="/">Homepage</a> -->
+    <!-- <a style="color:rgb(255, 111, 0)" id="create-quiz" class="user" name="user_name">profile</a> -->
     <h1 id="quiz_name" style=" text-transform: capitalize;;">hello</h1>
     <div id="timer"></div>
     <div id="parent">
@@ -40,7 +40,7 @@
         console.log('<%=username%>')
         // Display the message wherever needed in your HTML
         document.getElementById('code').textContent ="This Quiz Code: "+ '<%=quiz_code%>';
-        document.getElementById("create-quiz").href='/user?user_name='+'<%=username%>';
+        //document.getElementById("create-quiz").href='/user?user_name='+'%=username%>';
         document.getElementById('quiz_name').textContent =message.quiz_name;
 
         let total_marks=0;

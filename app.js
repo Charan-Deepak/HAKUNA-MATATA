@@ -261,16 +261,32 @@ app.post("/register-admin", async function(req,res){
  });
 
 
- app.get("/user",function(req,res){
-    if(req.isAuthenticated){
-        const user_name =req.query.user_name;
-        const code=req.query.code;
+ app.post("/new-user_to_take_quiz",function(req,res){
+        const user_name =req.body.user_name;
+        const code=0;
+        console.log("I am posting user name");
         console.log(user_name);
-        res.render("user",{username:user_name,code:code});
-    }
-    else{
-        req.redirect("/user-login");
-    }
+        res.render("user0",{user_name:user_name,code:code});
+});
+
+app.post("/user",function(req,res){
+    const user_name =req.body.user_name;
+    console.log("I am posting user name");
+    console.log(user_name);
+    res.render("user",{user_name:user_name});
+});
+
+app.post("/admin",function(req,res){
+    const user_name =req.body.user_name;
+    console.log("I am posting admin name");
+    console.log(user_name);
+    res.render("admin",{user_name:user_name});
+});
+
+app.get("/user",function(req,res){
+        const user_name =req.query.user_name;
+        console.log(user_name);
+        res.render("user",{user_name:user_name});
 });
 
 
@@ -342,13 +358,13 @@ app.get("/submittionpage",function(req,res){
         }
         else{
             passport.authenticate("user")(req,res,function(){
-                const code=0;
-                res.render("user",{username:req.body.username,code:code});
+                res.render("user",{user_name:req.body.username});
                 
             })
         }
     })
 });
+
 
 
 app.post("/create",function(req,res){
@@ -364,7 +380,7 @@ let posts = [];
 
 app.post("/create-quiz",function(req,res){
     let quiz_name=req.body.quizName;
-    let username=req.body.username;
+    let username=req.body.user_name;
     res.render("quiz.ejs",{quiz_name:quiz_name,username:username});
    
 });
@@ -378,13 +394,12 @@ app.post("/add-ques", function(req,res){
     posts.push(post);
    
   });
+
   app.use(bodyParser.json());
   app.use(express.json());
+
   //app.use(cors());//allow incoming requests from ip
   app.post("/admin_question_new", async function(req, res,next) {
-    
-    console.log("first")
-     console.log("second")
 
         try {
             
@@ -452,7 +467,8 @@ app.post("/add-ques", function(req,res){
                 // Handle the case where the user does not exist
                 console.log('admin not found.');
             }
-
+          console.log("printting the test");
+          console.log(test);
          const filename ="/submittionpage"; // Name of the file in the same folder
        const url = `${req.protocol}://${req.get('host')}${filename}`;
        res.json({ url,test });
@@ -470,17 +486,17 @@ app.post("/add-ques", function(req,res){
         const admin = await Admin.findOne({ random: req.body.quizcode});
         const student = await Admin.findOne({  "students": {
             $elemMatch: {
-                "students_attended": req.body.username,
+                "students_attended": req.body.user_name,
                 "test_code": req.body.quizcode
             }
         } });
         if(!student){
         const test=await Test.findOne({ random: req.body.quizcode});
         console.log(JSON.stringify(test));
-      res.render(__dirname+"/views/question_paper",{quiz_code:req.body.quizcode,username:req.body.username,test:JSON.stringify(test)});}
+      res.render(__dirname+"/views/question_paper",{quiz_code:req.body.quizcode,username:req.body.user_name,test:JSON.stringify(test)});}
       else{
           const code=1;
-          res.render("user",{username:req.body.username,code:code});
+          res.render("user0",{user_name:req.body.user_name,code:code});
       }
     });
    app.get("/logout",function(req,res){

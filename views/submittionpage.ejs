@@ -40,16 +40,16 @@
         document.getElementById('quiz_name').textContent = quiz_name;
         document.getElementById("create-quiz").href='/admin?user_name='+user_name;
         //console.log(document.getElementById("create-quiz").href);
-        function testpaper(){
+        async function testpaper(){
 
         const div=document.createElement("div");//creating div
         div.id="question";
         // let divs=[];
-        console.log(message.length)
+        console.log(message_length)
         for(var i=0;i<message_length;i++){
             const divs=document.createElement("div");//creating div
             divs.id="question${i+1}";
-       
+         
         if(message.form[i].type==3){
         divs.innerHTML=`
         <div id="question${i+1}">

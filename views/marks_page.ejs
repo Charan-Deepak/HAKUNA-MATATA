@@ -39,9 +39,8 @@
 
         // Display the message wherever needed in your HTML
         document.getElementById('code').textContent ="This Quiz Code: "+ code;
-        //alert
-        const code_=0;
-        const url = `/user?user_name=${encodeURIComponent(user_name)}&code=${encodeURIComponent(code_)}`;
+       
+        const url = `/user?user_name=${encodeURIComponent(user_name)}`;
         document.getElementById("create-quiz").href=url;
         document.getElementById('total_marks').textContent ="Total marks in test: "+ test_answer.totalmarks;
         document.getElementById('total_marks_get').textContent ="Total marks get: "+ test_answer.totalmarksget;

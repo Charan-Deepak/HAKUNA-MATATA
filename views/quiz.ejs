@@ -19,7 +19,7 @@
           <!-- Default switch -->
 <div class="form-check form-switch">
   
-  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" />
+  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" checked>
   <label class="form-check-label" for="flexSwitchCheckDefault"><p class="h6">Click for timer</p></label>
 </div>
 
@@ -32,13 +32,13 @@
   </div>
 </div>
 
-    <button type="button" class="btn btn-success add" data-mdb-ripple-init>ADD</button> 
+    <button type="button" id="add" class="btn btn-success add" data-mdb-ripple-init>ADD</button> 
     <!-- <button type="submit" class="btn btn-primary btn-floating" data-mdb-ripple-init>
       <i class="fa fa-check" aria-hidden="true"></i>
     </button> -->
 
-    <button type="button" class="btn btn-dark submit" style="float: right; margin-left: 10px;" data-mdb-ripple-init>DONE</button>
-    <button type="submit" name="productData" class="btn btn-info done right" style="float: right; margin-right: 10px;" data-mdb-ripple-init>SUBMIT</button>
+    <button type="button" class="btn btn-dark submit" id="done" style="float: right; margin-left: 10px;" data-mdb-ripple-init>DONE</button>
+    <button type="submit" name="productData" id="submit" class="btn btn-info done right" style="float: right; margin-right: 10px;" data-mdb-ripple-init>SUBMIT</button>
 
         </form>
     </div>
@@ -48,9 +48,10 @@
     <script>
      //dynamic field creation with javascript
      var i=0;
+     let option_type = [];
    //  let window={};
     const questionblock=document.querySelector(".questionblock");
-    const addbtn=document.querySelector(".add");
+    const addbtn=document.querySelector("#add");
    //remome input
    function removeInput(){
     this.parentElement.remove();
@@ -59,7 +60,6 @@
   
         //addinput question
             function addinputquestion(i){ 
-             
             //form
             // const form=document.createElement("form");
             // form.className="form"+i;
@@ -205,7 +205,8 @@
             buttonSingleCorrect.textContent = "SINGLE CORRECT";
             buttonSingleCorrect.style.marginRight = "10px";
             buttonSingleCorrect.addEventListener("click", function() {
-            radio_answer(i); //radio button for to add radio type answers
+              option_type[i]=1;
+              radio_answer(i); //radio button for to add radio type answers   
             });
 
             const buttonMultiCorrect = document.createElement("button");
@@ -219,7 +220,8 @@
             buttonMultiCorrect.textContent = "MULTI CORRECT";
             buttonMultiCorrect.style.marginRight = "10px";
             buttonMultiCorrect.addEventListener("click", function() {
-            checkbox_answer(i);//for addition of checkbox answers
+              option_type[i]=2;
+              checkbox_answer(i);//for addition of checkbox answers
             });
 
             const buttonSingleWord = document.createElement("button");
@@ -232,10 +234,10 @@
             buttonSingleWord.required="true";
             buttonSingleWord.textContent = "SINGLE WORD";
             buttonSingleWord.addEventListener("click", function() {
+            option_type[i]=3;
             text_answer(i);//for addition of text answer
             });
-
-
+            
             const btn = document.createElement("button");
             btn.type = "button";
             btn.className = "btn btn-danger btn-rounded delete";
@@ -280,13 +282,10 @@
             window['form' + i] = form;
             }
             
-            // addbtn.addEventListener("click",addinputquestion(i));
-            addbtn.addEventListener("click", function() {
-            addinputquestion(i);
-            i++
-            });
+            
+           
 
-        //value=1 
+             //value=1 
              function radio_answer(i){ 
               
                document.getElementById("your_options"+i).innerHTML = `
@@ -407,10 +406,10 @@
                 if (final_form) { // If form exists
                     var text_question_var = final_form.querySelector("#text_question" + j).value; // Get text question value
                     var marks=final_form.querySelector("#marks"+j).value;
-                    let option_type_read = final_form.querySelector(`input[name='option${j}']:checked`);
-                    var option_type = option_type_read ? option_type_read.value : "";
-            
-                    if (option_type == 1) {
+                    //let option_type_read = final_form.querySelector(`input[name='option_type${j}']:checked`);
+                    
+                    var option_type_0 = option_type[j] ? option_type[j] : "";
+                    if (option_type_0 == 1) {
                         // Add event listeners to each radio button
                         let radioBtns = final_form.querySelectorAll(`input[name='correct${j}']`);
             
@@ -439,7 +438,7 @@
                                 text_options.push(option.value);
                             }
                         }
-                    } else if (option_type == 2) {
+                    } else if (option_type_0 == 2) {
             
                         for (var k = 1; k <= 4; k++) {
                             var option = final_form.querySelector("#text_question" + k + j);
@@ -457,7 +456,7 @@
                             }
             
                         }
-                    } else if (option_type == 3) {
+                    } else if (option_type_0 == 3) {
             
                         text_a = final_form.querySelector("#option_type_text" + j)?final_form.querySelector("#option_type_text" + j).value:""; // Get text answer
                     }
@@ -468,7 +467,7 @@
                         question_no: j,
                         text: text_question_var,
                         marks:marks,
-                        type: parseInt(option_type), // radio, checkbox, text
+                        type: parseInt(option_type_0), // radio, checkbox, text
                         option1: text_options,
                         option1_answer_checkbox: text_answers_checkbox,
                         correct_answer: parseInt(option_correct_radio),
@@ -489,14 +488,13 @@
             
             // Now you can use the productData as needed
             // var submit = document.querySelector('.submit');
-            document.querySelector('.submit').addEventListener("click", async function() {
+            document.querySelector('#done').addEventListener("click", async function() {
                             // Display an alert
            // alert("Are you sure you want to submit the form?");
 
 
                 for (var j = 1; j <= i; j++) {
                     await submit_form(j); //control to sumbit the form
-                   console.log(j);
                 }
                 document.querySelector(".main_form").value = JSON.stringify(productData); // Set value of submit button
             });
@@ -513,7 +511,9 @@
                 
                 //timer
                 const time=document.getElementById("timer").value;
-                console.log(100000,i)
+                if(time===""){
+                  time=0;
+                }
                 console.log(JSON.stringify({productData}))
                 // Assuming productData is defined somewhere in your code
                 try {
@@ -557,17 +557,22 @@
        
 
         // Event listener for the "DONE" button
-        document.querySelector('.done').addEventListener('click', submitFormData);
-        document.getElementById('timer_op').addEventListener('change', function() {
-            var selectedValue = this.value;
+        document.querySelector('#submit').addEventListener('click', submitFormData);
+        document.getElementById('flexSwitchCheckDefault').addEventListener('change', function() {
+            if (this.checked) {
+               this.value = 'yes';
+             } else {
+                this.value = '';
+              }
+           var selectedValue = this.value;
             var timerSection = document.getElementById('timerSection');
     
             if (selectedValue === 'yes') {
-                timerSection.style.display = 'block'; // Show the timerSection
+                timerSection.style.display = 'block';// Show the timerSection
             } else {
                 timerSection.style.display = 'none';  // Hide the timerSection
                 const timerInput = document.getElementById('timer');
-                timerInput.value = 0;
+                timerInput.value = "";
             }
         });
 

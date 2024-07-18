@@ -51,7 +51,7 @@
          <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
           <div class="position-sticky">
             <div class="list-group list-group-flush mx-3 mt-4">
-              <a href="/admin" class="list-group-item list-group-item-action py-2" data-mdb-ripple-init aria-current="true">
+              <a href="#" id="admin_dashboard" class="list-group-item list-group-item-action py-2" data-mdb-ripple-init aria-current="true">
                 <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Main dashboard</span>
               </a>
               <a href="#" id = "createquiz1" class="list-group-item list-group-item-action py-2 active" data-mdb-ripple-init>
@@ -102,7 +102,7 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div class="navbar-nav">
                 <a class="nav-link active" aria-current="page" href="/">Home</a>
-                <a class="nav-link" href="#">Dashboard</a>
+                <a class="nav-link" href="#" >Dashboard</a>
                 <a class="nav-link" href="#">FAQ</a>
                 <!-- <a class="nav-link disabled"
                   >Logout</a
@@ -199,7 +199,7 @@
         const username = document.createElement("input");
         username.type="hidden";
         // Set attributes using setAttribute method
-        username.name="username";
+        username.name="user_name";
         username.value = '<%=user_name%>'; // Set text content, not value
 
         // Find the element with id "quiz_name"
@@ -208,6 +208,27 @@
         // Append the username div as a child of the quiz_name element
         quiz_name.appendChild(username); // adding the username div inside of the quiz_name block
 
+        document.getElementById('admin_dashboard').addEventListener('click', function(event) {
+          event.preventDefault(); // Prevent the default anchor click behavior
+      
+          // Create a form element
+          const form = document.createElement('form');
+          form.method = 'POST';
+          form.action = 'admin';
+      
+          // Create the hidden input element for username
+          const user_name = document.createElement('input');
+          user_name.type = 'hidden';
+          user_name.name = 'user_name';
+          user_name.value = '<%= user_name %>'; // Assuming this is a server-side templating variable
+          
+          // Append the form to the body (required to submit it)
+          document.body.appendChild(form);
+          form.appendChild(user_name);
+  
+          // Submit the form
+          form.submit();
+      });
         
   </script>
   <!-- Jumbotron -->
