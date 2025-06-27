@@ -1,0 +1,418 @@
+<%- include('../../includes/admin_home/header') -%>
+  <%- include('../../includes/admin_home/sidebar_create_quiz') -%>
+    <%- include('../../includes/admin_home/create_quiz/navbar') -%>
+
+  <!--Main Navigation-->
+  <!--Main layout-->
+  <main style="margin-top: 58px;">   
+    <div class="questionblock"  style="padding: 25px;">
+      <form class="main_form" id="main_form" action="/admin/create_quiz/ques_form_new" method="post">
+        <input type="hidden" name="productData" id="productData">
+        <input type="hidden" name="quizName" id="quizName">
+        <input type="hidden" name="username" id="username">
+        <input type="hidden" name="time" id="time">
+        <h1 class="display-5" style="text-transform: capitalize;"><%=quiz_name %></h1>
+        <hr>
+
+          <div class="col-lg-4 col-md-12 mb-4">
+            <div class="card">
+              <div class="card-body">
+                    <!-- Default switch -->
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" checked>
+                  <label class="form-check-label" for="flexSwitchCheckDefault"><p class="h6">Click for timer</p></label>
+                </div>
+
+                <div class="form-outline" id="timerSection" data-mdb-input-init>
+                  <input id="timer" name="timer" type="number"   required="true" class="form-control" />
+                  <label class="form-label" for="typeNumber">Time in minutes</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button type="button" id="add" class="btn btn-success add" data-mdb-ripple-init>ADD</button> 
+          <button type="button" class="btn btn-info submit" id="done" style="float: right; margin-left: 10px;" data-mdb-ripple-init>SUBMIT</button>
+                <!-- <button type="hidden" id="finalSubmit" class="btn btn-dark done right" style="float: right; margin-right: 10px;" data-mdb-ripple-init>SUBMIT default</button> -->
+
+            </form>
+    </div>
+
+  <script>
+     //dynamic field creation with javascript
+    var i=0;
+    let option_type = [];
+    const questionblock=document.querySelector(".questionblock");
+    const addbtn=document.querySelector("#add");
+    //remome input
+    function removeInput(){
+        this.parentElement.remove();
+        i--;
+    }
+  
+        //addinput question
+    function addinputquestion(i){ 
+
+            // Create form element
+            const form = document.createElement("form");
+            form.style.width = "40rem";
+            form.className="form"+i;
+
+            const headingQuestion = document.createElement("h4");
+            headingQuestion.style.fontFamily = "Times New Roman";
+            headingQuestion.textContent = "Enter your question:";
+
+            const divTextarea = document.createElement("div");
+            divTextarea.className = "mb-4";
+            divTextarea.setAttribute("data-mdb-input-init", "");
+
+            // Create the textarea
+            const textarea = document.createElement("textarea");
+            textarea.type = "text-area" ;
+            textarea.className = "form-control";
+            textarea.id = "text_question"+i ;
+            textarea.rows = "4";
+            textarea.name = "text_question" ;
+            textarea.required="true";//for must entry
+
+            divTextarea.appendChild(textarea);
+
+            // Create the second heading
+            const headingMarks = document.createElement("h4");
+            headingMarks.style.fontFamily = "Times New Roman";
+            headingMarks.textContent = "Enter the marks:";
+
+            const divNumber = document.createElement("div");
+            divNumber.className = "";
+            divNumber.setAttribute("data-mdb-input-init", "");
+
+            // Create the number input
+            const inputNumber = document.createElement("input");
+            inputNumber.type = "number";
+            inputNumber.id = "marks"+i;
+            inputNumber.className = "form-control";
+            inputNumber.name ="question_marks";
+            inputNumber.required="true";
+
+            // Append the number input to the div
+            divNumber.appendChild(inputNumber);
+
+            // Create the third heading
+            const headingType = document.createElement("h4");
+            headingType.style.fontFamily = "Times New Roman";
+            headingType.textContent = "Select the type of question:";
+
+            // Create the buttons for question type selection
+            const buttonSingleCorrect = document.createElement("button");
+            buttonSingleCorrect.type = "button";
+            buttonSingleCorrect.className = "btn btn-secondary";
+            buttonSingleCorrect.setAttribute("data-mdb-ripple-init", "");
+            buttonSingleCorrect.id="option_type"+i;
+            buttonSingleCorrect.name="option"+i;
+            buttonSingleCorrect.value="1";
+            buttonSingleCorrect.required="true";
+            buttonSingleCorrect.textContent = "SINGLE CORRECT";
+            buttonSingleCorrect.style.marginRight = "10px";
+            buttonSingleCorrect.addEventListener("click", function() {
+              option_type[i]=1;
+              radio_answer(i); //radio button for to add radio type answers   
+            });
+
+            const buttonMultiCorrect = document.createElement("button");
+            buttonMultiCorrect.type = "button";
+            buttonMultiCorrect.className = "btn btn-primary";
+            buttonMultiCorrect.setAttribute("data-mdb-ripple-init", "");
+            buttonMultiCorrect.id="option_type"+i;
+            buttonMultiCorrect.name="option"+i;
+            buttonMultiCorrect.value="2";
+            buttonMultiCorrect.required="true";
+            buttonMultiCorrect.textContent = "MULTI CORRECT";
+            buttonMultiCorrect.style.marginRight = "10px";
+            buttonMultiCorrect.addEventListener("click", function() {
+              option_type[i]=2;
+              checkbox_answer(i);//for addition of checkbox answers
+            });
+
+            const buttonSingleWord = document.createElement("button");
+            buttonSingleWord.type = "button";
+            buttonSingleWord.className = "btn btn-warning";
+            buttonSingleWord.setAttribute("data-mdb-ripple-init", "");
+            buttonSingleWord.id="option_type"+i;
+            buttonSingleWord.name="option"+i;
+            buttonSingleWord.value="3";
+            buttonSingleWord.required="true";
+            buttonSingleWord.textContent = "SINGLE WORD";
+            buttonSingleWord.addEventListener("click", function() {
+            option_type[i]=3;
+            text_answer(i);//for addition of text answer
+            });
+            
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "btn btn-danger btn-rounded delete";
+            btn.setAttribute("data-mdb-ripple-init", "");
+            btn.textContent = "DELETE";
+            btn.addEventListener("click",removeInput);
+
+            //div of your option
+            const your_options=document.createElement("div");
+            your_options.id="your_options"+i;
+            your_options.innerHTML="";
+ 
+            // Append the elements to the form
+            questionblock.appendChild(form);
+            form.appendChild(document.createElement("br"));
+            form.appendChild(headingQuestion);
+            form.appendChild(divTextarea);
+            form.appendChild(headingMarks);
+            form.appendChild(divNumber);
+            form.appendChild(document.createElement("br"));
+            form.appendChild(headingType);
+            form.appendChild(buttonSingleCorrect);
+            form.appendChild(buttonMultiCorrect);
+            form.appendChild(buttonSingleWord);
+            form.appendChild(your_options);
+            form.appendChild(document.createElement("br"));
+            form.appendChild(btn);
+            window['form' + i] = form;
+    }
+            
+             //value=1 
+    function radio_answer(i){ 
+              
+               document.getElementById("your_options"+i).innerHTML = `
+
+
+              <div class="form-check radio">
+                <br>
+
+                <p class="lead">
+                  Enter the options
+                </p>
+
+                <div  class= "mb-4">
+                <input class="form-check-input" type="radio" name="correct${i}" id="option_correct_radio_${i}" value=1 required/>
+                <div data-mdb-input-init>
+                <input type="text" class="form-control"  id="text_question1${i}" name="option_array" required="true"/>
+                </div>
+                </div>
+                
+                <div  class="mb-4">
+                <input class="form-check-input" type="radio" id="option_correct_radio_${i}" name="correct${i}" value=2 required/>
+                <div data-mdb-input-init>
+                <input type="text" class="form-control" id="text_question2${i}" name="option_array" required="true"/>
+                </div>
+                </div>
+
+                <div  class="mb-4">
+                <input class="form-check-input" type="radio" id="option_correct_radio_${i}" name="correct${i}" value=3 required/>
+                <div data-mdb-input-init>
+                <input type="text" class="form-control" id="text_question3${i}" name="option_array" required="true"/>
+                </div>
+                </div>
+
+                <div  class="mb-4">
+                <input class="form-check-input" type="radio" id="option_correct_radio_${i}" name="correct${i}" value=4 required/>
+                <div data-mdb-input-init>
+                <input type="text" class="form-control" id="text_question4${i}" name="option_array" required="true"/>
+                </div>
+                </div>
+              </div>
+                `;
+    }
+
+            //  value=2
+    function checkbox_answer(i){ 
+               document.getElementById("your_options"+i).innerHTML = `
+                    <div class="form-check checkbox">
+                <br>
+
+                <p class="lead">
+                  Enter the options
+                </p>
+
+                <div  class= "mb-4">
+                <input class="form-check-input" type="checkbox" id="text_answer_checkbox1${i}" name="correct_checkboxes1${i}" value="1"/>
+                <div data-mdb-input-init>
+                <input type="text" class="form-control"   id="text_question1${i}" name="option_array" required="true"/>
+                </div>
+                </div>
+                
+                <div  class="mb-4">
+                <input class="form-check-input" type="checkbox" id="text_answer_checkbox2${i}" name="correct_checkboxes2${i}" value="2"/>
+                <div data-mdb-input-init>
+                <input type="text" class="form-control" id="text_question2${i}" name="option_array" required="true"/>
+                </div>
+                </div>
+
+                <div  class="mb-4">
+                <input class="form-check-input" type="checkbox" id="text_answer_checkbox3${i}" name="correct_checkboxes3${i}" value="3"/>
+                <div data-mdb-input-init>
+                <input type="text" class="form-control" id="text_question3${i}" name="option_array" required="true"/>
+                </div>
+                </div>
+
+                <div  class="mb-4">
+                <input class="form-check-input" type="checkbox" id="text_answer_checkbox4${i}" name="correct_checkboxes4${i}" value="4"/>
+                <div data-mdb-input-init>
+                <input type="text" class="form-control" id="text_question4${i}" name="option_array" required="true"/>
+                </div>
+                </div>
+               
+
+              </div>
+
+                    `;
+    } 
+
+            // value=3 
+    function text_answer(i){ 
+                document.getElementById("your_options"+i).innerHTML = `
+                    <div class="text">
+                      <br>
+                        <p class="lead">
+                          Enter the answer (at max in 3 words) 
+                        </p>
+                        
+                        <div class="mb-4" data-mdb-input-init>
+                          <input type="text" id="option_type_text${i}" name="answer_text" required="true" class="form-control" />
+                        </div>
+                    </div>
+                    `;
+    } 
+
+    var productData = []; // Array to store product data
+
+    function submit_form(j) {
+                var text_answers_checkbox = [];
+                var text_options = [];
+                var text_a;
+                var option_correct_radio;
+                // Accessing the form
+                var final_form = window["form" + j];
+                if (final_form) { // If form exists
+                    var text_question_var = final_form.querySelector("#text_question" + j).value; // Get text question value
+                    var marks=final_form.querySelector("#marks"+j).value;
+                    //let option_type_read = final_form.querySelector(`input[name='option_type${j}']:checked`);
+                    
+                    var option_type_0 = option_type[j] ? option_type[j] : "";
+                    if (option_type_0 == 1) {
+                        // Add event listeners to each radio button
+                        let radioBtns = final_form.querySelectorAll(`input[name='correct${j}']`);
+            
+                        // Define a function to find the selected radio button
+                        let findSelected = () => {
+                            let selected = final_form.querySelector(`input[name='correct${j}']:checked`);
+                            if (selected) {
+                                option_correct_radio = selected.value;
+                            } else {
+                                option_correct_radio = ""; // Handle case where no radio button is checked
+                            }
+                        };
+            
+                        // Add event listeners to each radio button
+                        radioBtns.forEach(radioBtn => {
+                            radioBtn.addEventListener("change", findSelected);
+                        });
+            
+                        // Call the function initially to set the default value
+                        findSelected();
+            
+                        // Get options for radio type
+                        for (var k = 1; k <= 4; k++) {
+                            var option = final_form.querySelector("#text_question" + k + j);
+                            if (option) {
+                                text_options.push(option.value);
+                            }
+                        }
+                    } else if (option_type_0 == 2) {
+            
+                        for (var k = 1; k <= 4; k++) {
+                            var option = final_form.querySelector("#text_question" + k + j);
+                            if (option) {
+                                text_options.push(option.value);
+                            }
+                        }
+                        console.log(text_options);
+                        // Get options for checkbox type
+            
+                        for (var k = 1; k <= 4; k++) {
+                            let option_answer = final_form.querySelector(`input[name='correct_checkboxes${k}${j}']:checked`); // Corrected selector syntax
+                            if (option_answer) {
+                                text_answers_checkbox.push(option_answer.value);
+                            }
+            
+                        }
+                    } else if (option_type_0 == 3) {
+            
+                        text_a = final_form.querySelector("#option_type_text" + j)?final_form.querySelector("#option_type_text" + j).value:""; // Get text answer
+                    }
+            
+            
+                    // Construct data object
+                    var data = {
+                        question_no: j,
+                        text: text_question_var,
+                        marks:marks,
+                        type: parseInt(option_type_0), // radio, checkbox, text
+                        option1: text_options,
+                        option1_answer_checkbox: text_answers_checkbox,
+                        correct_answer: parseInt(option_correct_radio),
+                        text_answer: text_a
+                    };
+            
+                    productData.push(data); // Push data object to productData array
+                }
+                //console.log(productData); // Log productData for debugging
+            }
+            
+            addbtn.addEventListener("click", function() {
+                i++;
+                addinputquestion(i);
+            });
+            
+            // Now you can use the productData as needed
+          document.querySelector('#done').addEventListener("click", async function() {
+                for (var j = 1; j <= i; j++) {
+                    await submit_form(j); //control to sumbit the form
+                }
+                console.log(JSON.stringify(productData));
+                let isChecked = document.getElementById("timer").value;
+                let time = 0;
+                if (isChecked!='') {
+                  time = document.getElementById("timer").value;
+                }
+                const quizName = '<%=quiz_name %>';
+                const username = '<%=username%>';
+                document.getElementById("productData").value = JSON.stringify(productData);
+                document.getElementById("quizName").value = quizName;
+                document.getElementById("username").value = username;
+                document.getElementById("time").value = time;
+                //document.querySelector(".main_form").value = JSON.stringify(productData); // Set value of submit button
+                const form=document.getElementById('main_form');
+                form.submit();
+        });
+
+        // Event listener for the "DONE" button
+        //document.querySelector('#submit').addEventListener('click', submitFormData);
+        document.getElementById('flexSwitchCheckDefault').addEventListener('change', function () {
+            const timerSection = document.getElementById('timerSection');
+            const timerInput = document.getElementById('timer');
+
+            if (this.checked) {
+              this.value = 'yes';
+              timerSection.style.display = 'block'; // Show timer section
+            } else {
+              this.value = '';
+              timerSection.style.display = 'none';  // Hide timer section
+              timerInput.value = '';                // Clear input
+            }
+        });
+      
+
+
+    </script>
+  </main>
+
+  <%- include('../../partials/mdbfooter'); -%>
+    <%- include('../../partials/footer'); -%>

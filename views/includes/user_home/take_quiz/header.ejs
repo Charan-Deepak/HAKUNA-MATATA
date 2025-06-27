@@ -1,0 +1,84 @@
+<%- include('../../../partials/header'); -%>
+    <%- include('../../../partials/mdbheader'); -%>
+        <style>
+            body {
+                background-color: #fbfbfb;
+            }
+
+            @media (min-width: 991.98px) {
+                main {
+                    padding-left: 240px;
+                }
+            }
+
+            /* Sidebar */
+            .sidebar {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                padding: 58px 0 0;
+                /* Height of navbar */
+                box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+                width: 240px;
+                z-index: 600;
+            }
+
+            @media (max-width: 991.98px) {
+                .sidebar {
+                    width: 100%;
+                }
+            }
+
+            .sidebar .active {
+                border-radius: 5px;
+                box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+            }
+
+            .sidebar-sticky {
+                position: relative;
+                top: 0;
+                height: calc(100vh - 48px);
+                padding-top: 0.5rem;
+                overflow-x: hidden;
+                overflow-y: auto;
+                /* Scrollable contents if viewport is shorter than content. */
+            }
+                        /* Styling for the alert overlay */
+                        .alert-overlay {
+                            display: none;
+                            position: fixed;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            background-color: rgba(0, 0, 0, 0.5);
+                            /* Semi-transparent black overlay */
+                            z-index: 9999;
+                            justify-content: center;
+                            align-items: center;
+                            overflow: hidden;
+                        }
+            
+                        /* Styling for the alert box */
+                        .alert-box {
+                            background-color: #ffffff;
+                            padding: 20px;
+                            border-radius: 5px;
+                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                            text-align: center;
+                        }
+            
+                        /* Styling for the OK button */
+                        .alert-button {
+                            padding: 10px 20px;
+                            margin-top: 20px;
+                            background-color: #007bff;
+                            color: #ffffff;
+                            border: none;
+                            border-radius: 3px;
+                            cursor: pointer;
+                        }
+        </style>
+
+        <header>

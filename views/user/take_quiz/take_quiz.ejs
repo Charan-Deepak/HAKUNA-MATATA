@@ -1,0 +1,110 @@
+<%- include('../../includes/user_home/take_quiz/header'); -%>
+<%- include('../../includes/user_home/take_quiz/sidebar'); -%>
+<%- include('../../includes/user_home/take_quiz/navbar'); -%>
+<body>
+
+  <!-- Section: Design Block -->
+<section class="text-center" style="
+    margin: 3rem 0rem 0rem 15rem;">
+    <!-- Background image -->
+    <div class="p-5 bg-image" style="
+          background-image: url('../../pic29.jpg');
+          height: 300px;
+          "></div>
+    <!-- Background image -->
+  
+    <div class="card mx-4 mx-md-5 shadow-5-strong" style="
+          margin-top: -7rem;
+          background: hsla(0, 0%, 100%, 0.8);
+          backdrop-filter: blur(30px);
+          ">
+      <div class="card-body py-5 px-md-5">
+  
+        <div class="row d-flex justify-content-center">
+          <div class="col-lg-8">
+            <h2 class="fw-bold mb-4">Are you ready?</h2>
+            <form id="form1" action="/user/take_quiz/ques_paper" method="post">
+              <!-- 2 column grid layout with text inputs for the first and last names -->
+              <div class="row">
+                <div class="col-md-10 offset-1 mb-4">
+                  <div class="form-outline" id="form1">
+                    
+                    <input type="text" id="form3Example2" class="form-control" name="quizcode" />
+                    <label class="form-label" for="form3Example2">Quiz code</label>
+                  </div>
+                </div>
+              </div>
+
+  
+              <!-- Submit button -->
+              <button type="submit" class="btn btn-primary btn-block mb-4">
+                Dive into the quiz
+              </button>
+  
+              <!-- Alert for Already Responded -->
+              <div class="alert-overlay" id="alertOverlay_res"
+                style="display: none; background-color:rgb(0 0 0 / 35%);border-radius: 0.5rem;">
+                <div class="alert-box" style="background-color: #fffffff7;">
+                  <div class="m-0 alert alert-primary" role="alert">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill"
+                      viewBox="0 0 16 16">
+                      <path
+                        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                    </svg>
+                    You Already Responded!
+                  </div>
+                  <button type="button" class="px-5 btn btn-primary alert-button"  onclick="hideAlert_responded()">OK</button>
+                </div>
+              </div>
+              
+              <!-- Alert for Test Not Exists -->
+              <div class="alert-overlay" id="alertOverlay_test"
+                style="display: none; background-color:rgb(0 0 0 / 35%);border-radius: 0.5rem;">
+                <div class="alert-box" style="background-color: #fffffff7;">
+                  <div class="m-0 alert alert-danger" role="alert">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                      class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+                      <path
+                        d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />              </svg>
+                    No Test Exists!
+                  </div>
+                  <button type="button" class="px-5 btn btn-danger alert-button " style="background-color:rgb(220, 53, 69);" onclick="hideAlert_Test_not_exists()">OK</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Section: Design Block -->
+  <script>
+    function showAlert_responded() {
+        document.getElementById('alertOverlay_res').style.display = 'flex';
+      }
+
+      function hideAlert_responded() {
+        document.getElementById('alertOverlay_res').style.display = 'none';
+      }
+
+      function showAlert_Test_not_exists() {
+        document.getElementById('alertOverlay_test').style.display = 'flex';
+      }
+
+      function hideAlert_Test_not_exists() {
+        document.getElementById('alertOverlay_test').style.display = 'none';
+      }
+
+      window.onload = function () {
+        const code = '<%= code %>';
+        if (code == 1) {
+          showAlert_responded();
+        } else if (code == 2) {
+          showAlert_Test_not_exists();
+        }
+    };
+    
+  </script>
+
+  <%- include('../../partials/mdbfooter'); -%>
+  <%- include('../../partials/footer') -%>

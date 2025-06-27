@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: black;
+            color: rgb(250, 250, 249);
+        }
+    </style>
+</head>
+
+<body>
+
+    <a class="home" href="/">Home</a>
+    <a id="create-quiz" class="create-quiz" href="" name="user_name">New quiz</a>
+    <h3>
+        <div id="quiz_name" style=" text-transform: capitalize;"></div>
+    </h3>
+    <div id="parent">
+        <div id="code"></div>
+        <div id="message"></div>
+    </div>
+
+</body>
+<script>
+
+    // Extract the query parameter from the URL
+    const params = new URLSearchParams(window.location.search);//to get the test code from admin_question_new
+    const message = JSON.parse(params.get('message'));
+    const user_name = params.get('user_name');
+    const quiz_name = params.get('quizName');
+    console.log(user_name);
+    message_length = message.form.length
+
+    // Convert the object to a string representation
+    const messageString = JSON.stringify(message);
+    const code = JSON.stringify(message.random).replace(/"/g, '');
+
+    // Display the message wherever needed in your HTML
+    document.getElementById('code').textContent = "This Quiz Code: " + code;
+    document.getElementById('quiz_name').textContent = quiz_name;
+    document.getElementById("create-quiz").href = '/admin?user_name=' + user_name;
+    //console.log(document.getElementById("create-quiz").href);
+    async function testpaper() {
+
+        const div = document.createElement("div");//creating div
+        div.id = "question";
+        // let divs=[];
+        console.log(message_length)
+        for (var i = 0; i < message_length; i++) {
+            const divs = document.createElement("div");//creating div
+            divs.id = "question${i+1}";
+
+            if (message.form[i].type == 3) {
+                divs.innerHTML = `
+        <div id="question${i + 1}">
+            <h4 id="question${i + 1}_p" style="display: flex; justify-content: space-between;">${i + 1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}<span style="margin-right:20vw;">Marks:${JSON.stringify(message.form[i].marks).replace(/"/g, '')}</span></h4>
+          <span>A. <span> <span id=text${i + 1} style="text-decoration: underline; "> ${JSON.stringify(message.form[i].text_answer).replace(/"/g, '')}</span>
+        </div>
+        `} else if (message.form[i].type == 1) {
+                divs.innerHTML = `
+            <div id="question${i + 1}">
+                <h4 id="question${i + 1}_p" style="display: flex; justify-content: space-between;">${i + 1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}<span style="margin-right:20vw;">Marks:${JSON.stringify(message.form[i].marks).replace(/"/g, '')}</span></h4>
+                    ${message.form[i].correct_answer == 1 ?
+                        ` <input type="radio" id="option1${i}" name="options${i}" value="1" checked onclick="return false;">`
+                        : `<input type="radio" id="option1${i}" name="options${i}" value="1" disabled>`
+                    }
+                    <label for="option1${i}" > ${JSON.stringify(message.form[i].option1[0]).replace(/"/g, '')}</label><br>
+                     
+                     ${message.form[i].correct_answer == 2 ?
+                        ` <input type="radio" id="option2${i}" name="options${i}" value="2" checked onclick="return false;">`
+                        : `<input type="radio" id="option2${i}" name="options${i}" value="2" disabled>`
+                    }
+                    <label for="option2${i}" > ${JSON.stringify(message.form[i].option1[1]).replace(/"/g, '')}</label><br>
+                    ${message.form[i].correct_answer == 3 ?
+                        ` <input type="radio" id="option3${i}" name="options${i}" value="3" checked onclick="return false;">`
+                        : `<input type="radio" id="option3${i}" name="options${i}" value="3" disabled>`
+                    }
+                    <label for="option3${i}" > ${JSON.stringify(message.form[i].option1[2]).replace(/"/g, '')}</label><br>
+                    ${message.form[i].correct_answer == 4 ?
+                        ` <input type="radio" id="option4${i}" name="options${i}" value="4" checked onclick="return false;">`
+                        : `<input type="radio" id="option4${i}" name="options${i}" value="4" disabled>`
+                    }
+                    <label for="option4${i}" > ${JSON.stringify(message.form[i].option1[3]).replace(/"/g, '')}</label>
+                   
+            </div> `
+            } else if (message.form[i].type == 2) {
+                divs.innerHTML = `
+            <div id="question${i + 1}">
+                <h4 id="question${i + 1}_p" style="display: flex; justify-content: space-between;">${i + 1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}<span style="margin-right:20vw;">Marks:${JSON.stringify(message.form[i].marks).replace(/"/g, '')}</span></h4>
+
+                    ${message.form[i].option1_answer_checkbox.includes(1) ?
+                        ` <input type="checkbox" id="option_checkbox1${i}" name="options_checkbox" value="1" checked>`
+                        : `<input type="checkbox" id="option_checkbox1${i}" name="options_checkbox" value="1" disabled>`
+                    }
+                    <label for="option_checkbox1${i}" > ${JSON.stringify(message.form[i].option1[0]).replace(/"/g, '')}</label><br>
+                    
+                     ${message.form[i].option1_answer_checkbox.includes(2) ?
+                        ` <input type="checkbox" id="option_checkbox2${i}" name="options_checkbox" value="2" checked>`
+                        : `<input type="checkbox" id="option_checkbox2${i}" name="options_checkbox" value="2" disabled>`
+                    }
+                    <label for="option_checkbox2${i}" > ${JSON.stringify(message.form[i].option1[1]).replace(/"/g, '')}</label><br>
+                    ${message.form[i].option1_answer_checkbox.includes(3) ?
+                        ` <input type="checkbox" id="option_checkbox3${i}" name="options_checkbox" value="3" checked>`
+                        : `<input type="checkbox" id="option_checkbox3${i}" name="options_checkbox" value="3" disabled>`
+                    }
+                    <label for="option_checkbox3${i}" > ${JSON.stringify(message.form[i].option1[2]).replace(/"/g, '')}</label><br>
+                    ${message.form[i].option1_answer_checkbox.includes(4) ?
+                        ` <input type="checkbox" id="option_checkbox4${i}" name="options_checkbox" value="4" checked>`
+                        : `<input type="checkbox" id="option_checkbox4${i}" name="options_checkbox" value="4" disabled>`
+                    }
+                    <label for="option_checkbox4${i}" > ${JSON.stringify(message.form[i].option1[3]).replace(/"/g, '')}</label>
+                   
+            </div> `
+            }
+
+            div.appendChild(divs);//adding the inside of div
+
+        }
+        // Find the parent div
+        const parentDiv = document.getElementById('parent');
+
+        // Find the reference div (the one after which you want to append the new div)
+        const referenceDiv = parentDiv.children[1]; // Index 1 refers to the second child div
+
+        // Insert the new div after the reference div
+        parentDiv.insertBefore(div, referenceDiv.nextSibling);
+
+    }
+    testpaper();//calling the function
+
+
+</script>
+
+</html>

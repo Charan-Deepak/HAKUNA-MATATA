@@ -1,0 +1,247 @@
+<%- include('../../includes/user_home/take_quiz/header'); -%>
+    <%- include('../../includes/user_home/take_quiz/sidebar'); -%>
+        <%- include('../../includes/user_home/take_quiz/navbar'); -%>
+        <div class="questionblock" style="margin-top: 58px;padding: 25px 25px 25px 265px;">
+            <form class="main_form" id="main_form" action="/user/take_quiz/marks_page" method="post">
+                <input type="hidden" name="answerData" id="answerData">
+                <input type="hidden" name="quiz_code" id="quiz_code">
+                <input type="hidden" name="message" id="message">
+                <h3>
+                    <b><div id="quiz_name" class="display-5" style=" text-transform: capitalize;"></div></b>
+                    <hr>
+                </h3>
+
+                <div id="parent">
+                    <pre id="copyText"style="cursor:pointer;"
+                        class="border p-2"><div>Time remaining: <b><span id="timer"></span></b></div></b>Quiz Code: <b><span id="code"></span></b></pre>
+                    <div id="message"></div> 
+                </div>
+                <button  class="btn btn-info done"  type="button" id="done" style="float: right; margin-left: 10px;" data-mdb-ripple-init >Submit</button>
+                <!-- <button type="submit" id="submit" class="btn btn-dark submit" style="float: right; margin-right: 10px;" data-mdb-ripple-init>submit</button>  -->
+            </form> 
+        </div>
+<script>
+
+    // Extract the query parameter from the URL
+    // const params = new URLSearchParams(window.location.search);//to get the test code from admin_question_new
+    //const user_name=params.get('user_name');
+    const message = JSON.parse('<%- test%>');
+    let message_length = message.form.length
+    
+    // Display the message wherever needed in your HTML
+    document.getElementById('code').textContent ='<%=quiz_code%>';
+    document.getElementById('quiz_name').textContent =message.quiz_name;
+
+    let total_marks=0;
+    let mark_to_student=0;
+
+    async function testpaper(){
+        const div=document.createElement("div");
+        div.id="question";
+
+        for(var i=0;i<message_length;i++){
+            const form=document.createElement("form");//creating form 
+            form.className="form"+i;//i is for different forms of class name like form1,form2...
+            total_marks=total_marks+message.form[i].marks;
+
+            if(message.form[i].type==3){
+            form.innerHTML=`<form class="form${i}">
+            <div id="question${i+1}">
+                <h4 id="question${i+1}_p" style="text-transform: capitalize;display: flex; justify-content: space-between;">${i+1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}<span style="margin-right:20vw;">Marks:${JSON.stringify(message.form[i].marks).replace(/"/g, '')}</span></h4>
+            
+            <span>A. <span> <input id="option_type_text${i}" style="text-decoration: underline; type="test" name=>
+            </div>
+            `}else if(message.form[i].type==1){
+                form.innerHTML=`
+                <div id="question${i+1}">
+                    <h4 id="question${i+1}_p" style="display: flex; text-transform: capitalize; justify-content: space-between;">${i+1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}<span style="margin-right:20vw;">Marks:${JSON.stringify(message.form[i].marks).replace(/"/g, '')}</span></h4>
+                        <input type="radio" id="option1${i}" name="correct${i}" value="1" >
+                        
+                        <label for="option1${i}" > ${JSON.stringify(message.form[i].option1[0]).replace(/"/g, '')}</label><br>
+                        
+                        <input type="radio" id="option2${i}" name="correct${i}" value="2" >
+                        
+                        <label for="option2${i}" > ${JSON.stringify(message.form[i].option1[1]).replace(/"/g, '')}</label><br>
+                        <input type="radio" id="option3${i}" name="correct${i}" value="3" >
+                        
+                        <label for="option3${i}" > ${JSON.stringify(message.form[i].option1[2]).replace(/"/g, '')}</label><br>
+                        <input type="radio" id="option4${i}" name="correct${i}" value="4">
+                        
+                        <label for="option4${i}" > ${JSON.stringify(message.form[i].option1[3]).replace(/"/g, '')}</label>
+                    
+                </div> `
+            }else if(message.form[i].type==2){
+                form.innerHTML=`
+                <div id="question${i+1}">
+                    <h4 id="question${i+1}_p"text-transform: capitalize; style="display: flex; justify-content: space-between;">${i+1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}<span style="margin-right:20vw;">Marks:${JSON.stringify(message.form[i].marks).replace(/"/g, '')}</span></h4>
+
+                    <input type="checkbox" id="option_checkbox1${i}" name="correct_checkboxes1${i}" value="1" >
+                        
+                        <label for="option_checkbox1${i}" > ${JSON.stringify(message.form[i].option1[0]).replace(/"/g, '')}</label><br>
+                        
+                        <input type="checkbox" id="option_checkbox2${i}" name="correct_checkboxes2${i}" value="2" >
+                        
+                        <label for="option_checkbox2${i}" > ${JSON.stringify(message.form[i].option1[1]).replace(/"/g, '')}</label><br>
+                        <input type="checkbox" id="option_checkbox3${i}" name="correct_checkboxes3${i}" value="3" >
+                        
+                        <label for="option_checkbox3${i}" > ${JSON.stringify(message.form[i].option1[2]).replace(/"/g, '')}</label><br>
+                        <input type="checkbox" id="option_checkbox4${i}" name="correct_checkboxes4${i}" value="4" >
+                        
+                        <label for="option_checkbox4${i}" > ${JSON.stringify(message.form[i].option1[3]).replace(/"/g, '')}</label>
+                    
+                </div></form> `
+            }
+
+            div.appendChild(form);//adding the inside of div
+            window['form' + i] = form;
+        }
+        // Find the parent div
+        const parentDiv = document.getElementById('parent');
+
+        // Find the reference div (the one after which you want to append the new div)
+        const referenceDiv = parentDiv.children[1]; // Index 1 refers to the second child div
+
+        // Insert the new div after the reference div
+        parentDiv.insertBefore(div, referenceDiv.nextSibling);
+    
+    }
+    window.onload = async function () {
+            await testpaper();
+    };
+
+    var answerData = []; // Array to store answer data
+
+    function submit_form(j) {
+        var text_answers_checkbox = [];
+        var text_a;
+        var option_correct_radio;
+        var mark=0;
+        // Accessing the form
+        var final_form = window["form" + j];
+        if (final_form) { // If form exists
+
+            //let option_type_read = final_form.querySelector(`input[name='option${j}']:checked`);
+            var option_type = message.form[j].type;
+    
+            if (option_type == 1) {
+                // Add event listeners to each radio button
+                let radioBtns = final_form.querySelectorAll(`input[name='correct${j}']`);
+    
+                // Define a function to find the selected radio button
+                let findSelected = () => {
+                    let selected = final_form.querySelector(`input[name='correct${j}']:checked`);
+                    if (selected) {
+                        option_correct_radio = selected.value;
+                    } else {
+                        option_correct_radio = ""; // Handle case where no radio button is checked
+                    }
+
+                    if(parseInt(option_correct_radio)==message.form[j].correct_answer){
+                        mark_to_student+=message.form[j].marks;
+                        mark=message.form[j].marks;
+                    }
+                };
+    
+                // Add event listeners to each radio button
+                radioBtns.forEach(radioBtn => {
+                    radioBtn.addEventListener("change", findSelected);
+                });
+    
+                // Call the function initially to set the default value
+                findSelected();
+            } else if (option_type == 2) {
+                // Get options for checkbox type
+                var count=0;
+                for (var k = 0; k < 4; k++) {
+                    let option_answer = final_form.querySelector(`input[name='correct_checkboxes${k+1}${j}']:checked`); // Corrected selector syntax
+                    if (option_answer) {
+                        text_answers_checkbox.push(option_answer.value);
+                    } 
+                    if(parseInt(text_answers_checkbox[k])==message.form[j].option1_answer_checkbox[k]){
+                        count++;
+                    }}
+                    if(count==message.form[j].option1_answer_checkbox.length)
+                    {mark_to_student+=message.form[j].marks;
+                       mark= message.form[j].marks
+                    }
+                    else if(count>0 && count<message.form[j].option1_answer_checkbox.length){
+                         mark_to_student+=Math.ceil(message.form[j].marks*(count/message.form[j].option1_answer_checkbox.length));
+                         mark=Math.ceil(message.form[j].marks*(count/message.form[j].option1_answer_checkbox.length));
+                    }
+
+            } else if (option_type == 3) {
+    
+                text_a = final_form.querySelector("#option_type_text" + j)?final_form.querySelector("#option_type_text" + j).value:""; // Get text answer
+                if(text_a==message.form[j].text_answer){
+                    mark_to_student+=message.form[j].marks;
+                    mark=message.form[j].marks;
+                }
+            }
+
+            // Construct data object
+            var data = {
+                mark:mark,
+                type: parseInt(option_type), // radio, checkbox, text
+                option1_answer_checkbox: text_answers_checkbox,
+                correct_answer: parseInt(option_correct_radio),
+                text_answer: text_a
+            };
+    
+            answerData.push(data); // Push data object to productData array
+        }
+    
+    }
+    
+    async function done() {
+        // Display an alert
+       //alert("Are you sure you want to submit the form?");
+       for (var j = 0; j < message_length; j++) {
+            await submit_form(j); //control to sumbit the form
+        }
+        answerData.push(total_marks);
+        answerData.push(mark_to_student);
+       // console.log("hello");
+        const quiz_code='<%=quiz_code%>';
+        document.getElementById("answerData").value = JSON.stringify(answerData);
+        document.getElementById("quiz_code").value = quiz_code;
+        document.getElementById("message").value = JSON.stringify(message);
+        const form=document.getElementById('main_form');
+        form.submit();
+
+    };
+
+    //timer
+    let timerInterval; // Declare globally
+
+    document.addEventListener('DOMContentLoaded', async function () {
+        const timerDisplay = document.getElementById('timer');
+        let timeRemaining = message.time * 60;
+
+        if (timeRemaining != 0) {
+            timerInterval = setInterval(updateTimer, 1000); // Assign to global
+
+            async function updateTimer() {
+                const hours = Math.floor(timeRemaining / (60 * 60));
+                const minutes = Math.floor((timeRemaining % (60 * 60)) / 60);
+                const seconds = ((timeRemaining % (60 * 60)) % 60);
+                const timerText = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                timerDisplay.textContent = `${timerText}`;
+
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    await done();
+                }
+                timeRemaining--;
+            }
+        }
+    });
+
+    // Now this works correctly
+    document.querySelector('.done').addEventListener("click", async function () {
+        clearInterval(timerInterval); //  Works now
+        await done();
+    });
+
+ </script>
+<%- include('../../partials/mdbfooter'); -%>
+<%- include('../../partials/footer') -%>

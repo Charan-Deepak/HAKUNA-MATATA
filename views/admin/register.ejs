@@ -1,0 +1,114 @@
+<!-- ok -->
+<%- include('../partials/header.ejs') -%>
+<%- include('../partials/mdbheader'); -%>
+
+<style>
+    #home{
+        border-radius: 4px;
+        width:65px;
+        padding-left: 6px;
+    }
+    #features{
+        border-radius: 4px;
+        width:77px;
+    }
+
+    span{
+            color:#ff1717;
+            font-size: 16px;
+        }
+        .mismatch{
+          color: red;
+          font-size: 11px;
+          margin-left: 5px;
+        }
+  </style>
+  </head>
+  <body>
+  <!-- Start your project here-->
+  
+ 
+
+<section class="h-100" style="background-color:#BBC1C6;" >
+    <div class="container py-5 h-100" >
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col">
+          <div class="card card-registration my-4">
+            <div class="row g-0">
+              <div class="col-xl-6 d-none d-xl-block">
+                <img src="../pic11.jpg"
+                  alt="Sample photo" class="img-fluid"
+                  style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
+              </div>
+              <div class="col-xl-6">
+                <div class="card-body p-md-5 text-black">
+                  <form class="form" action="/admin/register" method="post">
+                    <h3 class="mb-5 text-uppercase">  <i class="fa-solid fa-school"></i> Create account</h3>
+  
+                    <div class="row">
+                      <div class="col-md-6 mb-4">
+                        <div class="form-outline">
+                          <input type="text" id="form3Example1m" class="form-control form-control-lg" name="firstname" required/>
+                          <label class="form-label" for="form3Example1m">First name<span>*</span></label>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-4">
+                        <div class="form-outline">
+                          <input type="text" id="form3Example1n" class="form-control form-control-lg" name="lastname" />
+                          <label class="form-label" for="form3Example1n">Last name</label>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="form-outline mb-4">
+                      <input type="text" id="form3Example8" class="form-control form-control-lg" name="username" required />
+                      <label class="form-label" for="form3Example8">Username<span>*</span></label>
+                    </div>
+
+                    <% if(typeof unavailable !=='undefined' && unavailable !==null) {%>
+                      <p class="mismatch">
+                        <%= unavailable %>
+                      </p>
+                      <% } %>
+                      
+                    <div class="form-outline mb-4">
+                      <input type="email" id="form3Example97" name="emailId" class="form-control form-control-lg" required />
+                      <label class="form-label" for="form3Example97">Email ID<span>*</span></label>
+                    </div>
+
+                      <% if(typeof accountexists !== 'undefined' && accountexists !== null) {%>  
+                       <p class="mismatch"><%= accountexists %></p>
+                      <%}%>
+
+                    <div class="form-outline mb-4">
+                      <input type="password" id="form3Example9" class="form-control form-control-lg" name="password" required/>
+                      <label class="form-label" for="form3Example9">New Password<span>*</span></label>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                      <input type="password" id="form3Example90" class="form-control form-control-lg" name="repassword" required/>
+                      <label class="form-label" for="form3Example90">Re-enter password<span>*</span></label>
+                    </div>
+                    <% if(typeof mismatch !== 'undefined' && mismatch !== null) {%>
+                      <p class="mismatch"><%= mismatch %></p>
+                      <%}%> 
+                    <div class="d-flex justify-content-end pt-3">
+                      <button type="submit" class="btn btn-warning btn-lg ms-2" style="background-color: rgb(79, 160, 211);" 
+                      onMouseOver="this.style.backgroundColor='#45a049'"
+         onMouseOut="this.style.backgroundColor='rgb(79, 160, 211)'">Register</button>
+                    </div>
+                  </form>
+                 
+  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<%- include('../partials/mdbfooter'); -%>
+<%- include('../partials/footer'); -%>
