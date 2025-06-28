@@ -9,6 +9,7 @@ const admin_Schema = new Schema({
     },
     username: {
         type: String,
+        required: true,
     },
     firstname: {
         type: String,
@@ -23,10 +24,12 @@ const admin_Schema = new Schema({
     },
     password: {
         type: String,
+        required: true,
 
     },
     repassword: {
         type: String,
+        required: true,
     },
     test: [{
         type: Schema.Types.ObjectId,

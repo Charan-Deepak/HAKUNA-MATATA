@@ -9,6 +9,7 @@ const user_Schema = new Schema({
       },
     username: {
         type: String,
+        required: true,
     },
     firstname: {
         type:String,
@@ -34,7 +35,7 @@ const user_Schema = new Schema({
             ref: "Test_answer"
         },
         quiz_code: String,
-        date: Date
+        end_date: Date
     }]
 });
 

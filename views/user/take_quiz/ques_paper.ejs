@@ -11,12 +11,30 @@
                     <hr>
                 </h3>
 
+                <!-- Tab Warning Modal -->
+                <div class="modal fade" id="tabWarningModal" tabindex="-1" aria-labelledby="tabWarningModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content border-warning">
+                            <div class="modal-header bg-warning text-dark">
+                                <h5 class="modal-title" id="tabWarningModalLabel">Tab Switch Warning</h5>
+                            </div>
+                            <div class="modal-body">
+                                <p id="tab-warning-text">You have only 1 chance left. After that, the quiz will be auto-submitted.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="tab-ok-btn" type="button" class="btn btn-warning" data-bs-dismiss="modal">OK</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+  
+
                 <div id="parent">
                     <pre id="copyText"style="cursor:pointer;"
-                        class="border p-2"><div>Time remaining: <b><span id="timer"></span></b></div></b>Quiz Code: <b><span id="code"></span></b></pre>
+                        class="border p-2"><div class="timer_div">Time remaining: <b><span id="timer"></span></b></div></b>Quiz Code: <b><span id="code"></span></b></pre>
                     <div id="message"></div> 
                 </div>
-                <button  class="btn btn-info done"  type="button" id="done" style="float: right; margin-left: 10px;" data-mdb-ripple-init >Submit</button>
+                <button  class="btn btn-info done mb-4"  type="button" id="done" style="float: right; margin-left: 10px;" data-mdb-ripple-init >Submit</button>
                 <!-- <button type="submit" id="submit" class="btn btn-dark submit" style="float: right; margin-right: 10px;" data-mdb-ripple-init>submit</button>  -->
             </form> 
         </div>
@@ -183,7 +201,7 @@
             } else if (option_type == 3) {
     
                 text_a = final_form.querySelector("#option_type_text" + j)?final_form.querySelector("#option_type_text" + j).value:""; // Get text answer
-                if(text_a==message.form[j].text_answer){
+                if(text_a.toLowerCase() === message.form[j].text_answer.toLowerCase()){
                     mark_to_student+=message.form[j].marks;
                     mark=message.form[j].marks;
                 }
@@ -226,9 +244,11 @@
 
     document.addEventListener('DOMContentLoaded', async function () {
         const timerDisplay = document.getElementById('timer');
-        let timeRemaining = message.time * 60;
+        let timeRemaining = Math.floor((new Date("<%= end_time.toISOString() %>") - new Date()) / 1000);
 
-        if (timeRemaining != 0) {
+        if(message.time==0){
+            document.querySelector('.timer_div').style.display = 'none';
+        }else if (timeRemaining != 0) {
             timerInterval = setInterval(updateTimer, 1000); // Assign to global
 
             async function updateTimer() {
@@ -252,7 +272,40 @@
         clearInterval(timerInterval); //  Works now
         await done();
     });
+    
+    let tab_cnt = 0;
+        let shouldSubmitOnOk = false;
 
+        document.addEventListener("visibilitychange", function () {
+            if (document.hidden) {
+                tab_cnt++;
+
+                const warningText = document.getElementById("tab-warning-text");
+                const modal = new bootstrap.Modal(document.getElementById('tabWarningModal'));
+                const okButton = document.getElementById('tab-ok-btn');
+
+                if (tab_cnt === 1) {
+                    warningText.innerText = "You have only 1 chance left. After that, if you switch tabs or minimiz the window the quiz will be auto-submitted.";
+                    shouldSubmitOnOk = false;
+                } else if (tab_cnt === 2) {
+                    warningText.innerText = "No chances left. Clicking OK will submit the quiz.";
+                    shouldSubmitOnOk = true;
+                }
+
+                modal.show();
+
+                // Attach only once (important!)
+                okButton.onclick = async function () {
+                    if (shouldSubmitOnOk) {
+                        clearInterval(timerInterval);
+                        await done();
+                    }
+                };
+            }
+        });
+
+
+        
  </script>
 <%- include('../../partials/mdbfooter'); -%>
 <%- include('../../partials/footer') -%>

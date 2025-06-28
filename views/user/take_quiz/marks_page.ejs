@@ -20,11 +20,8 @@
     //const params = new URLSearchParams(window.location.search);//to get the test code from admin_question_new
     //const test_answer =JSON.parse( params.get('message'));
     const test_answer = JSON.parse('<%-message%>');
-    console.log(test_answer)
     const message =JSON.parse('<%-test%>');
-    console.log(message)
     const user_name='<%=user_name%>';
-    console.log(user_name);
     message_length=message.form.length
 
    // Convert the object to a string representation
@@ -35,15 +32,12 @@
     document.getElementById('code').textContent =code;
     document.getElementById('user_id').textContent = user_name;
     document.getElementById('quiz_name').textContent = message.quiz_name;
-    //const url = `/user?user_name=${encodeURIComponent(user_name)}`;
     document.getElementById('total_marks').textContent =test_answer.totalmarks;
     document.getElementById('total_marks_get').textContent =test_answer.totalmarksget;
-    //console.log(document.getElementById("create-quiz").href);
     function testpaper(){
 
         const div=document.createElement("div");//creating div
         div.id="question";
-        // let divs=[];
         for(var i=0;i<message_length;i++){
             const divs=document.createElement("div");//creating div
             divs.id="question${i+1}";
@@ -71,9 +65,9 @@
                         `;
                 } else {
                         answerContent = `
-                            <span>A. <span><span id="text${i + 1}" style="text-transform: capitalize; text-decoration: underline; color:#b13008; ">
+                            <span>A. <span><span id="text${i + 1}" style=" text-decoration: underline; color:#b13008; ">
                                 ${JSON.stringify(test_answer.form[i].text_answer).replace(/"/g, '')}
-                            </span><span>|</span><span id="text${i + 2}" style="text-transform: capitalize; text-decoration: underline;color:#068f06;">
+                            </span><span>|</span><span id="text${i + 2}" style=" text-decoration: underline;color:#068f06;">
                                 ${JSON.stringify(message.form[i].text_answer).replace(/"/g, '')}
                             </span>
                         `;
@@ -89,37 +83,48 @@
                         <h4 id="question${i+1}_p" style="text-transform: capitalize; display: flex; justify-content: space-between;">${i+1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}<span style="margin-right:20vw;">Marks:${JSON.stringify(test_answer.form[i].mark).replace(/"/g, '')}/${JSON.stringify(message.form[i].marks).replace(/"/g, '')}</span></h4>
                             ${message.form[i].correct_answer == 1 || test_answer.form[i].correct_answer==1  ? 
                                 (message.form[i].correct_answer == test_answer.form[i].correct_answer==1 ||message.form[i].correct_answer==1 ?
-                                ` <input type="radio" style="accent-color:#198d06 ;" id="option1${i}" name="options1${i}" value="1" checked>`
-                                : `<input type="radio" style="accent-color:#c23c0b ;" id="option1${i}" name="options1${i}" value="1" checked>`
+                                ` <input type="radio" style="accent-color:#198d06 ;" id="option1${i}" name="options1${i}" value="1" checked>
+                                <label for="option1${i}" style="color:#198d06 ;"> ${JSON.stringify(message.form[i].option1[0]).replace(/"/g, '')}</label><br>`
+                                : `<input type="radio" style="accent-color:#c23c0b ;" id="option1${i}" name="options1${i}" value="1" checked>
+                                <label for="option1${i}" > ${JSON.stringify(message.form[i].option1[0]).replace(/"/g, '')}</label><br>`
                             ):
-                                `<input type="radio" id="option1${i}" name="options1" value="1${i}" disabled>`
+                                `<input type="radio" id="option1${i}" name="options1" value="1${i}" disabled>
+                                <label for="option1${i}" > ${JSON.stringify(message.form[i].option1[0]).replace(/"/g, '')}</label><br>`
                             }
-                            <label for="option1${i}" > ${JSON.stringify(message.form[i].option1[0]).replace(/"/g, '')}</label><br>
                             
                             ${message.form[i].correct_answer == 2 || test_answer.form[i].correct_answer==2  ?
                                 (message.form[i].correct_answer == test_answer.form[i].correct_answer==2 ||message.form[i].correct_answer==2 ?
-                                ` <input type="radio" style="accent-color:#198d06 ;" id="option2${i}" name="options2${i}" value="2" checked>`
-                                : `<input type="radio" style="accent-color:#c23c0b ;" id="option2${i}" name="options2${i}" value="2" checked>`
+                                ` <input type="radio" style="accent-color:#198d06 ;" id="option2${i}" name="options2${i}" value="2" checked>
+                                <label for="option2${i}" style="color:#198d06 ;"> ${JSON.stringify(message.form[i].option1[1]).replace(/"/g, '')}</label><br>`
+                                : `<input type="radio" style="accent-color:#c23c0b ;" id="option2${i}" name="options2${i}" value="2" checked>
+                                <label for="option2${i}" > ${JSON.stringify(message.form[i].option1[1]).replace(/"/g, '')}</label><br>`
                             )
-                                : `<input type="radio"  id="option2${i}" name="options2" value="2${i}" disabled>`
+                                : `<input type="radio"  id="option2${i}" name="options2" value="2${i}" disabled>
+                                <label for="option2${i}" > ${JSON.stringify(message.form[i].option1[1]).replace(/"/g, '')}</label><br>`
                             }
-                            <label for="option2${i}" > ${JSON.stringify(message.form[i].option1[1]).replace(/"/g, '')}</label><br>
+                            
                             ${message.form[i].correct_answer == 3 || test_answer.form[i].correct_answer==3  ?
                                 (message.form[i].correct_answer == test_answer.form[i].correct_answer==3 ||message.form[i].correct_answer==3 ?
-                                ` <input type="radio" style="accent-color:#198d06 ;" id="option3${i}" name="options3${i}" value="3" checked>`
-                                : `<input type="radio" style="accent-color: #c23c0b;" id="option3${i}" name="options3${i}" value="3" checked>`
+                                ` <input type="radio" style="accent-color:#198d06 ;" id="option3${i}" name="options3${i}" value="3" checked>
+                                <label for="option3${i}" style="color:#198d06 ;"> ${JSON.stringify(message.form[i].option1[2]).replace(/"/g, '')}</label><br>`
+                                : `<input type="radio" style="accent-color: #c23c0b;" id="option3${i}" name="options3${i}" value="3" checked>
+                                <label for="option3${i}" > ${JSON.stringify(message.form[i].option1[2]).replace(/"/g, '')}</label><br>`
                             )
-                                : `<input type="radio" id="option3${i}" name="options3${i}" value="3" disabled>`
+                                : `<input type="radio" id="option3${i}" name="options3${i}" value="3" disabled>
+                                <label for="option3${i}" > ${JSON.stringify(message.form[i].option1[2]).replace(/"/g, '')}</label><br>`
                             }
-                            <label for="option3${i}" > ${JSON.stringify(message.form[i].option1[2]).replace(/"/g, '')}</label><br>
+                            
                             ${message.form[i].correct_answer == 4 || test_answer.form[i].correct_answer==4   ?
                                 (message.form[i].correct_answer == test_answer.form[i].correct_answer==4 ||message.form[i].correct_answer==4 ?
-                                ` <input type="radio" style="accent-color:#198d06 ;" id="option4${i}" name="options4${i}" value="4" checked>`
-                                : `<input type="radio" style="accent-color: #c23c0b ;" id="option4${i}" name="options4${i}" value="4" checked>`
+                                ` <input type="radio" style="accent-color:#198d06 ;" id="option4${i}" name="options4${i}" value="4" checked>
+                                <label for="option4${i}" style="color:#198d06 ;"> ${JSON.stringify(message.form[i].option1[3]).replace(/"/g, '')}</label>`
+                                : `<input type="radio" style="accent-color: #c23c0b ;" id="option4${i}" name="options4${i}" value="4" checked>
+                                <label for="option4${i}" > ${JSON.stringify(message.form[i].option1[3]).replace(/"/g, '')}</label>`
                             )
-                                : `<input type="radio" id="option4${i}" name="options4${i}" value="4" disabled>`
+                                : `<input type="radio" id="option4${i}" name="options4${i}" value="4" disabled>
+                                <label for="option4${i}" > ${JSON.stringify(message.form[i].option1[3]).replace(/"/g, '')}</label>`
                             }
-                            <label for="option4${i}" > ${JSON.stringify(message.form[i].option1[3]).replace(/"/g, '')}</label>
+                            
                         
                     </div> `
             }else if(message.form[i].type==2){

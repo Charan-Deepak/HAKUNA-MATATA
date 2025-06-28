@@ -8,83 +8,144 @@ module.exports.get_takequiz = function (req, res) {
     res.render("./user/take_quiz/take_quiz.ejs", { code: 0, message: "You Already Responded!" });
 }
 
-module.exports.post_quesPaper=async function (req, res) {
+module.exports.post_quesPaper = async function (req, res) {
     const test = await Test.findOne({ random: req.body.quizcode }).populate('form');
+    const user = await User.findOne({ username: req.user.username });
+
+    // If quiz code not found
     if (!test) {
-        // code: 2 => Quiz code not found
         return res.render("./user/take_quiz/take_quiz.ejs", { code: 2 });
     }
 
-    const student_exists = test.students_attended.some(
-        s => s.username === req.user.username
-    );
+    const now = new Date();
+    const existingAnswer = user.test_answer.find(ans => ans.quiz_code === req.body.quizcode);
 
-    if (!student_exists) {
-        // Show quiz questions;
-        res.render("./user/take_quiz/ques_paper.ejs", {
-            quiz_code: req.body.quizcode,
-            test: JSON.stringify(test)
+    // If user hasn't attempted the quiz yet
+    if (!existingAnswer) {
+        const endTime = new Date(now.getTime() + test.time * 60 * 1000); // Set end time
+
+        test.students_attended.push({
+            student_ref: user._id,
+            username: req.user.username,
+            marks: 0
         });
-    } else {
-        // code: 1 => Already attempted
-        res.render("./user/take_quiz/take_quiz.ejs", { code: 1 });
+
+        await test.save();
+        user.test_answer.push({
+            quiz_code: req.body.quizcode,
+            end_date: endTime,
+        });
+
+        await user.save(); // Save the updated user record
+
+        return res.render("./user/take_quiz/ques_paper.ejs", {
+            quiz_code: req.body.quizcode,
+            test: JSON.stringify(test),
+            end_time: endTime
+        });
     }
-}
+
+    // User already has a test_answer entry
+    const expiredOrNoTimer = test.time === 0 || (existingAnswer.end_date && (existingAnswer.end_date - now)>=0);
+    const notSubmitted = typeof existingAnswer.answer_ref === "undefined";
+
+    if (notSubmitted && expiredOrNoTimer) {
+        // Allow to show quiz paper again
+        return res.render("./user/take_quiz/ques_paper.ejs", {
+            quiz_code: req.body.quizcode,
+            test: JSON.stringify(test),
+            end_time: existingAnswer.end_date
+        });
+    }
+
+    // Already attempted and active
+    return res.render("./user/take_quiz/take_quiz.ejs", { code: 1 });
+};
+
 
 module.exports.post_markPage = async function (req, res, next) {
     try {
         const user = await User.findOne({ username: req.user.username });
         if (!user) return res.redirect('/user/login');
 
-        const answerData = JSON.parse(req.body.answerData);
-        let questions = [];
+        let answerData;
+        try {
+            answerData = JSON.parse(req.body.answerData);
+        } catch (e) {
+            return next(new ExpressError("Invalid answer data."));
+        }
 
-        for (let i = 0; i < answerData.length - 2; i++) {
+        if (answerData.length < 2) {
+            return next(new ExpressError("Incomplete answer data."));
+        }
+
+        const totalmarks = answerData[answerData.length - 2];
+        const totalmarksget = answerData[answerData.length - 1];
+        const answersOnly = answerData.slice(0, -2);
+
+        const answerIds = [];
+
+        for (let ans of answersOnly) {
             const answer = new Answer({
-                mark: answerData[i].mark,
-                type: answerData[i].type,
-                correct_answer: answerData[i].correct_answer,
-                option1_answer_checkbox: answerData[i].option1_answer_checkbox,
-                text_answer: answerData[i].text_answer
+                mark: ans.mark,
+                type: ans.type,
+                correct_answer: ans.correct_answer,
+                option1_answer_checkbox: ans.option1_answer_checkbox,
+                text_answer: ans.text_answer
             });
 
             await answer.save();
-            questions.push(answer._id);
+            answerIds.push(answer._id);
         }
 
         const test_answer = new Test_answer({
-            totalmarks: answerData[answerData.length - 2],
-            totalmarksget: answerData[answerData.length - 1],
+            totalmarks,
+            totalmarksget,
             quiz_code: req.body.quiz_code,
-            form: questions
+            form: answerIds
         });
 
         await test_answer.save();
 
-        user.test_answer.push({
-            answer_ref: test_answer._id,
-            quiz_code: req.body.quiz_code,
-            date: Date.now()
-        });
+        let userAnswerEntry = user.test_answer.find(ans => ans.quiz_code === req.body.quiz_code);
+        if (userAnswerEntry) {
+            userAnswerEntry.answer_ref = test_answer._id;
+        } else {
+            user.test_answer.push({
+                quiz_code: req.body.quiz_code,
+                answer_ref: test_answer._id,
+                end_date: new Date()
+            });
+        }
         await user.save();
 
         const test = await Test.findOne({ random: req.body.quiz_code });
-        if (!test) return next(new ExpressError(404,"Test not found."));
+        if (!test) return next(new ExpressError("Test not found."));
 
-        test.students_attended.push({
-            student_ref: user._id,
-            username: req.user.username,
-            marks: test_answer.totalmarksget
-        });
-        await test.save();
+        const index = test.students_attended.findIndex(
+            s => s.student_ref.toString() === user._id.toString()
+        );
+
+        if (index !== -1) {
+            // Update the existing entry
+            test.students_attended[index].marks = totalmarksget;
+        } else {
+            // Push a new entry if it doesn't exist
+            test.students_attended.push({
+                student_ref: user._id,
+                username: req.user.username,
+                marks: totalmarksget
+            });
+        }
+
+        await test.save();        
+
         res.redirect(`/user/take_quiz/marks_page/${req.body.quiz_code}`);
     } catch (error) {
         next(error);
-        //res.status(500).send("Internal Server Error");
     }
-}
-
-
+};
+  
 module.exports.get_markPage =async function (req, res,next) {
     try {
         let { code } = req.params;

@@ -119,7 +119,7 @@ app.use('/admin/create_quiz',admin_quizRoute);
 app.use('/user/take_quiz', user_quizRoute);
 
 // app.get('/error', ()=>{
-//    throw new ExpressError(500,"What");
+//    throw new ExpressError(500,"Admin not Found");
 // })
 app.use((err, req, res, next) => {
     let { status = 500, message = "Some Error Occured!" } = err;
