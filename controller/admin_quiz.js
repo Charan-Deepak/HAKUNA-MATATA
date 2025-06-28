@@ -1,3 +1,4 @@
+const ExpressError = require('../ExpressError');
 const { Admin } = require('../model/admin');
 const { Form, Test} = require('../model/adminform');
 const randomstring = require('randomstring');
@@ -59,26 +60,24 @@ module.exports.post_ques_form_new=async function (req, res, next) {
             );            
         } else {
             // Handle the case where the user does not exist
-            console.log('admin not found.');
+            return next(new ExpressError(500,'admin not found.'));
         }
-        // console.log(test, req.body.username, req.body.quizName);
-        // let result=await Test.findById(test._id).populate('form');
         //send object as string to ejs and then parse it
         res.redirect(`/admin/create_quiz/submittion_page/${randomString}`);
 
     } catch (error) {
-        console.error(error);
-        res.status(500).send("Internal Server Error");
+        next(error);
+        // res.status(500).send("Internal Server Error");
     }
 }
 
 
-module.exports.get_SubmittionPage =async function (req, res) {
+module.exports.get_SubmittionPage =async function (req, res,next) {
     try {
         let {code}=req.params;
         const test = await Test.findOne({random:code}).populate('form');
         if (!test) {
-            return res.status(404).render("./error/page_!fnd.ejs");
+            return next(new ExpressError(404,"Test not Found!"));
         }
         res.render('./admin/create_quiz/submittion_page.ejs', {
             test: JSON.stringify(test),
@@ -86,7 +85,7 @@ module.exports.get_SubmittionPage =async function (req, res) {
             quizName: test.quiz_name
         });
     } catch (error) {
-        console.error(error);
-        res.status(500).send("Internal Server Error");
+        next(error);
+        //res.status(500).send("Internal Server Error");
     }
 }

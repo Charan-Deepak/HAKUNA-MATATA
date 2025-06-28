@@ -14,7 +14,7 @@ route.post("/register", ControllerAdmin.post_register);
 
 route.post("/login", passport.authenticate("admin", {
     failureRedirect: "/admin/login",
-    failureFlash: true
+    failureFlash: "Invalid username or password"//stores in error
 }), ControllerAdmin.post_login);
 
 route.get("/logout", ControllerAdmin.get_logout);

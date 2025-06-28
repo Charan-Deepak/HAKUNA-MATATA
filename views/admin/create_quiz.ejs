@@ -24,13 +24,13 @@
         <div class="col-lg-5 mb-5 mb-lg-0">
           <div class="card" >
             <div class="card-body py-5 px-md-5">
-              <form action="/admin/create_quiz/quiz_ques" method="POST">
+              <form action="/admin/create_quiz/quiz_ques" method="POST" class="needs-validation" novalidate>
                 
                 <div id="quiz_name" class="form-outline mb-4">
                   <input type="text" id="form3Example3" class="form-control" name="quizName" required/>
                   <label class="form-label" for="form3Example3">Name of quiz</label>
                 </div>
-            
+
                 <!-- Submit button -->
                 <button type="submit" class="btn btn-primary btn-block mb-4" style="opacity: 100%;">
                   Create quiz
@@ -49,6 +49,6 @@
 <!-- Section: Design Block -->
   </main>
   <!--Main layout-->
-
+  <%- include('../partials/validation'); -%>
     <%- include('../partials/mdbfooter'); -%>
     <%- include('../partials/footer'); -%>

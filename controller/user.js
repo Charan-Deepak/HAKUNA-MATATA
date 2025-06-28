@@ -66,7 +66,7 @@ module.exports.post_register=async function (req, res) {
             }
         }
     } catch (e) {
-        console.log(e.message)
+        next(e);
     }
 }
 
@@ -77,7 +77,7 @@ module.exports.post_login = (req, res) => {
 module.exports.get_logout = function (req, res) {
     req.logout((err) => {
         if (err) {
-            console.log(err);
+            next(err);
         } else {
             res.redirect('/');
         }

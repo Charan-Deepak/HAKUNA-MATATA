@@ -17,7 +17,7 @@ module.exports.get_home = function (req, res) {
     res.render("./admin/admin_home.ejs");
 }
 
-module.exports.post_register=async function (req, res) {
+module.exports.post_register=async function (req, res,next) {
 
     const newadmin = new Admin({
         username: req.body.username,
@@ -48,13 +48,13 @@ module.exports.post_register=async function (req, res) {
                 if (md5(req.body.password) === md5(req.body.repassword)) {
                     Admin.register(newadmin, req.body.password, function (err, admin) {
                         if (err) {
-                            console.log(err);
+                            next(err);
                             res.redirect("/admin/register");
                         }
                         else {
                             req.login(admin, (err) => {
                             if (err) {
-                                console.log(err);
+                                next(err);
                                 return res.redirect("/admin/login");
                             }
                             res.redirect("/admin/home");
@@ -67,7 +67,7 @@ module.exports.post_register=async function (req, res) {
             }
         }
     } catch (e) {
-        console.log(e.message)
+        next(e)
     }
 }
 
@@ -75,10 +75,10 @@ module.exports.post_login = (req, res) => {
     res.render("./admin/admin_home.ejs");
 }
 
-module.exports.get_logout = function (req, res) {
+module.exports.get_logout = function (req, res,next) {
     req.logout((err) => {
         if (err) {
-            console.log(err);
+            next(err);
         } else {
             res.redirect('/');
         }

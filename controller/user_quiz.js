@@ -2,6 +2,7 @@ const { User } = require('../model/user');
 const { Admin } = require('../model/admin');
 const { Test } = require('../model/adminform');
 const { Test_answer, Answer } = require('../model/answerform');
+const ExpressError = require('../ExpressError');
 
 module.exports.get_takequiz = function (req, res) {
     res.render("./user/take_quiz/take_quiz.ejs", { code: 0, message: "You Already Responded!" });
@@ -68,7 +69,7 @@ module.exports.post_markPage = async function (req, res, next) {
         await user.save();
 
         const test = await Test.findOne({ random: req.body.quiz_code });
-        if (!test) return res.status(404).send("Test not found.");
+        if (!test) return next(new ExpressError(404,"Test not found."));
 
         test.students_attended.push({
             student_ref: user._id,
@@ -78,13 +79,13 @@ module.exports.post_markPage = async function (req, res, next) {
         await test.save();
         res.redirect(`/user/take_quiz/marks_page/${req.body.quiz_code}`);
     } catch (error) {
-        console.error(error);
-        res.status(500).send("Internal Server Error");
+        next(error);
+        //res.status(500).send("Internal Server Error");
     }
 }
 
 
-module.exports.get_markPage =async function (req, res) {
+module.exports.get_markPage =async function (req, res,next) {
     try {
         let { code } = req.params;
         const test = await Test.findOne({ random: code }).populate('form');
@@ -97,13 +98,13 @@ module.exports.get_markPage =async function (req, res) {
                 }
             });
         if (!test||!user) {
-            return res.status(404).render("./error/page_!fnd.ejs");
+            return next(new ExpressError(500,"Test or User not Found!"));
         }
         const testAnsEntry = user.test_answer.find(
             t => t.quiz_code === code && t.answer_ref
         );
         if (!testAnsEntry) {
-            return res.status(404).render("./error/page_!fnd.ejs");
+            return next(new ExpressError(500, "Answers Not Found!"));
         }
         res.render("./user/take_quiz/marks_page.ejs", {
             message: JSON.stringify(testAnsEntry.answer_ref),
@@ -111,7 +112,7 @@ module.exports.get_markPage =async function (req, res) {
             test: JSON.stringify(test)
         });
     } catch (error) {
-        console.error(error);
-        res.status(500).send("Internal Server Error");
+        next(error)
+        //res.status(500).send("Internal Server Error");
     }
 }

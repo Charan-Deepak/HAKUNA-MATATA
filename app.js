@@ -27,6 +27,9 @@ const userRoute=require('./routes/users')
 const admin_quizRoute=require('./routes/admin_quiz');
 const user_quizRoute = require('./routes/user_quiz');
 
+//Error
+const ExpressError = require('./ExpressError');
+
 //ejs ans views
 app.set("views", path.join(__dirname, "views"));
 app.set('view engine', 'ejs');
@@ -115,9 +118,18 @@ app.use('/user',userRoute);
 app.use('/admin/create_quiz',admin_quizRoute);
 app.use('/user/take_quiz', user_quizRoute);
 
+// app.get('/error', ()=>{
+//    throw new ExpressError(500,"What");
+// })
+app.use((err, req, res, next) => {
+    let { status = 500, message = "Some Error Occured!" } = err;
+    res.status(status).render('./error/error.ejs', { status, message });
+});
+
+
 //app.use(cors());//allow incoming requests from ip
 app.use('*',(req,res)=>{
-    res.render('./error/page_!fnd.ejs');
+    res.render('./error/error.ejs', { status:400, message:"Page not Found!" });
 })
 
 app.listen(1000, function() {

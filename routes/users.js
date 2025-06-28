@@ -16,7 +16,7 @@ route.post("/register", ControllerUser.post_register);
 
 route.post("/login", passport.authenticate("user", {
     failureRedirect: "/user/login",
-    failureFlash: true,
+    failureFlash: "Invalid username or password",
 }), ControllerUser.post_login);
 
 route.get("/logout", ControllerUser.get_logout)

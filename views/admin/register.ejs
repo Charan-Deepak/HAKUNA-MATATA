@@ -22,6 +22,17 @@
           font-size: 11px;
           margin-left: 5px;
         }
+        .was-validated .form-control:invalid,
+        .was-validated .form-control:valid {
+          margin-bottom: 0 !important;
+        }
+        /* Give subtle space between input and invalid message */
+      .form-outline .invalid-feedback {
+        margin-top: 0.25rem;   /* Top space between input and message */
+        margin-bottom: 0.5rem; /* Optional bottom space */
+        font-size: 0.875rem;
+        opacity: 90%;   /* Slightly smaller font for clarity */
+      }
   </style>
   </head>
   <body>
@@ -42,7 +53,7 @@
               </div>
               <div class="col-xl-6">
                 <div class="card-body p-md-5 text-black">
-                  <form class="form" action="/admin/register" method="post">
+                  <form class="form needs-validation" action="/admin/register" method="post" novalidate>
                     <h3 class="mb-5 text-uppercase">  <i class="fa-solid fa-school"></i> Create account</h3>
   
                     <div class="row">
@@ -75,6 +86,8 @@
                     <div class="form-outline mb-4">
                       <input type="email" id="form3Example97" name="emailId" class="form-control form-control-lg" required />
                       <label class="form-label" for="form3Example97">Email ID<span>*</span></label>
+                      <div class="invalid-feedback">
+                        Please enter a valid Gmail address ending with <strong>@gmail.com</strong> </div>
                     </div>
 
                       <% if(typeof accountexists !== 'undefined' && accountexists !== null) {%>  
@@ -109,6 +122,6 @@
       </div>
     </div>
   </section>
-
+<%- include('../partials/validation'); -%>
 <%- include('../partials/mdbfooter'); -%>
 <%- include('../partials/footer'); -%>

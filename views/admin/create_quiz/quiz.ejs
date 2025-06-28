@@ -1,12 +1,25 @@
 <%- include('../../includes/admin_home/header') -%>
   <%- include('../../includes/admin_home/sidebar_create_quiz') -%>
     <%- include('../../includes/admin_home/create_quiz/navbar') -%>
+    <style>
+      .form-check-input.is-valid~.form-check-label, .was-validated .form-check-input:valid~.form-check-label {
+        margin-bottom: 0rem;
+    }
+    .form-control.is-invalid, .was-validated .form-control:invalid {
+      margin-bottom: 0rem;
+     }
+     .form-control.is-valid, .was-validated .form-control:valid {
+      margin-bottom: 0rem;
+  }
+      
+    </style>
 
   <!--Main Navigation-->
   <!--Main layout-->
-  <main style="margin-top: 58px;">   
-    <div class="questionblock"  style="padding: 25px;">
-      <form class="main_form" id="main_form" action="/admin/create_quiz/ques_form_new" method="post">
+  <main style="margin-top: 58px;"> 
+    <form class="main_form needs-validation" id="main_form" action="/admin/create_quiz/ques_form_new" method="post"
+      novalidate>
+      <div class="questionblock"  style="padding: 25px;">
         <input type="hidden" name="productData" id="productData">
         <input type="hidden" name="quizName" id="quizName">
         <input type="hidden" name="username" id="username">
@@ -24,7 +37,7 @@
                 </div>
 
                 <div class="form-outline" id="timerSection" data-mdb-input-init>
-                  <input id="timer" name="timer" type="number"   required="true" class="form-control" />
+                  <input id="timer" name="timer" type="number" min="0" class="form-control" required/>
                   <label class="form-label" for="typeNumber">Time in minutes</label>
                 </div>
               </div>
@@ -32,11 +45,10 @@
           </div>
 
           <button type="button" id="add" class="btn btn-success add" data-mdb-ripple-init>ADD</button> 
-          <button type="button" class="btn btn-info submit" id="done" style="float: right; margin-left: 10px;" data-mdb-ripple-init>SUBMIT</button>
+          <button type="submit" class="btn btn-info submit" id="done" style="float: right; margin-left: 10px;" data-mdb-ripple-init>SUBMIT</button>
                 <!-- <button type="hidden" id="finalSubmit" class="btn btn-dark done right" style="float: right; margin-right: 10px;" data-mdb-ripple-init>SUBMIT default</button> -->
-
-            </form>
-    </div>
+      </div>
+    </form>
 
   <script>
      //dynamic field creation with javascript
@@ -54,7 +66,7 @@
     function addinputquestion(i){ 
 
             // Create form element
-            const form = document.createElement("form");
+            const form = document.createElement("div");
             form.style.width = "40rem";
             form.className="form"+i;
 
@@ -73,7 +85,7 @@
             textarea.id = "text_question"+i ;
             textarea.rows = "4";
             textarea.name = "text_question" ;
-            textarea.required="true";//for must entry
+            textarea.required=true;//for must entry
 
             divTextarea.appendChild(textarea);
 
@@ -89,10 +101,11 @@
             // Create the number input
             const inputNumber = document.createElement("input");
             inputNumber.type = "number";
+            inputNumber.min=0;
             inputNumber.id = "marks"+i;
             inputNumber.className = "form-control";
             inputNumber.name ="question_marks";
-            inputNumber.required="true";
+            inputNumber.required=true;
 
             // Append the number input to the div
             divNumber.appendChild(inputNumber);
@@ -110,7 +123,7 @@
             buttonSingleCorrect.id="option_type"+i;
             buttonSingleCorrect.name="option"+i;
             buttonSingleCorrect.value="1";
-            buttonSingleCorrect.required="true";
+            buttonSingleCorrect.required=true;
             buttonSingleCorrect.textContent = "SINGLE CORRECT";
             buttonSingleCorrect.style.marginRight = "10px";
             buttonSingleCorrect.addEventListener("click", function() {
@@ -125,7 +138,7 @@
             buttonMultiCorrect.id="option_type"+i;
             buttonMultiCorrect.name="option"+i;
             buttonMultiCorrect.value="2";
-            buttonMultiCorrect.required="true";
+            buttonMultiCorrect.required=true;
             buttonMultiCorrect.textContent = "MULTI CORRECT";
             buttonMultiCorrect.style.marginRight = "10px";
             buttonMultiCorrect.addEventListener("click", function() {
@@ -140,7 +153,7 @@
             buttonSingleWord.id="option_type"+i;
             buttonSingleWord.name="option"+i;
             buttonSingleWord.value="3";
-            buttonSingleWord.required="true";
+            buttonSingleWord.required=true;
             buttonSingleWord.textContent = "SINGLE WORD";
             buttonSingleWord.addEventListener("click", function() {
             option_type[i]=3;
@@ -174,6 +187,9 @@
             form.appendChild(your_options);
             form.appendChild(document.createElement("br"));
             form.appendChild(btn);
+            option_type[i] = 1;
+            radio_answer(i);
+            buttonSingleCorrect.click();
             window['form' + i] = form;
     }
             
@@ -193,28 +209,28 @@
                 <div  class= "mb-4">
                 <input class="form-check-input" type="radio" name="correct${i}" id="option_correct_radio_${i}" value=1 required/>
                 <div data-mdb-input-init>
-                <input type="text" class="form-control"  id="text_question1${i}" name="option_array" required="true"/>
+                <input type="text" class="form-control"  id="text_question1${i}" name="option_array" required/>
                 </div>
                 </div>
                 
                 <div  class="mb-4">
                 <input class="form-check-input" type="radio" id="option_correct_radio_${i}" name="correct${i}" value=2 required/>
                 <div data-mdb-input-init>
-                <input type="text" class="form-control" id="text_question2${i}" name="option_array" required="true"/>
+                <input type="text" class="form-control" id="text_question2${i}" name="option_array" required/>
                 </div>
                 </div>
 
                 <div  class="mb-4">
                 <input class="form-check-input" type="radio" id="option_correct_radio_${i}" name="correct${i}" value=3 required/>
                 <div data-mdb-input-init>
-                <input type="text" class="form-control" id="text_question3${i}" name="option_array" required="true"/>
+                <input type="text" class="form-control" id="text_question3${i}" name="option_array" required/>
                 </div>
                 </div>
 
                 <div  class="mb-4">
                 <input class="form-check-input" type="radio" id="option_correct_radio_${i}" name="correct${i}" value=4 required/>
                 <div data-mdb-input-init>
-                <input type="text" class="form-control" id="text_question4${i}" name="option_array" required="true"/>
+                <input type="text" class="form-control" id="text_question4${i}" name="option_array" required/>
                 </div>
                 </div>
               </div>
@@ -234,28 +250,28 @@
                 <div  class= "mb-4">
                 <input class="form-check-input" type="checkbox" id="text_answer_checkbox1${i}" name="correct_checkboxes1${i}" value="1"/>
                 <div data-mdb-input-init>
-                <input type="text" class="form-control"   id="text_question1${i}" name="option_array" required="true"/>
+                <input type="text" class="form-control"   id="text_question1${i}" name="option_array" required/>
                 </div>
                 </div>
                 
                 <div  class="mb-4">
                 <input class="form-check-input" type="checkbox" id="text_answer_checkbox2${i}" name="correct_checkboxes2${i}" value="2"/>
                 <div data-mdb-input-init>
-                <input type="text" class="form-control" id="text_question2${i}" name="option_array" required="true"/>
+                <input type="text" class="form-control" id="text_question2${i}" name="option_array" required/>
                 </div>
                 </div>
 
                 <div  class="mb-4">
                 <input class="form-check-input" type="checkbox" id="text_answer_checkbox3${i}" name="correct_checkboxes3${i}" value="3"/>
                 <div data-mdb-input-init>
-                <input type="text" class="form-control" id="text_question3${i}" name="option_array" required="true"/>
+                <input type="text" class="form-control" id="text_question3${i}" name="option_array" required/>
                 </div>
                 </div>
 
                 <div  class="mb-4">
                 <input class="form-check-input" type="checkbox" id="text_answer_checkbox4${i}" name="correct_checkboxes4${i}" value="4"/>
                 <div data-mdb-input-init>
-                <input type="text" class="form-control" id="text_question4${i}" name="option_array" required="true"/>
+                <input type="text" class="form-control" id="text_question4${i}" name="option_array" required/>
                 </div>
                 </div>
                
@@ -275,7 +291,7 @@
                         </p>
                         
                         <div class="mb-4" data-mdb-input-init>
-                          <input type="text" id="option_type_text${i}" name="answer_text" required="true" class="form-control" />
+                          <input type="text" id="option_type_text${i}" name="answer_text" required="true" class="form-control" required/>
                         </div>
                     </div>
                     `;
@@ -370,9 +386,47 @@
                 i++;
                 addinputquestion(i);
             });
+
+            function showAlert(message, type = 'warning', timeout = 3000) {
+                const alertBox = document.createElement('div');
+                alertBox.className = `alert alert-${type} alert-dismissible fade show`;
+                alertBox.role = 'alert';
+                alertBox.innerHTML = `
+                <strong>${type.charAt(0).toUpperCase() + type.slice(1)}!</strong> ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              `;
+
+                const container = document.querySelector(".questionblock");
+                container.insertBefore(alertBox, container.firstChild);
+
+                // Auto-hide after timeout (e.g., 3 seconds)
+                setTimeout(() => {
+                  alertBox.classList.remove('show');
+                  alertBox.classList.add('hide');
+                  alertBox.remove();
+                }, timeout);
+              }
+            
             
             // Now you can use the productData as needed
-          document.querySelector('#done').addEventListener("click", async function() {
+          document.querySelector('#done').addEventListener("click", async function(e) {
+                const form = document.getElementById('main_form');
+
+                // Trigger Bootstrap validation
+                if (!form.checkValidity()) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  form.classList.add('was-validated');
+                  return; // Stop submission if invalid
+                }else if(i<1){
+                  e.preventDefault();
+                  e.stopPropagation();
+                  showAlert("Min one question needed", "warning", 10000); // 10-second timeout
+                  return;
+                }
+
+                form.classList.add('was-validated');
+
                 for (var j = 1; j <= i; j++) {
                     await submit_form(j); //control to sumbit the form
                 }
@@ -388,8 +442,7 @@
                 document.getElementById("quizName").value = quizName;
                 document.getElementById("username").value = username;
                 document.getElementById("time").value = time;
-                //document.querySelector(".main_form").value = JSON.stringify(productData); // Set value of submit button
-                const form=document.getElementById('main_form');
+
                 form.submit();
         });
 
@@ -401,18 +454,20 @@
 
             if (this.checked) {
               this.value = 'yes';
-              timerSection.style.display = 'block'; // Show timer section
+              timerSection.style.display = 'block';
+              timerInput.setAttribute('required', 'true'); // Make timer required
             } else {
               this.value = '';
-              timerSection.style.display = 'none';  // Hide timer section
-              timerInput.value = '';                // Clear input
+              timerSection.style.display = 'none';
+              timerInput.removeAttribute('required'); // Remove required when hidden
+              timerInput.value = ''; // Optional: clear input value
             }
-        });
+          });        
       
 
 
     </script>
   </main>
-
+  <%- include('../../partials/validation'); -%>
   <%- include('../../partials/mdbfooter'); -%>
     <%- include('../../partials/footer'); -%>

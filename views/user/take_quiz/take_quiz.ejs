@@ -1,6 +1,14 @@
 <%- include('../../includes/user_home/take_quiz/header'); -%>
 <%- include('../../includes/user_home/take_quiz/sidebar'); -%>
 <%- include('../../includes/user_home/take_quiz/navbar'); -%>
+<style>
+  /* Remove extra bottom margin on invalid input */
+  .was-validated .form-control:invalid,
+  .was-validated .form-control:valid {
+    margin-bottom: 0 !important;
+  }
+  
+</style>
 <body>
 
   <!-- Section: Design Block -->
@@ -23,13 +31,13 @@
         <div class="row d-flex justify-content-center">
           <div class="col-lg-8">
             <h2 class="fw-bold mb-4">Are you ready?</h2>
-            <form id="form1" action="/user/take_quiz/ques_paper" method="post">
+            <form id="form1" action="/user/take_quiz/ques_paper" method="post" class="needs-validation" novalidate>
               <!-- 2 column grid layout with text inputs for the first and last names -->
               <div class="row">
                 <div class="col-md-10 offset-1 mb-4">
                   <div class="form-outline" id="form1">
                     
-                    <input type="text" id="form3Example2" class="form-control" name="quizcode" />
+                    <input type="text" id="form3Example2" class="form-control" name="quizcode" required/>
                     <label class="form-label" for="form3Example2">Quiz code</label>
                   </div>
                 </div>
@@ -106,5 +114,6 @@
     
   </script>
 
+  <%- include('../../partials/validation'); -%>
   <%- include('../../partials/mdbfooter'); -%>
   <%- include('../../partials/footer') -%>
