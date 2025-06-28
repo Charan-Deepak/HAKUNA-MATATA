@@ -27,13 +27,15 @@
         <h1 class="display-5" style="text-transform: capitalize;"><%=quiz_name %></h1>
         <hr>
 
-          <div class="col-lg-4 col-md-12 mb-4">
+        
+
+          <!-- <div class="col-lg-4 col-md-12 mb-4">
             <div class="card">
               <div class="card-body">
-                    <!-- Default switch -->
+                    Default switch
                 <div class="form-check form-switch">
                   <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" checked>
-                  <label class="form-check-label" for="flexSwitchCheckDefault"><p class="h6">Click for timer</p></label>
+                  <label class="form-check-label" for="flexSwitchCheckDefault"><p class="h6">Need a timer ?</p></label>
                 </div>
 
                 <div class="form-outline" id="timerSection" data-mdb-input-init>
@@ -42,11 +44,68 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
 
-          <button type="button" id="add" class="btn btn-success add" data-mdb-ripple-init>ADD</button> 
-          <button type="submit" class="btn btn-info submit" id="done" style="float: right; margin-left: 10px;" data-mdb-ripple-init>SUBMIT</button>
+           <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" checked>
+                  <label class="form-check-label" for="flexSwitchCheckDefault"><p class="h6">Need a timer ?</p></label>
+                </div>
+
+                <div class="form-outline col-lg-4 col-md-12 mb-4" id="timerSection" data-mdb-input-init>
+                  <input id="timer" name="timer" type="number" min="0" class="form-control" required/>
+                  <label class="form-label" for="typeNumber">Time in minutes</label>
+                </div>
+          
+               <!-- <div class="fixed-action-btn" id="fixed1" data-mdb-button-init data-mdb-ripple-init>
+  <a class="btn btn-floating text-white btn-lg" data-mdb-button-init data-mdb-ripple-init style="background-color: #f44336;">
+    <i class="fas fa-pencil-alt"></i>
+  </a>
+
+  <ul class="list-unstyled">
+    <li>
+      <a class="btn text-white btn-floating btn-lg" data-mdb-button-init data-mdb-ripple-init style="background-color: #f44336;"
+        ><i class="fas fa-star"></i
+      ></a>
+
+      <button type="button" id="add" class="btn btn-success add" data-mdb-ripple-init>ADD</button>
+    </li>
+    <li>
+      <a class="btn text-white btn-floating btn-lg" data-mdb-button-init data-mdb-ripple-init style="background-color: #fdd835;"
+        ><i class="fas fa-user"></i
+      ></a>
+    </li>
+    <li>
+      <a class="btn text-white btn-floating btn-lg" data-mdb-button-init data-mdb-ripple-init style="background-color: #4caf50;"
+        ><i class="fas fa-envelope"></i
+      ></a>
+    </li>
+    <li>
+      <a class="btn text-white btn-floating btn-lg" data-mdb-button-init data-mdb-ripple-init style="background-color: #2196f3;"
+        ><i class="fas fa-shopping-cart"></i
+      ></a>
+    </li>
+  </ul>
+</div> -->
+
+<!-- Fixed Buttons - Side by Side -->
+<div style="position: fixed; bottom: 20px; right: 20px; display: flex; gap: 15px; z-index: 9999;">
+  
+  <button type="button" id="add" class="btn btn-success add" data-mdb-ripple-init>ADD</button>
+
+   <button type="submit" class="btn btn-info submit" id="done" style="float: right; margin-left: 10px;" data-mdb-ripple-init>SUBMIT</button>
+  </button>
+
+</div>
+
+
+
+
+
+
+          <!-- <button type="button" id="add" class="btn btn-success add" data-mdb-ripple-init>ADD</button>  -->
+          <!-- <button type="submit" class="btn btn-info submit" id="done" style="float: right; margin-left: 10px;" data-mdb-ripple-init>SUBMIT</button> -->
                 <!-- <button type="hidden" id="finalSubmit" class="btn btn-dark done right" style="float: right; margin-right: 10px;" data-mdb-ripple-init>SUBMIT default</button> -->
+
       </div>
     </form>
 
