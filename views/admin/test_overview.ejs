@@ -1,0 +1,21 @@
+<%- include('../includes/admin_home/header') -%>
+    <%- include('../includes/admin_home/sidebar_test_overview') -%>
+        <%- include('../includes/admin_home/navbar') -%>
+
+            <!--Main Navigation-->
+              
+
+            <!--Main layout-->
+            <main style="margin-top: 58px">
+                <%- include('../includes/admin_home/test_overview') -%>
+                <%- include('../includes/admin_home/question_paper') -%>
+            </main>
+            <!--Main layout-->
+            <script>
+                const admin = JSON.parse(`<%- admin%>`);
+            </script>
+            <script src="/js/home/overview.js"></script>
+            <script src="/js/home/question_paper_overview.js"></script>
+
+            <%- include('../partials/mdbfooter'); -%>
+                <%- include('../partials/footer'); -%>

@@ -5,7 +5,7 @@ const { Test_answer, Answer } = require('../model/answerform');
 const ExpressError = require('../ExpressError');
 
 module.exports.get_takequiz = function (req, res) {
-    res.render("./user/take_quiz/take_quiz.ejs", { code: 0, message: "You Already Responded!" });
+    res.render("./user/take_quiz/take_quiz.ejs", { code: 0});
 }
 
 module.exports.post_quesPaper = async function (req, res) {
@@ -107,20 +107,23 @@ module.exports.post_markPage = async function (req, res, next) {
 
         await test_answer.save();
 
+
+        const test = await Test.findOne({ random: req.body.quiz_code });
+        if (!test) return next(new ExpressError("Test not found."));
+
         let userAnswerEntry = user.test_answer.find(ans => ans.quiz_code === req.body.quiz_code);
         if (userAnswerEntry) {
             userAnswerEntry.answer_ref = test_answer._id;
+            userAnswerEntry.test_ref=test._id;
         } else {
             user.test_answer.push({
                 quiz_code: req.body.quiz_code,
                 answer_ref: test_answer._id,
-                end_date: new Date()
+                end_date: new Date(),
+                test_ref:test._id
             });
         }
         await user.save();
-
-        const test = await Test.findOne({ random: req.body.quiz_code });
-        if (!test) return next(new ExpressError("Test not found."));
 
         const index = test.students_attended.findIndex(
             s => s.student_ref.toString() === user._id.toString()
@@ -128,13 +131,15 @@ module.exports.post_markPage = async function (req, res, next) {
 
         if (index !== -1) {
             // Update the existing entry
+            test.students_attended[index].answer_ref = test_answer._id;
             test.students_attended[index].marks = totalmarksget;
         } else {
             // Push a new entry if it doesn't exist
             test.students_attended.push({
                 student_ref: user._id,
                 username: req.user.username,
-                marks: totalmarksget
+                marks: totalmarksget,
+                answer_ref: test_answer._id,
             });
         }
 

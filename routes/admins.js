@@ -10,6 +10,10 @@ route.get("/register", ControllerAdmin.get_register);
 
 route.get("/home", isAdminLoggedIn, ControllerAdmin.get_home);
 
+route.get("/test_overview", isAdminLoggedIn, ControllerAdmin.get_test_overview);
+
+route.get("/depth", isAdminLoggedIn, ControllerAdmin.get_depth);
+
 route.post("/register", ControllerAdmin.post_register);
 
 route.post("/login", passport.authenticate("admin", {

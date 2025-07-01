@@ -1,0 +1,119 @@
+
+    <style>
+        .heading {
+          font-family: 'Comic Sans MS', 'Chalkboard SE', 'Marker Felt', cursive;
+          font-size: 2rem;
+          color: #ff4081;
+          text-shadow: 2px 2px 0 #fff176, 4px 4px 0 #000;
+          text-align: center;
+          margin: 2rem 0;
+          padding: 0.5rem;
+          background: #fff9c4;
+          border: 4px dashed #ff6f00;
+          border-radius: 12px;
+          display: inline-block;
+        }
+        
+        .align-center {
+          display: flex;
+          justify-content: center;
+        }
+        </style>
+
+<!--Main layout-->
+<div class="depth quiz_depth">
+        <!--Section: Sales Performance KPIs-->
+        <section class="mb-4">
+            <div class="card">
+                <div class="card-header text-center pb-0 ">
+                    <a class="d-flex justify-content-start pe-2 back_but" style="cursor: pointer;">
+                        <small class="text-muted " style="font-size: 0.9rem; "><svg xmlns="http://www.w3.org/2000/svg"
+                                width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-left"
+                                viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M10 3.5a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1 1 0v2A1.5 1.5 0 0 1 9.5 14h-8A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2h8A1.5 1.5 0 0 1 11 3.5v2a.5.5 0 0 1-1 0z" />
+                                <path fill-rule="evenodd"
+                                    d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708z" />
+                            </svg></small>
+                    </a>
+                    <h5 class="mb-0 text-uppercase fw-light quiz_name"
+                        style="font-size: 3rem; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; ">
+                        TEST
+                    </h5>
+                    <div class="d-flex justify-content-end pe-2">
+                        <small class="text-muted " style="font-size: 0.9rem; margin-top: -1.2rem;">Date: <span
+                                class="test_date">DD MM YYYY</span></small>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container my-4 px-4 py-3 shadow rounded bg-light" style="margin-left: 4rem;width: 85%;">
+                        <div class="row mb-2">
+                            <div class="col-md-6 mb-2 ps-5">
+                                <strong>User :</strong> <span class="text-muted admin_name">xyz</span>
+                            </div>
+                            <div class="col-md-6 mb-2 ps-5">
+                                <strong>Email :</strong> <span class="text-muted admin_email">xyz@gmail.com</span>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-6 mb-2 ps-5">
+                                <strong>Test Code :</strong> <span class="text-muted test_code">xyz</span>
+                                <span class="test_into" style="cursor:pointer"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right"
+                                        viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
+                                        <path fill-rule="evenodd"
+                                            d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+                                    </svg></span>
+                            </div>
+                            <div class="col-md-6 mb-2 ps-5">
+                                <strong>Duration :</strong> <span class="text-muted test_time">x mins</span>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-6 mb-2 ps-5">
+                                <strong>Questions :</strong> <span class="text-muted ttl_ques">x</span>
+                            </div>
+                            <div class="col-md-6 mb-2 ps-5">
+                                <strong>Rank :</strong> <span class="text-muted rnk">x</span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-2 ps-5">
+                                <strong>Total Marks :</strong> <span class="text-muted ttl_marks">x</span>
+                            </div>
+                            <div class="col-md-6 mb-2 ps-5">
+                                <strong>Scored Marks :</strong> <span class="text-muted marks">x</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Rank</th>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Marks</th>
+                                </tr>
+                            </thead>
+                            <tbody id="student_items">
+                            </tbody>
+                        </table>
+                        <div class="align-center">
+                            <h4 class="heading">Answer Sheet</h4>                    </div>
+                        <%- include('./answer_sheet') -%>
+                        <div class="d-flex justify-content-end">
+                            <button id="download" class="btn btn-danger">Download as PDF</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Section: Sales Performance KPIs-->
+        </div>

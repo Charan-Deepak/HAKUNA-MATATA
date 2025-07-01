@@ -30,6 +30,10 @@ const test_Schema=new mongoose.Schema({
             type: Schema.Types.ObjectId,
             ref: "User",
         },
+        answer_ref: {
+            type: Schema.Types.ObjectId,
+            ref: "Test_answer",
+        },
         username:String,
         marks:Number,
     },]

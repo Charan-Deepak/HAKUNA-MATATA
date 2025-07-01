@@ -1,0 +1,253 @@
+<%- include('../includes/user_home/header') -%>
+    <%- include('../includes/user_home/sidebar_graph') -%>
+        <%- include('../includes/user_home/navbar') -%>
+
+        <style>
+            body {
+                margin: 0;
+                background: #d7b04e;
+                overflow: hidden;
+            }
+            canvas {
+                display: block;
+                margin: auto;
+                padding: 1rem;
+                background: #6b4b05;
+                border: 2px solid #00ffc8;
+                box-shadow: 0 0 20px #00ffc8;
+            }
+        
+            #tooltip {
+                position: absolute;
+                background: white;
+                color: #111;
+                padding: 6px 10px;
+                border-radius: 6px;
+                font-family: sans-serif;
+                font-size: 14px;
+                box-shadow: 0 0 10px #00ffe1;
+                pointer-events: none;
+                display: none;
+                z-index: 10;
+            }
+        
+            </style>
+
+            <!--Main layout-->
+            <main  style="margin-top: 58px">
+                <div class="container pt-4">
+
+                    <canvas id="graph"></canvas>
+                    <div id="tooltip"></div>
+
+                </div>
+            </main>
+                <script>
+                    const answer = JSON.parse(`<%- user %>`);
+                    console.log(answer);
+                </script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+                <script>
+                    const canvas = document.getElementById('graph');
+                    const ctx = canvas.getContext('2d');
+                    const tooltip = document.getElementById('tooltip');
+
+                    const margin = 80;
+                    let width, height, pixelRatio;
+                    let curvePoints = [];
+
+                    // Step 1: Sort by end_date
+                    answer.sort((a, b) => new Date(a.end_date) - new Date(b.end_date));
+
+                    // Step 2: Normalize dates to percentage (0 to 100 range)
+                    const minDate =answer.length<=0?0: new Date(answer[0].end_date).getTime();
+                    const maxDate = answer.length <= 0 ? 0 : new Date(answer[answer.length - 1].end_date).getTime();
+                    const range = maxDate - minDate;
+
+                    const points = answer.map(entry => {
+                        const date = new Date(entry.end_date).getTime();
+                        const x = range > 0 ? ((date - minDate) / range) * 100 : 0; // Time as percentage (0-100)
+                        const y = (entry.answer_ref.totalmarksget / entry.answer_ref.totalmarks) * 100; // Percentage score
+                        return { x, y };
+                    });
+
+                    const progress = { value: 0 };
+
+                    function resizeCanvas() {
+                        width = window.innerWidth * 0.9;
+                        height = window.innerHeight * 0.6;
+                        pixelRatio = window.devicePixelRatio || 1;
+
+                        canvas.width = width* pixelRatio;
+                        canvas.height = height * pixelRatio;
+                        canvas.style.width = "56rem";
+                        canvas.style.height = "24rem";
+                        canvas.style.marginTop = "5vw";
+                        ctx.setTransform(1, 0, 0, 1.02, 0, 0);
+                        ctx.scale(pixelRatio, pixelRatio);
+                        canvas.style.cursor = "pointer";
+                        curvePoints = getSmoothPoints(points);
+                    }
+
+                    function toCanvasCoords(pt) {
+                        const x = margin + (pt.x / 100) * (width - 2 * margin);
+                        let y = height - margin - (pt.y / 100) * (height - 2 * margin);
+                        y = Math.max(margin, Math.min(height - margin, y));
+                        return { x, y };
+                    }
+
+                    function getSmoothPoints(data, segments = 200) {
+                        const smooth = [];
+                        for (let i = 0; i <= segments; i++) {
+                            const t = i / segments;
+                            const index = Math.floor(t * (data.length - 1));
+                            const p0 = data[Math.max(0, index - 1)];
+                            const p1 = data[index];
+                            const p2 = data[Math.min(data.length - 1, index + 1)];
+                            const p3 = data[Math.min(data.length - 1, index + 2)];
+
+                            const tt = (t * (data.length - 1)) - index;
+
+                            const x = catmullRom(p0.x, p1.x, p2.x, p3.x, tt);
+                            const y = catmullRom(p0.y, p1.y, p2.y, p3.y, tt);
+                            const canvasPoint = toCanvasCoords({ x, y });
+                            canvasPoint.real = { x, y };
+                            smooth.push(canvasPoint);
+                        }
+                        return smooth;
+                    }
+
+                    function catmullRom(p0, p1, p2, p3, t) {
+                        return 0.5 * (
+                            2 * p1 +
+                            (-p0 + p2) * t +
+                            (2 * p0 - 5 * p1 + 4 * p2 - p3) * t * t +
+                            (-p0 + 3 * p1 - 3 * p2 + p3) * t * t * t
+                        );
+                    }
+
+                    function drawAxes() {
+                        const axisColor = "#00ffe1";
+                        ctx.strokeStyle = axisColor;
+                        ctx.lineWidth = 2;
+
+                        // X-axis
+                        ctx.beginPath();
+                        ctx.moveTo(margin, height - margin);
+                        ctx.lineTo(width - margin-20, height - margin);
+                        ctx.stroke();
+
+                        // Y-axis
+                        ctx.beginPath();
+                        ctx.moveTo(margin, height - margin);
+                        ctx.lineTo(margin, margin-30);
+                        ctx.stroke();
+
+                        // Time label gradient
+                        const xGrad = ctx.createLinearGradient(width - margin - 90, 0, width - margin, 0);
+                        xGrad.addColorStop(0, "#ffff00");
+                        xGrad.addColorStop(1, "#ffaa00");
+                        ctx.fillStyle = xGrad;
+                        ctx.font = '16px sans-serif';
+                        ctx.fillText('Time  →', width - margin - 60, height - margin + 30);
+
+                        // Score label gradient
+                        const yGrad = ctx.createLinearGradient(0, margin, 0, margin + 100);
+                        yGrad.addColorStop(0, "#00ccff");
+                        yGrad.addColorStop(1, "#0044cc");
+                        ctx.fillStyle = yGrad;
+                        ctx.save();
+                        ctx.translate(margin - 40, margin+20);
+                        ctx.rotate(-Math.PI / 2);
+                        ctx.fillText('Score (%) →', 0, 0);
+                        ctx.restore();
+                    }
+
+                    function drawArrowTip(x, y, angle) {
+                        const size = 15;
+                        ctx.save();
+                        ctx.translate(x, y);
+                        ctx.rotate(angle);
+                        ctx.fillStyle = '#dc2626';
+                        ctx.beginPath();
+                        ctx.moveTo(2.5, 0);
+                        ctx.lineTo(-size, -size / 2);
+                        ctx.lineTo(-size, size / 2);
+                        ctx.closePath();
+                        ctx.fill();
+                        ctx.restore();
+                    }
+
+                    function drawCurve() {
+                        ctx.clearRect(0, 0, width, height);
+                        drawAxes();
+
+                        const drawCount = Math.floor(progress.value * curvePoints.length);
+                        if (drawCount < 2) return;
+
+                        ctx.lineWidth = 3;
+                        const gradient = ctx.createLinearGradient(margin, 0, width - margin, 0);
+                        gradient.addColorStop(0, '#00ffc8');
+                        gradient.addColorStop(0.5, '#00aaff');
+                        gradient.addColorStop(1, '#ffcc00');
+                        ctx.strokeStyle = gradient;
+
+                        ctx.beginPath();
+                        ctx.moveTo(curvePoints[0].x, curvePoints[0].y);
+                        for (let i = 1; i < drawCount; i++) {
+                            ctx.lineTo(curvePoints[i].x, curvePoints[i].y);
+                        }
+                        ctx.stroke();
+
+                        // Red arrow tip
+                        const lead = curvePoints[drawCount - 1];
+                        const prev = curvePoints[drawCount - 2];
+                        const angle = Math.atan2(lead.y - prev.y, lead.x - prev.x);
+                        drawArrowTip(lead.x, lead.y, angle);
+                    }
+
+                    function animate() {
+                        drawCurve();
+                        requestAnimationFrame(animate);
+                    }
+
+                    function showTooltip(e) {
+                            const rect = canvas.getBoundingClientRect();
+                            const mx = (e.clientX - rect.left);
+                            const my = (e.clientY - rect.top);
+
+                            for (let i = 0; i < points.length; i++) {
+                                const canvasPt = toCanvasCoords(points[i]);
+
+                                // Check if mouse X is close to the real point X (±6px tolerance)
+                                const xMatch = Math.abs(mx - canvasPt.x) < 6;
+
+                                if (xMatch) {
+                                    const score = Math.round(points[i].y); // Original point score
+                                    tooltip.style.left = `${canvasPt.x + rect.left + 10}px`;
+                                    tooltip.style.top = `${canvasPt.y + rect.top - 20}px`;
+                                    tooltip.innerHTML = `Score: ${score}%`;
+                                    tooltip.style.display = 'block';
+                                    return;
+                                }
+                            }
+
+                            tooltip.style.display = 'none';
+                        }
+                    
+
+                    window.addEventListener('resize', resizeCanvas);
+                    canvas.addEventListener('mousemove', showTooltip);
+                    resizeCanvas();
+                    animate();
+
+                    gsap.to(progress, {
+                        duration: 3,
+                        value: 1,
+                        ease: "power2.inOut"
+                    });
+                </script>
+            <!--Main layout-->
+
+    <%- include('../partials/mdbfooter'); -%>
+    <%- include('../partials/footer'); -%>

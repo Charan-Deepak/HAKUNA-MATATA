@@ -8,7 +8,7 @@
   <main style="margin-top: 58px">
     <div class="container pt-4">
       <!-- Section: Main chart -->
-      <section class="mb-4">
+      <!-- <section class="mb-4">
         <div class="card">
           <div class="card-header py-3">
             <h5 class="mb-0 text-center"><strong>Sales</strong></h5>
@@ -17,103 +17,11 @@
             <canvas class="my-4 w-100" id="myChart" height="380"></canvas>
           </div>
         </div>
-      </section>
+      </section> -->
       <!-- Section: Main chart -->
 
-      <!--Section: Sales Performance KPIs-->
-      <section class="mb-4">
-        <div class="card">
-          <div class="card-header text-center py-3">
-            <h5 class="mb-0 text-center">
-              <strong>Sales Performance KPIs</strong>
-            </h5>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-hover text-nowrap">
-                <thead>
-                  <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Product Detail Views</th>
-                    <th scope="col">Unique Purchases</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Product Revenue</th>
-                    <th scope="col">Avg. Price</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">Value</th>
-                    <td>18,492</td>
-                    <td>228</td>
-                    <td>350</td>
-                    <td>$4,787.64</td>
-                    <td>$13.68</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Percentage change</th>
-                    <td>
-                      <span class="text-danger">
-                        <i class="fas fa-caret-down me-1"></i><span>-48.8%%</span>
-                      </span>
-                    </td>
-                    <td>
-                      <span class="text-success">
-                        <i class="fas fa-caret-up me-1"></i><span>14.0%</span>
-                      </span>
-                    </td>
-                    <td>
-                      <span class="text-success">
-                        <i class="fas fa-caret-up me-1"></i><span>46.4%</span>
-                      </span>
-                    </td>
-                    <td>
-                      <span class="text-success">
-                        <i class="fas fa-caret-up me-1"></i><span>29.6%</span>
-                      </span>
-                    </td>
-                    <td>
-                      <span class="text-danger">
-                        <i class="fas fa-caret-down me-1"></i><span>-11.5%</span>
-                      </span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Absolute change</th>
-                    <td>
-                      <span class="text-danger">
-                        <i class="fas fa-caret-down me-1"></i><span>-17,654</span>
-                      </span>
-                    </td>
-                    <td>
-                      <span class="text-success">
-                        <i class="fas fa-caret-up me-1"></i><span>28</span>
-                      </span>
-                    </td>
-                    <td>
-                      <span class="text-success">
-                        <i class="fas fa-caret-up me-1"></i><span>111</span>
-                      </span>
-                    </td>
-                    <td>
-                      <span class="text-success">
-                        <i class="fas fa-caret-up me-1"></i><span>$1,092.72</span>
-                      </span>
-                    </td>
-                    <td>
-                      <span class="text-danger">
-                        <i class="fas fa-caret-down me-1"></i><span>$-1.78</span>
-                      </span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!--Section: Sales Performance KPIs-->
-
+      
+      
       <!--Section: Minimal statistics cards-->
       <section>
         <div class="row">
@@ -184,8 +92,8 @@
               <div class="card-body">
                 <div class="d-flex justify-content-between px-md-1">
                   <div>
-                    <h3 class="text-danger">278</h3>
-                    <p class="mb-0">New Projects</p>
+                    <h3 class="max_ques text-danger"></h3>
+                    <p class="mb-0">Max Question</p>
                   </div>
                   <div class="align-self-center">
                     <i class="fas fa-rocket text-danger fa-3x"></i>
@@ -246,8 +154,8 @@
               <div class="card-body">
                 <div class="d-flex justify-content-between px-md-1">
                   <div>
-                    <h3 class="text-info">278</h3>
-                    <p class="mb-0">New Posts</p>
+                    <h3 class="test_cnt_b text-info"></h3>
+                    <p class="mb-0">Tests</p>
                   </div>
                   <div class="align-self-center">
                     <i class="fas fa-book-open text-info fa-3x"></i>
@@ -329,6 +237,44 @@
       </section>
       <!--Section: Minimal statistics cards-->
 
+      <!--Section: Sales Performance KPIs-->
+      <section class="mb-4">
+        <div class="card">
+          <div class="card-header text-center py-3">
+            <h5 class="mb-0 text-center">
+              <strong>Quizzit - Test</strong>
+            </h5>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover text-nowrap">
+                <thead>
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Code</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">No. of Question</th>
+                    <th scope="col">Max Marks</th>
+                    <th scope="col">Marks Scored</th>
+                    <th scope="col">Duration</th>
+                  </tr>
+                </thead>
+                <tbody id="test_items">
+                </tbody>
+              </table>
+              <div class="text-center mt-2">
+                <button id="showMoreBtn" class="btn d-none text-primary p-0"
+                  style="border: none; background: transparent; box-shadow: none; outline: none;"
+                  onmousedown="this.style.outline='none'; this.style.boxShadow='none'; this.style.border='none';">
+                  more
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!--Section: Sales Performance KPIs-->
+
       <!--Section: Statistics with subtitles-->
       <section>
         <div class="row">
@@ -341,12 +287,12 @@
                       <i class="fas fa-pencil-alt text-info fa-3x me-4"></i>
                     </div>
                     <div>
-                      <h4>Total Posts</h4>
-                      <p class="mb-0">Monthly blog posts</p>
+                      <h4>Total Tests</h4>
+                      <p class="mb-0">Till know</p>
                     </div>
                   </div>
                   <div class="align-self-center">
-                    <h2 class="h1 mb-0">18,000</h2>
+                    <h2 class="test_cnt h1 mb-0"></h2>
                   </div>
                 </div>
               </div>
@@ -361,12 +307,12 @@
                       <i class="far fa-comment-alt text-warning fa-3x me-4"></i>
                     </div>
                     <div>
-                      <h4>Total Comments</h4>
-                      <p class="mb-0">Monthly blog posts</p>
+                      <h4>Total Tests</h4>
+                      <p class="mb-0">Monthly blog Tests</p>
                     </div>
                   </div>
-                  <div class="align-self-center">
-                    <h2 class="h1 mb-0">84,695</h2>
+                  <div class=" align-self-center">
+                    <h2 class="mon_test_cnt h1 mb-0">84,695</h2>
                   </div>
                 </div>
               </div>
@@ -380,11 +326,11 @@
                 <div class="d-flex justify-content-between p-md-1">
                   <div class="d-flex flex-row">
                     <div class="align-self-center">
-                      <h2 class="h1 mb-0 me-4">$76,456.00</h2>
+                      <h2 class="user_cnt h1 mb-0 me-4">$76,456.00</h2>
                     </div>
                     <div>
-                      <h4>Total Sales</h4>
-                      <p class="mb-0">Monthly Sales Amount</p>
+                      <h4>Users</h4>
+                      <p class="mb-0">Total Connected</p>
                     </div>
                   </div>
                   <div class="align-self-center">
@@ -400,11 +346,11 @@
                 <div class="d-flex justify-content-between p-md-1">
                   <div class="d-flex flex-row">
                     <div class="align-self-center">
-                      <h2 class="h1 mb-0 me-4">$36,000.00</h2>
+                      <h2 class="avg_res h1 mb-0 me-4">$36,000</h2>
                     </div>
                     <div>
-                      <h4>Total Cost</h4>
-                      <p class="mb-0">Monthly Cost</p>
+                      <h4>Avg. Responce</h4>
+                      <p class="mb-0">Per Test</p>
                     </div>
                   </div>
                   <div class="align-self-center">
@@ -419,28 +365,90 @@
       <!--Section: Statistics with subtitles-->
     </div>
     <script>
-      //document.getElementById('new-user_to_take_quiz').addEventListener('click', function(event) {
-        //event.preventDefault(); // Prevent the default anchor click behavior
-    
-        // Create a form element
-        //const form = document.createElement('form');
-        //form.method = 'POST';
-        //form.action = '/user/take_quiz/take_quiz';
-    
-        // Create the hidden input element for username
-        //const user_name = document.createElement('input');
-        //user_name.type = 'hidden';
-        //user_name.name = 'user_name';
-        //user_name.value = '< user_name >'; // Assuming this is a server-side templating variable
-         // Create the hidden input element for username
-        
-        // Append the form to the body (required to submit it)
-        //document.body.appendChild(form);
-        //form.appendChild(user_name);
+        const user= JSON.parse(`<%- user %>`);
 
-        // Submit the form
-        //form.submit();
-    //});
+        console.log(user);
+
+          const items = document.getElementById('test_items');
+          const showMoreBtn = document.getElementById('showMoreBtn');
+          const testItems = user.test_answer.slice().reverse();
+          let visibleCount = 6;
+
+          const options = {
+            day: '2-digit',
+          month: 'short',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: true,     // for AM/PM format
+          timeZone: 'Asia/Kolkata' // IST (you can remove this if you want local time)
+          };
+
+
+          function renderTests(count) {
+            items.innerHTML = ``;
+          for (let i = 0; i < Math.min(count, testItems.length); i++) {
+                const test = testItems[i];
+
+          const row = document.createElement("tr");
+          row.className = "align-middle";
+          row.style.cursor = "pointer";
+          row.id = `row_${i}`;
+          row.setAttribute("data-quiz-code", test.quiz_code);
+
+
+          const sub_item_1 = document.createElement("th");
+          sub_item_1.scope = "row";
+          sub_item_1.textContent = test.test_ref.quiz_name;
+          sub_item_1.style.textTransform = "capitalize";
+
+          const sub_item_2 = document.createElement("td");
+          sub_item_2.textContent = test.quiz_code;
+          sub_item_2.className = "text-dark";
+
+          const date = new Date(test.end_date);
+          const formatted = date.toLocaleString('en-GB', options);
+          const sub_item_3 = document.createElement('td');
+          sub_item_3.textContent = formatted;
+          sub_item_3.className = "text-dark";
+
+          const sub_item_4 = document.createElement('td');
+          sub_item_4.textContent = test.test_ref.form.length;
+          sub_item_4.className = "text-success fw-medium";
+
+          const sub_item_5 = document.createElement('td');
+          sub_item_5.textContent = test.answer_ref.totalmarks;
+          sub_item_5.className = "text-info fw-medium";
+
+          const sub_item_6 = document.createElement('td');
+            sub_item_6.textContent = test.answer_ref.totalmarksget;
+            sub_item_6.className = "text-danger fw-medium";
+
+          const sub_item_7 = document.createElement('td');
+          const hours = Math.floor(test.test_ref.time / 60);
+          const minutes = test.test_ref.time % 60;
+          sub_item_7.textContent =minutes==0?"No Time":
+                  (hours > 0 ? `${hours} hr${hours > 1 ? 's' : ''} ` : '') +
+          (`${minutes} min`);
+          sub_item_7.className = "text-warning fw-medium";
+
+          row.append(sub_item_1, sub_item_2, sub_item_3, sub_item_4, sub_item_5, sub_item_6, sub_item_7);
+          items.appendChild(row);
+              }
+    
+              if (testItems.length > visibleCount) {
+            showMoreBtn.classList.remove("d-none");
+              } else {
+            showMoreBtn.classList.add("d-none");
+              }
+            }
+
+          renderTests(visibleCount);
+    
+            showMoreBtn.addEventListener("click", () => {
+            window.location.href = `/admin/test_overview`;
+            });
+
     
    </script>
   </main>

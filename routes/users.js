@@ -12,6 +12,12 @@ route.get("/register", ControllerUser.get_register);
 
 route.get("/home", isUserLoggedIn , ControllerUser.get_home);
 
+route.get("/overview", isUserLoggedIn, ControllerUser.get_overview);
+
+route.get("/depth", isUserLoggedIn, ControllerUser.get_depth);
+
+route.get("/analytics", isUserLoggedIn, ControllerUser.get_graph);
+
 route.post("/register", ControllerUser.post_register);
 
 route.post("/login", passport.authenticate("user", {

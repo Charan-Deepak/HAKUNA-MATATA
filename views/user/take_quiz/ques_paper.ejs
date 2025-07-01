@@ -1,7 +1,87 @@
 <%- include('../../includes/user_home/take_quiz/header'); -%>
     <%- include('../../includes/user_home/take_quiz/sidebar'); -%>
         <%- include('../../includes/user_home/take_quiz/navbar'); -%>
-        <div class="questionblock" style="margin-top: 58px;padding: 25px 25px 25px 265px;">
+
+        <style>
+          /* Main fixed toolbox */
+          .toolbox {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 2rem;
+            height: 93.5vh;
+            background: rgba(0, 0, 0, 0.6);
+            /* semi-black */
+            box-shadow: -3px 0 8px rgba(0, 0, 0, 0.5);
+            /* 3D/z-axis look */
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: auto;
+            scrollbar-width: none;
+            /* for Firefox */
+          }
+        
+          .toolbox::-webkit-scrollbar {
+            display: none;
+            /* Chrome & Safari */
+          }
+        
+          /* Inner scrollable button container */
+          .toolbox-buttons {
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: center;
+          }
+        
+          /* Cartoon-style buttons */
+          .cartoon-btn {
+            width: 1.5rem;
+            height: 1.5rem;
+            background: #ffdb58;
+            /* yellowish color */
+            border: 2px solid #333;
+            border-radius: 4px;
+            box-shadow: 2px 2px 0px #222;
+            font-weight: bold;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+          }
+        
+          .cartoon-btn:hover {
+            transform: scale(1.1) rotate(-3deg);
+            background-color: #ffe888;
+            box-shadow: 3px 3px 0px #111;
+          }  
+          
+          /* Flash effect when jumping to a form */
+        .highlight-flash {
+          animation: flashHighlight 1.5s ease;
+          border: 2px solid #ffdb58; /* yellow border */
+          box-shadow: 0 0 10px #ffdb58;
+          border-radius: 6px;
+        }
+
+        @keyframes flashHighlight {
+          0%   { background-color: #fff8dc; }
+          50%  { background-color: #fff1a8; }
+          100% { background-color: transparent; }
+        }
+
+
+        </style>
+
+        <div class="questionblock" style="margin-top: 58px;padding: 25px 3rem 25px 265px;">
+
+            <div class="toolbox mt-5 pt-1 pb-3">
+              <div class="toolbox-buttons">
+              </div>
+            </div>
+
             <form class="main_form" id="main_form" action="/user/take_quiz/marks_page" method="post">
                 <input type="hidden" name="answerData" id="answerData">
                 <input type="hidden" name="quiz_code" id="quiz_code">
@@ -57,128 +137,155 @@
         const div=document.createElement("div");
         div.id="question";
 
-        for(var i=0;i<message_length;i++){
+        for(let i=0;i<message_length;i++){
             const form=document.createElement("form");//creating form 
             form.className="form"+i;//i is for different forms of class name like form1,form2...
+            form.style.padding="1rem";
+            form.style.margin="1rem";
             total_marks=total_marks+message.form[i].marks;
 
             if(message.form[i].type==3){
-            form.innerHTML=`<form class="form${i}">
-  <div style="margin-bottom: 1rem;">
-  
-    <div class="text-end" style="font-weight: bold; color: #555; margin-bottom: 0.25rem;">
-      Marks: ${JSON.stringify(message.form[i].marks).replace(/"/g, '')}
-    </div>
-    
-    <h5 style="margin: 0 0 0.5rem 0;">
-      ${i+1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}
-    </h5>
-    
-    <div class="input-group mb-3">
-  <span class="input-group-text" id="basic-addon1">A.</span>
-  <input
-    type="text"
-    class="form-control"
-    aria-label="Username"
-    aria-describedby="basic-addon1"
-    id="option_type_text${i}"
-    style="max-width: 300px;"
-  />
-</div>
-   
-    
-  </div>
-</form>
+            form.innerHTML=`
+                <div id="question${i + 1}" style="margin-bottom: 1rem;">
+                
+                      <div class="text-end" style="font-weight: bold; color: #555; margin-bottom: 0.25rem;">
+                        Marks: ${JSON.stringify(message.form[i].marks).replace(/"/g, '')}
+                      </div>
+                      
+                      <h5 id="question${i + 1}_p" style="text-transform: capitalize; margin: 0 0 0.5rem 0;">
+                        ${i+1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}
+                      </h5>
+                      
+                      <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">A.</span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      aria-label="Username"
+                      aria-describedby="basic-addon1"
+                      id="option_type_text${i}"
+                      style="max-width: 300px;"
+                    />
+                  </div>
+                
+                  
+                </div>
             `}else if(message.form[i].type==1){
                 form.innerHTML=`
-                <div style="margin-bottom: 1.5rem;">
+                <div id="question${i + 1}" style="margin-bottom: 1.5rem;">
   
-  <div class="text-end" style="font-weight: bold; color: #555; margin-bottom: 0.25rem;">
-    Marks: ${JSON.stringify(message.form[i].marks).replace(/"/g, '')}
-  </div>
-  
-  <h5 style="margin: 0 0 0.5rem 0;">
-    ${i+1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}
-  </h5>
+                  <div class="text-end" style="font-weight: bold; color: #555; margin-bottom: 0.25rem;">
+                    Marks: ${JSON.stringify(message.form[i].marks).replace(/"/g, '')}
+                  </div>
+                  
+                  <h5 id="question${i + 1}_p" style="text-transform: capitalize;margin: 0 0 0.5rem 0;">
+                    ${i+1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}
+                  </h5>
 
-  <div style="margin-left: 1rem;">
-    
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="correct${i}" id="option1${i}" value="1">
-      <label class="form-check-label" for="option1${i}">
-        ${JSON.stringify(message.form[i].option1[0]).replace(/"/g, '')}
-      </label>
-    </div>
-    
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="correct${i}" id="option2${i}" value="2">
-      <label class="form-check-label" for="option2${i}">
-        ${JSON.stringify(message.form[i].option1[1]).replace(/"/g, '')}
-      </label>
-    </div>
-    
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="correct${i}" id="option3${i}" value="3">
-      <label class="form-check-label" for="option3${i}">
-        ${JSON.stringify(message.form[i].option1[2]).replace(/"/g, '')}
-      </label>
-    </div>
-    
-    <div class="form-check">
-      <input class="form-check-input" type="radio" name="correct${i}" id="option4${i}" value="4">
-      <label class="form-check-label" for="option4${i}">
-        ${JSON.stringify(message.form[i].option1[3]).replace(/"/g, '')}
-      </label>
-    </div>
+                  <div style="margin-left: 1rem;">
+                    
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="correct${i}" id="option1${i}" value="1">
+                      <label class="form-check-label" for="option1${i}">
+                        ${JSON.stringify(message.form[i].option1[0]).replace(/"/g, '')}
+                      </label>
+                    </div>
+                    
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="correct${i}" id="option2${i}" value="2">
+                      <label class="form-check-label" for="option2${i}">
+                        ${JSON.stringify(message.form[i].option1[1]).replace(/"/g, '')}
+                      </label>
+                    </div>
+                    
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="correct${i}" id="option3${i}" value="3">
+                      <label class="form-check-label" for="option3${i}">
+                        ${JSON.stringify(message.form[i].option1[2]).replace(/"/g, '')}
+                      </label>
+                    </div>
+                    
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="correct${i}" id="option4${i}" value="4">
+                      <label class="form-check-label" for="option4${i}">
+                        ${JSON.stringify(message.form[i].option1[3]).replace(/"/g, '')}
+                      </label>
+                    </div>
 
-  </div>
+                  </div>
 
-</div>`
+              </div>`
             }else if(message.form[i].type==2){
                 form.innerHTML=`
                 <div id="question${i+1}">
   
-  <div class="text-end" style="font-weight: bold; color: #555; margin-bottom: 0.25rem;">
-    Marks: ${JSON.stringify(message.form[i].marks).replace(/"/g, '')}
-  </div>
-  
-  <h5 style="margin: 0 0 0.5rem 0;">
-    ${i+1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}
-  </h5>
+                  <div class="text-end" style="font-weight: bold; color: #555; margin-bottom: 0.25rem;">
+                    Marks: ${JSON.stringify(message.form[i].marks).replace(/"/g, '')}
+                  </div>
+                  
+                  <h5 id="question${i + 1}_p" style="text-transform: capitalize;margin: 0 0 0.5rem 0;">
+                    ${i+1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}
+                  </h5>
 
-  <div class="form-check">
-    <input class="form-check-input" type="checkbox" id="option_checkbox1${i}" name="correct_checkboxes${i}" value="1">
-    <label class="form-check-label" for="option_checkbox1${i}">
-      ${JSON.stringify(message.form[i].option1[0]).replace(/"/g, '')}
-    </label>
-  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="option_checkbox1${i}" name="correct_checkboxes1${i}" value="1">
+                    <label class="form-check-label" for="option_checkbox1${i}">
+                      ${JSON.stringify(message.form[i].option1[0]).replace(/"/g, '')}
+                    </label>
+                  </div>
 
-  <div class="form-check">
-    <input class="form-check-input" type="checkbox" id="option_checkbox2${i}" name="correct_checkboxes${i}" value="2">
-    <label class="form-check-label" for="option_checkbox2${i}">
-      ${JSON.stringify(message.form[i].option1[1]).replace(/"/g, '')}
-    </label>
-  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="option_checkbox2${i}" name="correct_checkboxes2${i}" value="2">
+                    <label class="form-check-label" for="option_checkbox2${i}">
+                      ${JSON.stringify(message.form[i].option1[1]).replace(/"/g, '')}
+                    </label>
+                  </div>
 
-  <div class="form-check">
-    <input class="form-check-input" type="checkbox" id="option_checkbox3${i}" name="correct_checkboxes${i}" value="3">
-    <label class="form-check-label" for="option_checkbox3${i}">
-      ${JSON.stringify(message.form[i].option1[2]).replace(/"/g, '')}
-    </label>
-  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="option_checkbox3${i}" name="correct_checkboxes3${i}" value="3">
+                    <label class="form-check-label" for="option_checkbox3${i}">
+                      ${JSON.stringify(message.form[i].option1[2]).replace(/"/g, '')}
+                    </label>
+                  </div>
 
-  <div class="form-check">
-    <input class="form-check-input" type="checkbox" id="option_checkbox4${i}" name="correct_checkboxes${i}" value="4">
-    <label class="form-check-label" for="option_checkbox4${i}">
-      ${JSON.stringify(message.form[i].option1[3]).replace(/"/g, '')}
-    </label>
-  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="option_checkbox4${i}" name="correct_checkboxes4${i}" value="4">
+                    <label class="form-check-label" for="option_checkbox4${i}">
+                      ${JSON.stringify(message.form[i].option1[3]).replace(/"/g, '')}
+                    </label>
+                  </div>
 
-</div> `
+              </div> `
             }
 
             div.appendChild(form);//adding the inside of div
             window['form' + i] = form;
+
+            //  Create toolbox nav button
+            const nav_button = document.createElement('button');
+            nav_button.classList.add("cartoon-btn", `step-${i}`);
+            nav_button.innerText = i + 1;
+
+            const tool_button = document.querySelector(".toolbox-buttons");
+            tool_button.appendChild(nav_button);
+
+            //  Now bind event
+            document.querySelector(`.step-${i}`).addEventListener("click", function () {
+              const targetForm = document.querySelector(`.form${i}`);
+              console.log(`Trying to scroll to .form${i}:`, targetForm);
+
+              if (targetForm) {
+                targetForm.scrollIntoView({ behavior: "smooth", block: "center" });
+                targetForm.classList.add("highlight-flash");
+                setTimeout(() => {
+                  targetForm.classList.remove("highlight-flash");
+                }, 1500);
+              } else {
+                console.error(`.form${i} not found in DOM!`);
+              }
+            });
+
+            
         }
         // Find the parent div
         const parentDiv = document.getElementById('parent');
@@ -190,16 +297,6 @@
         parentDiv.insertBefore(div, referenceDiv.nextSibling);
     
     }
-    //function openFullscreen() {
-    //        let elem = document.documentElement; // or use specific element like document.getElementById("quiz-container")
-    //        if (elem.requestFullscreen) {
-    //            elem.requestFullscreen();
-    //        } else if (elem.webkitRequestFullscreen) { // Safari
-    //            elem.webkitRequestFullscreen();
-    //        } else if (elem.msRequestFullscreen) { // IE11
-    //            elem.msRequestFullscreen();
-    //        }
-    //}
     window.onload = async function () {
             //openFullscreen()
             await testpaper();
@@ -248,19 +345,23 @@
             } else if (option_type == 2) {
                 // Get options for checkbox type
                 var count=0;
+                var wrong=false;
                 for (var k = 0; k < 4; k++) {
                     let option_answer = final_form.querySelector(`input[name='correct_checkboxes${k+1}${j}']:checked`); // Corrected selector syntax
                     if (option_answer) {
                         text_answers_checkbox.push(option_answer.value);
-                    } 
-                    if(parseInt(text_answers_checkbox[k])==message.form[j].option1_answer_checkbox[k]){
-                        count++;
-                    }}
-                    if(count==message.form[j].option1_answer_checkbox.length)
+                        if(message.form[j].option1_answer_checkbox.includes(parseInt(option_answer.value))){
+                            count++;
+                        }else{
+                            wrong=true;// selected something that’s not correct
+                        }
+                      }
+                }
+                    if(!wrong&&count==message.form[j].option1_answer_checkbox.length)
                     {mark_to_student+=message.form[j].marks;
                        mark= message.form[j].marks
                     }
-                    else if(count>0 && count<message.form[j].option1_answer_checkbox.length){
+                    else if(count>0 && count<message.form[j].option1_answer_checkbox.length && !wrong){
                          mark_to_student+=Math.ceil(message.form[j].marks*(count/message.form[j].option1_answer_checkbox.length));
                          mark=Math.ceil(message.form[j].marks*(count/message.form[j].option1_answer_checkbox.length));
                     }

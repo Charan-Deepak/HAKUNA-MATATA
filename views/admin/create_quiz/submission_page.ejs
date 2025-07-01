@@ -1,0 +1,147 @@
+<%- include('../../includes/admin_home/header') -%>
+    <%- include('../../includes/admin_home/sidebar_submittion_page') -%>
+        <%- include('../../includes/admin_home/create_quiz/navbar_sub') -%>
+
+        <div class="questionblock" style="margin-top: 58px;padding: 25px 25px 25px 265px;">
+            <h3>
+                <div id="quiz_name" class="display-5" style=" text-transform: capitalize;"></div>
+                <hr>
+            </h3>
+            <!-- Copy Notification Toast -->
+            <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1055">
+              <div id="copyToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive"
+                aria-atomic="true">
+                <div class="d-flex">
+                  <div class="toast-body">
+                    <strong>Copied!</strong> The content has been copied to clipboard.
+                  </div>
+                  <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+                </div>
+              </div>
+            </div>
+
+            <div id="parent">
+                <pre id="copyText" onclick="copyContent()" style="cursor:pointer;" class="border p-2">Quiz Code: <span id="code"></span> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-copy"
+                    viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z" /></svg></pre>
+                
+                <br>
+                <div id="message"></div>
+            </div>
+    </div>
+<script>
+
+    // Extract the query parameter from the URL
+    //const params = new URLSearchParams(window.location.search);//to get the test code from admin_question_new
+    let message = `<%- test %>`;
+    const user_name=`<%=user_name%>`;
+    const quizName=`<%= quizName%>`;
+    // Convert the object to a string representation
+    message = JSON.parse(message);
+    message_length= message.form.length
+
+   // Convert the object to a string representation
+    const code=JSON.stringify(message.random).replace(/"/g, '');
+
+    // Display the message wherever needed in your HTML
+    document.getElementById('code').textContent =code;
+    document.getElementById('quiz_name').textContent = quizName;
+    async function testpaper(){
+
+        const div=document.createElement("div");//creating div
+        div.id="question";
+        for(var i=0;i<message_length;i++){
+            const divs=document.createElement("div");//creating div
+            divs.id="question${i+1}";
+         
+            if(message.form[i].type==3){
+                divs.innerHTML=`
+                <div class="card border border-dark mb-3 text-bg-light mb-3" id="question${i+1}"> 
+                <div class="card-body">
+                    <h5 class="card-title">${i+1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted text-end">Marks: ${JSON.stringify(message.form[i].marks).replace(/"/g, '')}</h6>
+                    <p class="card-text">${JSON.stringify(message.form[i].text_answer).replace(/"/g, '')}</p>
+                </div>
+                </div>
+            `}else if(message.form[i].type==1){
+                divs.innerHTML=`
+                <div class="card border border-dark mb-3 text-bg-light mb-3" id="question${i+1}"> 
+            <div class="card-body">
+              <h5 class="card-title">${i+1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}</h5>
+              <h6 class="card-subtitle mb-2 text-muted text-end">Marks: ${JSON.stringify(message.form[i].marks).replace(/"/g, '')}</h6>
+              <p class="card-text">
+                <input type="radio" id="option1${i}" name="options${i}" value="1" ${message.form[i].correct_answer == 1 ? 'checked onclick="return false;"' : 'disabled'}>
+                <label for="option1${i}"> ${JSON.stringify(message.form[i].option1[0]).replace(/"/g, '')}</label><br>
+
+                <input type="radio" id="option2${i}" name="options${i}" value="2" ${message.form[i].correct_answer == 2 ? 'checked onclick="return false;"' : 'disabled'}>
+                <label for="option2${i}"> ${JSON.stringify(message.form[i].option1[1]).replace(/"/g, '')}</label><br>
+
+                <input type="radio" id="option3${i}" name="options${i}" value="3" ${message.form[i].correct_answer == 3 ? 'checked onclick="return false;"' : 'disabled'}>
+                <label for="option3${i}"> ${JSON.stringify(message.form[i].option1[2]).replace(/"/g, '')}</label><br>
+
+                <input type="radio" id="option4${i}" name="options${i}" value="4" ${message.form[i].correct_answer == 4 ? 'checked onclick="return false;"' : 'disabled'}>
+                <label for="option4${i}"> ${JSON.stringify(message.form[i].option1[3]).replace(/"/g, '')}</label>
+              </p>
+            </div>
+          </div>`
+            }else if(message.form[i].type==2){
+                divs.innerHTML=`
+                            <div class="card border border-dark mb-3 text-bg-light mb-3" id="question${i+1}"> 
+                <div class="card-body">
+                  <h5 class="card-title">${i+1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted text-end">Marks: ${JSON.stringify(message.form[i].marks).replace(/"/g, '')}</h6>
+                  <p class="card-text">
+                    <input type="checkbox" id="option_checkbox1${i}" name="options_checkbox${i}" value="1" ${message.form[i].option1_answer_checkbox.includes(1) ? 'checked' : 'disabled'}>
+                    <label for="option_checkbox1${i}"> ${JSON.stringify(message.form[i].option1[0]).replace(/"/g, '')}</label><br>
+
+                    <input type="checkbox" id="option_checkbox2${i}" name="options_checkbox${i}" value="2" ${message.form[i].option1_answer_checkbox.includes(2) ? 'checked' : 'disabled'}>
+                    <label for="option_checkbox2${i}"> ${JSON.stringify(message.form[i].option1[1]).replace(/"/g, '')}</label><br>
+
+                    <input type="checkbox" id="option_checkbox3${i}" name="options_checkbox${i}" value="3" ${message.form[i].option1_answer_checkbox.includes(3) ? 'checked' : 'disabled'}>
+                    <label for="option_checkbox3${i}"> ${JSON.stringify(message.form[i].option1[2]).replace(/"/g, '')}</label><br>
+
+                    <input type="checkbox" id="option_checkbox4${i}" name="options_checkbox${i}" value="4" ${message.form[i].option1_answer_checkbox.includes(4) ? 'checked' : 'disabled'}>
+                    <label for="option_checkbox4${i}"> ${JSON.stringify(message.form[i].option1[3]).replace(/"/g, '')}</label>
+                  </p>
+                </div>
+              </div>`
+            }
+      
+            div.appendChild(divs);//adding the inside of div
+        
+        }
+        // Find the parent div
+        const parentDiv = document.getElementById('parent');
+
+        // Find the reference div (the one after which you want to append the new div)
+        const referenceDiv = parentDiv.children[1]; // Index 1 refers to the second child div
+
+        // Insert the new div after the reference div
+        parentDiv.insertBefore(div, referenceDiv.nextSibling);
+    
+    }
+    window.onload = function () {
+            testpaper();
+    };
+   
+    function copyContent() {
+        const text = document.getElementById("code").innerText;
+
+        navigator.clipboard.writeText(text)
+          .then(() => {
+            // Show Bootstrap toast
+            const toast = new bootstrap.Toast(document.getElementById('copyToast'));
+            toast.show();
+          })
+          .catch(err => {
+            alert("Failed to copy: " + err);
+          });
+      }
+  
+
+ </script>
+  </html>
+<%- include('../../partials/mdbfooter'); -%>
+<%- include('../../partials/footer'); -%>

@@ -63,7 +63,7 @@ module.exports.post_ques_form_new=async function (req, res, next) {
             return next(new ExpressError(500,'admin not found.'));
         }
         //send object as string to ejs and then parse it
-        res.redirect(`/admin/create_quiz/submittion_page/${randomString}`);
+        res.redirect(`/admin/create_quiz/submission_page/${randomString}`);
 
     } catch (error) {
         next(error);
@@ -72,14 +72,14 @@ module.exports.post_ques_form_new=async function (req, res, next) {
 }
 
 
-module.exports.get_SubmittionPage =async function (req, res,next) {
+module.exports.get_SubmissionPage =async function (req, res,next) {
     try {
         let {code}=req.params;
         const test = await Test.findOne({random:code}).populate('form');
         if (!test) {
             return next(new ExpressError(404,"Test not Found!"));
         }
-        res.render('./admin/create_quiz/submittion_page.ejs', {
+        res.render('./admin/create_quiz/submission_page.ejs', {
             test: JSON.stringify(test),
             user_name: req.user.username,
             quizName: test.quiz_name

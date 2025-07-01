@@ -1,0 +1,67 @@
+<div class="user_overview container pt-4">
+
+    <nav class="navbar bg-body-tertiary mb-2 px-3 py-2">
+        <div class="container-fluid">
+            <form class="w-100">
+                <div class="row gx-2 align-items-center">
+                    <!-- Quiz Code Input -->
+                    <div class="col-12 col-md-10">
+                        <div class="input-group">
+                            <span class="input-group-text">@</span>
+                            <input type="text" class="form-control" id="quizCodeInput" placeholder="Quiz code" />
+                        </div>
+                    </div>
+                    <!-- Search Button -->
+                    <div class="col-12 col-md-2 mt-2 mt-md-0">
+                        <button type="button" id="searchBtn" class="btn btn-primary w-100">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </nav>
+
+
+    <!--Section: Sales Performance KPIs-->
+    <section class="mb-4">
+        <div class="card">
+            <div class="card-header text-center py-3">
+                <h5 class="mb-0 text-center">
+                    <strong>Quizzit - Test</strong>
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover text-nowrap">
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Code</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">No. of Question</th>
+                                <th scope="col">Max Marks</th>
+                                <th scope="col">Marks Scored</th>
+                                <th scope="col">Duration</th>
+                            </tr>
+                        </thead>
+                        <tbody id="test_items">
+                        </tbody>
+                    </table>
+                    <div class="text-center mt-2">
+                        <button id="showMoreBtn" class="btn d-none text-primary p-0"
+                            style="border: none; background: transparent; box-shadow: none; outline: none;"
+                            onmousedown="this.style.outline='none'; this.style.boxShadow='none'; this.style.border='none';">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                class="bi bi-chevron-bar-down" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M3.646 4.146a.5.5 0 0 1 .708 0L8 7.793l3.646-3.647a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 0-.708M1 11.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Section: Sales Performance KPIs-->
+</div>
+
+    

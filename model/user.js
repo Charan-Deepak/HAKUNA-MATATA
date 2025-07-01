@@ -34,6 +34,10 @@ const user_Schema = new Schema({
             type: Schema.Types.ObjectId,
             ref: "Test_answer"
         },
+        test_ref: {
+            type: Schema.Types.ObjectId,
+            ref: "Test"
+        },
         quiz_code: String,
         end_date: Date
     }]

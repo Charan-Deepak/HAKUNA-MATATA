@@ -9,6 +9,6 @@ route.post("/quiz_ques",isAdminLoggedIn, ControllerAdminQuiz.post_quizQues);
 
 route.post("/ques_form_new", isAdminLoggedIn, ControllerAdminQuiz.post_ques_form_new);
 
-route.get("/submittion_page/:code",isAdminLoggedIn,ControllerAdminQuiz.get_SubmittionPage);
+route.get("/submission_page/:code",isAdminLoggedIn,ControllerAdminQuiz.get_SubmissionPage);
 
 module.exports = route;

@@ -5,9 +5,9 @@ const ControllerUserQuiz=require('../controller/user_quiz');
 //ok
 route.get("/take_quiz", isUserLoggedIn, ControllerUserQuiz.get_takequiz);
 
-route.post("/ques_paper", isUserLoggedIn , ControllerUserQuiz.post_quesPaper);
+route.post("/ques_paper", isUserLoggedIn,ControllerUserQuiz.post_quesPaper);
 
-route.post("/marks_page", isUserLoggedIn , ControllerUserQuiz.post_markPage);
+route.post("/marks_page", isUserLoggedIn, ControllerUserQuiz.post_markPage);
 
 route.get("/marks_page/:code", isUserLoggedIn , ControllerUserQuiz.get_markPage);
 

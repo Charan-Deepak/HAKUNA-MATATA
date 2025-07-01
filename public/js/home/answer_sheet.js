@@ -1,0 +1,179 @@
+function answer_sheet(admin_test, username, answer_test) {
+
+    document.querySelector(".question_paper").style.display = 'none'
+    document.querySelector(".quiz_overview").style.display = "none";
+    document.querySelector(".quiz_depth").style.display = "none";
+    document.querySelector(".answer_sheet").style.display = "block";
+    const test_answer = answer_test;
+    const message = admin_test;
+    const user_name = username;
+    message_length = message.form.length
+
+    const code = JSON.stringify(message.random).replace(/"/g, '');
+
+    // Display the message wherever needed in your HTML
+    document.getElementById('ans_code').textContent = code;
+    document.getElementById('ans_user_id').textContent = username;
+    document.getElementById('ans_quiz_name').textContent = message.quiz_name;
+    document.getElementById('ans_total_marks').textContent = test_answer.totalmarks;
+    document.getElementById('ans_total_marks_get').textContent = test_answer.totalmarksget;
+
+    function anspaper() {
+
+        const div = document.createElement("div");//creating div
+        div.id = "question";
+        for (var i = 0; i < message_length; i++) {
+            const divs = document.createElement("div");//creating div
+            divs.id = "question${i+1}";
+
+            if (message.form[i].type == 3) {
+
+                const newDiv = document.createElement('div');
+                newDiv.id = `question_inside${i + 1}`;
+
+                // Create the question and marks content
+                const questionContent = `
+                    <h4 id="question${i + 1}_p" style=" text-transform: capitalize; display: flex; justify-content: space-between;">
+                        ${i + 1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}
+                        <span style="margin-right:20vw;">Marks: ${JSON.stringify(test_answer.form[i].mark).replace(/"/g, '')}/${JSON.stringify(message.form[i].marks).replace(/"/g, '')}</span>
+                    </h4>
+                `;
+
+                // Check if test_answer is available and conditionally render answer details
+                let answerContent;
+                if (test_answer.form[i].text_answer === message.form[i].text_answer) {
+                    answerContent = `
+                        <span>A. <span><span id="text${i + 1}" style=" text-transform: capitalize; text-decoration: underline; color:#068f06;">
+                            ${JSON.stringify(message.form[i].text_answer).replace(/"/g, '')}
+                        </span>
+                    `;
+                } else {
+                    answerContent = `
+                        <span>A. <span><span id="text${i + 1}" style=" text-decoration: underline; color:#b13008; ">
+                            ${JSON.stringify(test_answer.form[i].text_answer).replace(/"/g, '')}
+                        </span><span>|</span><span id="text${i + 2}" style=" text-decoration: underline;color:#068f06;">
+                            ${JSON.stringify(message.form[i].text_answer).replace(/"/g, '')}
+                        </span>
+                    `;
+                }
+
+                // Combine questionContent and answerContent within the newDiv
+                newDiv.innerHTML = questionContent + answerContent;
+                divs.appendChild(newDiv);
+
+            } else if (message.form[i].type == 1) {
+                divs.innerHTML = `
+                <div id="question${i + 1}">
+                    <h4 id="question${i + 1}_p" style="text-transform: capitalize; display: flex; justify-content: space-between;">${i + 1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}<span style="margin-right:20vw;">Marks:${JSON.stringify(test_answer.form[i].mark).replace(/"/g, '')}/${JSON.stringify(message.form[i].marks).replace(/"/g, '')}</span></h4>
+                        ${message.form[i].correct_answer == 1 || test_answer.form[i].correct_answer == 1 ?
+                        (message.form[i].correct_answer == test_answer.form[i].correct_answer == 1 || message.form[i].correct_answer == 1 ?
+                            ` <input type="radio" style="accent-color:#198d06 ;" id="option1${i}" name="options1${i}" value="1" checked>
+                <label for="option1${i}" style="color:#198d06 ;"> ${JSON.stringify(message.form[i].option1[0]).replace(/"/g, '')}</label><br>`
+                            : `<input type="radio" style="accent-color:#c23c0b ;" id="option1${i}" name="options1${i}" value="1" checked>
+                <label for="option1${i}" > ${JSON.stringify(message.form[i].option1[0]).replace(/"/g, '')}</label><br>`
+                        ) :
+                        `<input type="radio" id="option1${i}" name="options1" value="1${i}" disabled>
+                <label for="option1${i}" > ${JSON.stringify(message.form[i].option1[0]).replace(/"/g, '')}</label><br>`
+                    }
+            
+            ${message.form[i].correct_answer == 2 || test_answer.form[i].correct_answer == 2 ?
+                        (message.form[i].correct_answer == test_answer.form[i].correct_answer == 2 || message.form[i].correct_answer == 2 ?
+                            ` <input type="radio" style="accent-color:#198d06 ;" id="option2${i}" name="options2${i}" value="2" checked>
+                <label for="option2${i}" style="color:#198d06 ;"> ${JSON.stringify(message.form[i].option1[1]).replace(/"/g, '')}</label><br>`
+                            : `<input type="radio" style="accent-color:#c23c0b ;" id="option2${i}" name="options2${i}" value="2" checked>
+                <label for="option2${i}" > ${JSON.stringify(message.form[i].option1[1]).replace(/"/g, '')}</label><br>`
+                        )
+                        : `<input type="radio"  id="option2${i}" name="options2" value="2${i}" disabled>
+                <label for="option2${i}" > ${JSON.stringify(message.form[i].option1[1]).replace(/"/g, '')}</label><br>`
+                    }
+            
+            ${message.form[i].correct_answer == 3 || test_answer.form[i].correct_answer == 3 ?
+                        (message.form[i].correct_answer == test_answer.form[i].correct_answer == 3 || message.form[i].correct_answer == 3 ?
+                            ` <input type="radio" style="accent-color:#198d06 ;" id="option3${i}" name="options3${i}" value="3" checked>
+                <label for="option3${i}" style="color:#198d06 ;"> ${JSON.stringify(message.form[i].option1[2]).replace(/"/g, '')}</label><br>`
+                            : `<input type="radio" style="accent-color: #c23c0b;" id="option3${i}" name="options3${i}" value="3" checked>
+                <label for="option3${i}" > ${JSON.stringify(message.form[i].option1[2]).replace(/"/g, '')}</label><br>`
+                        )
+                        : `<input type="radio" id="option3${i}" name="options3${i}" value="3" disabled>
+                <label for="option3${i}" > ${JSON.stringify(message.form[i].option1[2]).replace(/"/g, '')}</label><br>`
+                    }
+            
+            ${message.form[i].correct_answer == 4 || test_answer.form[i].correct_answer == 4 ?
+                        (message.form[i].correct_answer == test_answer.form[i].correct_answer == 4 || message.form[i].correct_answer == 4 ?
+                            ` <input type="radio" style="accent-color:#198d06 ;" id="option4${i}" name="options4${i}" value="4" checked>
+                <label for="option4${i}" style="color:#198d06 ;"> ${JSON.stringify(message.form[i].option1[3]).replace(/"/g, '')}</label>`
+                            : `<input type="radio" style="accent-color: #c23c0b ;" id="option4${i}" name="options4${i}" value="4" checked>
+                <label for="option4${i}" > ${JSON.stringify(message.form[i].option1[3]).replace(/"/g, '')}</label>`
+                        )
+                        : `<input type="radio" id="option4${i}" name="options4${i}" value="4" disabled>
+                <label for="option4${i}" > ${JSON.stringify(message.form[i].option1[3]).replace(/"/g, '')}</label>`
+                    }
+            
+        
+    </div> `
+            } else if (message.form[i].type == 2) {
+                divs.innerHTML = `
+    <div id="question${i + 1}">
+        <h4 id="question${i + 1}_p" style="text-transform: capitalize; display: flex; justify-content: space-between;">${i + 1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}<span style="margin-right:20vw;">Marks:${JSON.stringify(test_answer.form[i].mark).replace(/"/g, '')}/${JSON.stringify(message.form[i].marks).replace(/"/g, '')}</span></h4>
+
+        ${message.form[i].option1_answer_checkbox.includes(1) || test_answer.form[i].option1_answer_checkbox.includes(1) ? ((message.form[i].option1_answer_checkbox.includes(1) && test_answer.form[i].option1_answer_checkbox.includes(1)) ?
+                        `<input type="checkbox" style="accent-color:#198d06 ;" id="option_checkbox1${i}" name="options_checkbox1${i}" value="1" checked onclick="return false;">`
+                        : ((test_answer.form[i].option1_answer_checkbox.includes(1)) ?
+                            `<input type="checkbox" style="accent-color:#c23c0b ;" id="option_checkbox1${i}" name="options_checkbox1${i}" value="1" checked onclick="return false;">`
+                            : `<input type="checkbox" id="option_checkbox1${i}" name="options_checkbox1${i}" value="1" disabled>`))
+                        : `<input type="checkbox" id="option_checkbox1${i}" name="options_checkbox1${i}" value="1" disabled>`
+                    }
+            ${message.form[i].option1_answer_checkbox.includes(1) ?
+                        `<label  style="color:#198d06 " for="option_checkbox1${i}" > ${JSON.stringify(message.form[i].option1[0]).replace(/"/g, '')}</label><br>`
+                        : `<label for="option_checkbox1${i}" > ${JSON.stringify(message.form[i].option1[0]).replace(/"/g, '')}</label><br>`}
+            ${message.form[i].option1_answer_checkbox.includes(2) || test_answer.form[i].option1_answer_checkbox.includes(2) ? ((message.form[i].option1_answer_checkbox.includes(2) && test_answer.form[i].option1_answer_checkbox.includes(2)) ?
+                        `<input type="checkbox" style="accent-color:#198d06 ;" id="option_checkbox2${i}" name="options_checkbox2${i}" value="2" checked onclick="return false;">`
+                        : ((test_answer.form[i].option1_answer_checkbox.includes(2)) ?
+                            `<input type="checkbox" style="accent-color:#c23c0b ;" id="option_checkbox2${i}" name="options_checkbox2${i}" value="2" checked onclick="return false;">`
+                            : `<input type="checkbox" id="option_checkbox2${i}" name="options_checkbox2${i}" value="1" disabled>`))
+                        : `<input type="checkbox"  id="option_checkbox2${i}" name="options_checkbox2${i}" value="2" disabled>`
+                    }
+            ${message.form[i].option1_answer_checkbox.includes(2) ?
+                        `<label  style="color:#198d06 " for="option_checkbox2${i}" > ${JSON.stringify(message.form[i].option1[1]).replace(/"/g, '')}</label><br>`
+                        : `<label for="option_checkbox2${i}" > ${JSON.stringify(message.form[i].option1[1]).replace(/"/g, '')}</label><br>`}
+            
+            ${message.form[i].option1_answer_checkbox.includes(3) || test_answer.form[i].option1_answer_checkbox.includes(3) ? ((message.form[i].option1_answer_checkbox.includes(3) && test_answer.form[i].option1_answer_checkbox.includes(3)) ?
+                        `<input type="checkbox" style="accent-color:#198d06 ;"id="option_checkbox3${i}" name="options_checkbox3${i}" value="3" checked onclick="return false;">`
+                        : ((test_answer.form[i].option1_answer_checkbox.includes(3)) ?
+                            `<input type="checkbox" style="accent-color:#c23c0b ;" id="option_checkbox3${i}" name="options_checkbox3${i}" value="3" checked onclick="return false;">`
+                            : `<input type="checkbox" id="option_checkbox3${i}" name="options_checkbox3${i}" value="3" disabled>`))
+                        : `<input type="checkbox" id="option_checkbox3${i}" name="options_checkbox3${i}" value="3" disabled>`
+                    }
+            ${message.form[i].option1_answer_checkbox.includes(3) ?
+                        `<label  style="color:#198d06 " for="option_checkbox3${i}" > ${JSON.stringify(message.form[i].option1[2]).replace(/"/g, '')}</label><br>`
+                        : `<label for="option_checkbox3${i}" > ${JSON.stringify(message.form[i].option1[2]).replace(/"/g, '')}</label><br>`}
+
+            ${message.form[i].option1_answer_checkbox.includes(4) || test_answer.form[i].option1_answer_checkbox.includes(4) ? ((message.form[i].option1_answer_checkbox.includes(4) && test_answer.form[i].option1_answer_checkbox.includes(4)) ?
+                        `<input type="checkbox"style="accent-color:#198d06 ;" id="option_checkbox4${i}" name="options_checkbox4${i}" value="4" checked onclick="return false;">`
+                        : ((test_answer.form[i].option1_answer_checkbox.includes(4)) ?
+                            `<input type="checkbox" style="accent-color:#c23c0b ;" id="option_checkbox4${i}" name="options_checkbox1${i}" value="4" checked onclick="return false;">`
+                            : `<input type="checkbox" id="option_checkbox4${i}" name="options_checkbox4${i}" value="4" disabled>`))
+                        : `<input type="checkbox" id="option_checkbox4${i}" name="options_checkbox4${i}" value="4" disabled>`
+                    }
+            ${message.form[i].option1_answer_checkbox.includes(4) ?
+                        `<label  style="color:#198d06" for="option_checkbox4${i}" > ${JSON.stringify(message.form[i].option1[3]).replace(/"/g, '')}</label><br>`
+                        : `<label for="option_checkbox4${i}" > ${JSON.stringify(message.form[i].option1[3]).replace(/"/g, '')}</label><br>`}
+
+        
+    </div> `
+            }
+
+            div.appendChild(divs);//adding the inside of div
+
+        }
+        document.getElementById('parent').innerHTML = ``;
+        // Find the parent div
+        const parentDiv = document.getElementById('parent');
+        parentDiv.appendChild(div);
+
+    }
+    anspaper();
+    document.querySelector(".back_but_ans").addEventListener("click", () => {
+        quiz_details(admin_test);
+    });
+}

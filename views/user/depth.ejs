@@ -1,0 +1,25 @@
+<%- include('../includes/user_home/header') -%>
+    <%- include('../includes/user_home/sidebar_depth') -%>
+        <%- include('../includes/user_home/navbar') -%>
+
+            <!--Main Navigation-->
+            <main style="margin-top: 58px">
+                <%- include('../includes/user_home/user_overview') -%>
+                <%- include('../includes/user_home/depth') -%>
+                <%- include('../includes/admin_home/question_paper') -%>
+            </main>
+                <script>
+                    const user = JSON.parse(`<%- user %>`);
+
+                    console.log(user);
+                </script>
+                <script src="/js/user_home/depth_overview.js"></script>
+                <script src="/js/user_home/depth.js"> </script>
+
+                <script src="/js/user_home/answer_sheet.js"></script>
+                <script src="/js/user_home/depth_question_paper.js"></script>
+            </main>
+            <!--Main layout-->
+
+            <%- include('../partials/mdbfooter'); -%>
+                <%- include('../partials/footer'); -%>

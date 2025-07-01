@@ -1,0 +1,20 @@
+<%- include('../includes/user_home/header') -%>
+    <%- include('../includes/user_home/sidebar_overview') -%>
+        <%- include('../includes/user_home/navbar') -%>
+
+            <!--Main Navigation-->
+            <main style="margin-top: 58px">
+
+            <%- include('../includes/user_home/user_overview') -%>
+            <%- include('../includes/admin_home/question_paper') -%>
+           </main>
+            <script>
+                    const user = JSON.parse(`<%- user %>`);
+            </script>
+            <script src="/js/user_home/overview.js"></script>
+            <script src="/js/user_home/question_paper.js"></script>
+
+            <!--Main layout-->
+
+            <%- include('../partials/mdbfooter'); -%>
+                <%- include('../partials/footer'); -%>

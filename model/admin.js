@@ -24,12 +24,10 @@ const admin_Schema = new Schema({
     },
     password: {
         type: String,
-        required: true,
 
     },
     repassword: {
         type: String,
-        required: true,
     },
     test: [{
         type: Schema.Types.ObjectId,
