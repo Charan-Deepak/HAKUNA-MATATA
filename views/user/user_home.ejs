@@ -33,8 +33,8 @@
                     <i class="fas fa-pencil-alt text-info fa-3x"></i>
                   </div>
                   <div class="text-end">
-                    <h3>278</h3>
-                    <p class="mb-0">New Posts</p>
+                    <h3 class="max-score">Score</h3>
+                    <p class="mb-0">Max Score</p>
                   </div>
                 </div>
               </div>
@@ -63,8 +63,8 @@
                     <i class="fas fa-chart-line text-success fa-3x"></i>
                   </div>
                   <div class="text-end">
-                    <h3>64.89 %</h3>
-                    <p class="mb-0">Bounce Rate</p>
+                    <h3 class="avg-score">Avg</h3>
+                    <p class="mb-0">Avg Score</p>
                   </div>
                 </div>
               </div>
@@ -92,7 +92,7 @@
               <div class="card-body">
                 <div class="d-flex justify-content-between px-md-1">
                   <div>
-                    <h3 class="max_ques text-danger"></h3>
+                    <h3 class="max-ques text-danger">Max Ques</h3>
                     <p class="mb-0">Max Question</p>
                   </div>
                   <div class="align-self-center">
@@ -154,7 +154,7 @@
               <div class="card-body">
                 <div class="d-flex justify-content-between px-md-1">
                   <div>
-                    <h3 class="test_cnt_b text-info"></h3>
+                    <h3 class="test-cnt text-info">Test</h3>
                     <p class="mb-0">Tests</p>
                   </div>
                   <div class="align-self-center">
@@ -369,6 +369,24 @@
 
         console.log(user);
 
+        const scores = user.test_answer.map(test => test.answer_ref.totalmarksget);
+
+          // Maximum score
+          const max_score = Math.max(...scores);
+
+          // Average score
+          const total = scores.reduce((sum, score) => sum + score, 0);
+          const average_score = scores.length > 0 ? Math.floor(total / scores.length) : 0;
+
+          //max-question
+          const ques= user.test_answer.map(test => test.answer_ref.form.length);
+          const max_ques=Math.max(...ques);
+
+          document.querySelector(".max-score").textContent=max_score;
+          document.querySelector(".avg-score").textContent = average_score;
+          document.querySelector(".max-ques").textContent = max_ques;
+          document.querySelector(".test-cnt").textContent = user.test_answer.length;
+
           const items = document.getElementById('test_items');
           const showMoreBtn = document.getElementById('showMoreBtn');
           const testItems = user.test_answer.slice().reverse();
@@ -446,7 +464,7 @@
           renderTests(visibleCount);
     
             showMoreBtn.addEventListener("click", () => {
-            window.location.href = `/admin/test_overview`;
+            window.location.href = `/user/overview`;
             });
 
     
