@@ -1,12 +1,17 @@
 <%- include('../includes/admin_home/header') -%>
 <%- include('../includes/admin_home/sidebar_create_quiz') -%>
 <%- include('../includes/admin_home/navbar') -%>
+<%- include('../includes/admin_home/profile_css') -%>
   <!--Main Navigation-->
   
   <!--Main layout-->
   <main style="margin-top: 58px;">
-   <!-- Section: Design Block -->
-<section class="">
+    <div>
+      <!-- Section: Design Block -->
+
+      <%- include('../includes/admin_home/profile') -%>
+
+      <section class="">
   <!-- Jumbotron -->
   <div class="bg-image px-4 py-5 px-md-5 text-center text-lg-start" style="background-color: hsl(0, 0%, 96%); background-image: url('pic10.jpg'); height: 100vh;">
     <div class="container">
@@ -46,9 +51,12 @@
   </div>
   <!-- Jumbotron -->
 </section>
+    </div>
 <!-- Section: Design Block -->
   </main>
   <!--Main layout-->
-  <%- include('../partials/validation'); -%>
-    <%- include('../partials/mdbfooter'); -%>
-    <%- include('../partials/footer'); -%>
+
+<%- include('../includes/admin_home/profile_script') -%>
+<%- include('../partials/validation'); -%>
+<%- include('../partials/mdbfooter'); -%>
+<%- include('../partials/footer'); -%>

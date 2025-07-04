@@ -32,12 +32,14 @@
             }
         
             </style>
-
+            <%- include('../includes/user_home/profile_css'); -%>
             <!--Main layout-->
             <main  style="margin-top: 58px">
+                <%- include('../includes/user_home/profile'); -%>
                 <div class="container pt-4">
 
-                    <canvas id="graph"></canvas>
+                    <!-- <canvas id="graph"></canvas> -->
+                    <canvas id="line-chart"></canvas>
                     <div id="tooltip"></div>
 
                 </div>
@@ -247,7 +249,10 @@
                         ease: "power2.inOut"
                     });
                 </script>
+
+                
             <!--Main layout-->
+            <%- include('../includes/user_home/profile_script'); -%>
 
     <%- include('../partials/mdbfooter'); -%>
     <%- include('../partials/footer'); -%>

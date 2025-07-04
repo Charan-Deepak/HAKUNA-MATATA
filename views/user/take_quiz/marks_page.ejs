@@ -1,6 +1,7 @@
 <%- include('../../includes/user_home/take_quiz/header'); -%>
     <%- include('../../includes/user_home/take_quiz/sidebar'); -%>
         <%- include('../../includes/user_home/take_quiz/navbar_marks_page'); -%>
+        <%- include('../../includes/user_home/profile_css'); -%>
         <div class="questionblock" style="margin-top: 58px;padding: 25px 25px 25px 265px;">
             <h3>
                 <b>
@@ -14,6 +15,7 @@
             <div id="message"></div> </div>
         </div>
 </body>
+<%- include('../../includes/user_home/profile'); -%>
 <script>
 
     // Extract the query parameter from the URL
@@ -43,38 +45,91 @@
             divs.id="question${i+1}";
        
             if(message.form[i].type==3){
-      
+
                 const newDiv = document.createElement('div');
                 newDiv.id = `question_inside${i + 1}`;
+                newDiv.className = 'mb-3';
 
-                // Create the question and marks content
-                const questionContent = `
-                    <h4 id="question${i + 1}_p" style=" text-transform: capitalize; display: flex; justify-content: space-between;">
-                        ${i + 1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}
-                        <span style="margin-right:20vw;">Marks: ${JSON.stringify(test_answer.form[i].mark).replace(/"/g, '')}/${JSON.stringify(message.form[i].marks).replace(/"/g, '')}</span>
-                    </h4>
-                `;
+                const cardBorderClass = test_answer.form[i].text_answer === message.form[i].text_answer 
+                    ? 'border border-success shadow-0' 
+                    : 'border border-danger shadow-0';
 
-                // Check if test_answer is available and conditionally render answer details
-                let answerContent;
-                if (test_answer.form[i].text_answer === message.form[i].text_answer) {
-                        answerContent = `
-                            <span>A. <span><span id="text${i + 1}" style=" text-transform: capitalize; text-decoration: underline; color:#068f06;">
-                                ${JSON.stringify(message.form[i].text_answer).replace(/"/g, '')}
-                            </span>
-                        `;
-                } else {
-                        answerContent = `
-                            <span>A. <span><span id="text${i + 1}" style=" text-decoration: underline; color:#b13008; ">
-                                ${JSON.stringify(test_answer.form[i].text_answer).replace(/"/g, '')}
-                            </span><span>|</span><span id="text${i + 2}" style=" text-decoration: underline;color:#068f06;">
-                                ${JSON.stringify(message.form[i].text_answer).replace(/"/g, '')}
-                            </span>
-                        `;
-                }
 
-                // Combine questionContent and answerContent within the newDiv
-                newDiv.innerHTML = questionContent + answerContent;
+const questionContent = `
+    <div class="card ${cardBorderClass}">
+        <div class="card-body">
+        
+            <!-- Question as Card Title -->
+            <h5 class="card-title" id="question${i + 1}_p" style="text-transform: capitalize;">
+                ${i + 1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}
+            </h5>
+
+            <!-- Marks as Card Subtitle -->
+            <h6 class="card-subtitle mb-2 text-muted text-end">
+                Marks: ${JSON.stringify(test_answer.form[i].mark).replace(/"/g, '')}/${JSON.stringify(message.form[i].marks).replace(/"/g, '')}
+            </h6>
+
+            <!-- Answer Section -->
+            ${
+                test_answer.form[i].text_answer === message.form[i].text_answer
+                ? `
+                <p class="card-text">
+                    A. <span id="text${i + 1}" style="text-transform: capitalize; text-decoration: underline; color:#068f06;">
+                        ${JSON.stringify(message.form[i].text_answer).replace(/"/g, '')}
+                    </span>
+                </p>
+                `
+                : `
+                <a href="#" class="card-link">
+                    <span id="text${i + 1}" style="text-decoration: underline; color:#b13008;">
+                        ${JSON.stringify(test_answer.form[i].text_answer).replace(/"/g, '')}
+                    </span>
+                </a>
+                <a href="#" class="card-link">
+                    <span id="text${i + 2}" style="text-decoration: underline; color:#068f06;">
+                        ${JSON.stringify(message.form[i].text_answer).replace(/"/g, '')}
+                    </span>
+                </a>
+                `
+            }
+        </div>
+    </div>
+`;
+
+newDiv.innerHTML = questionContent;
+
+      
+                // const newDiv = document.createElement('div');
+                // newDiv.id = `question_inside${i + 1}`;
+
+                // // Create the question and marks content
+                // const questionContent = `
+                //     <h4 id="question${i + 1}_p" style=" text-transform: capitalize; display: flex; justify-content: space-between;">
+                //         ${i + 1}. ${JSON.stringify(message.form[i].text).replace(/"/g, '')}
+                //         <span style="margin-right:20vw;">Marks: ${JSON.stringify(test_answer.form[i].mark).replace(/"/g, '')}/${JSON.stringify(message.form[i].marks).replace(/"/g, '')}</span>
+                //     </h4>
+                // `;
+
+                // // Check if test_answer is available and conditionally render answer details
+                // let answerContent;
+                // if (test_answer.form[i].text_answer === message.form[i].text_answer) {
+                //         answerContent = `
+                //             <span>A. <span><span id="text${i + 1}" style=" text-transform: capitalize; text-decoration: underline; color:#068f06;">
+                //                 ${JSON.stringify(message.form[i].text_answer).replace(/"/g, '')}
+                //             </span>
+                //         `;
+                // } else {
+                //         answerContent = `
+                //             <span>A. <span><span id="text${i + 1}" style=" text-decoration: underline; color:#b13008; ">
+                //                 ${JSON.stringify(test_answer.form[i].text_answer).replace(/"/g, '')}
+                //             </span><span>|</span><span id="text${i + 2}" style=" text-decoration: underline;color:#068f06;">
+                //                 ${JSON.stringify(message.form[i].text_answer).replace(/"/g, '')}
+                //             </span>
+                //         `;
+                // }
+
+                // // Combine questionContent and answerContent within the newDiv
+                // newDiv.innerHTML = questionContent + answerContent;
                 divs.appendChild(newDiv);
     
             }else if(message.form[i].type==1){
@@ -198,6 +253,7 @@
     
    
  </script>
+   <%- include('../../includes/user_home/profile_script'); -%>
    
 
 

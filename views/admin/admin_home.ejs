@@ -1,12 +1,15 @@
 <%- include('../includes/admin_home/header') -%>
 <%- include('../includes/admin_home/sidebar_main') -%>
 <%- include('../includes/admin_home/navbar') -%>
+<%- include('../includes/admin_home/profile_css') -%>
 
   <!--Main Navigation-->
 
   <!--Main layout-->
   <main style="margin-top: 58px">
     <div class="container pt-4">
+
+      <%- include('../includes/admin_home/profile') -%>
 
       
          <!--Section: Statistics with subtitles-->
@@ -492,6 +495,8 @@
         });
         
   </script>
+
+  <%- include('../includes/admin_home/profile_script') -%>
 
   <%- include('../partials/mdbfooter'); -%>
   <%- include('../partials/footer'); -%>

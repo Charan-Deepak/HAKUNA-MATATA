@@ -1,0 +1,15 @@
+ <script>
+        const profileOverlay = document.getElementById('profileOverlay');
+        const myProfileBtn = document.getElementById('myProfileBtn');
+
+        myProfileBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            profileOverlay.style.display = 'block';
+        });
+
+        profileOverlay.addEventListener('click', function (e) {
+            if (e.target === profileOverlay || e.target === document.getElementById('blurBackground')) {
+                profileOverlay.style.display = 'none';
+            }
+        });
+    </script>

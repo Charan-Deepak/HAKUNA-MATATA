@@ -1,9 +1,11 @@
 <%- include('../includes/user_home/header') -%>
     <%- include('../includes/user_home/sidebar_overview') -%>
         <%- include('../includes/user_home/navbar') -%>
+        <%- include('../includes/user_home/profile_css'); -%>
 
             <!--Main Navigation-->
             <main style="margin-top: 58px">
+                <%- include('../includes/user_home/profile'); -%>
 
             <%- include('../includes/user_home/user_overview') -%>
             <%- include('../includes/admin_home/question_paper') -%>
@@ -15,6 +17,7 @@
             <script src="/js/user_home/question_paper.js"></script>
 
             <!--Main layout-->
+            <%- include('../includes/user_home/profile_script'); -%>
 
             <%- include('../partials/mdbfooter'); -%>
                 <%- include('../partials/footer'); -%>

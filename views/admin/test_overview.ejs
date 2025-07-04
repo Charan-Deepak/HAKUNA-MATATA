@@ -1,12 +1,14 @@
 <%- include('../includes/admin_home/header') -%>
     <%- include('../includes/admin_home/sidebar_test_overview') -%>
         <%- include('../includes/admin_home/navbar') -%>
+        <%- include('../includes/admin_home/profile_css') -%>
 
             <!--Main Navigation-->
               
 
             <!--Main layout-->
             <main style="margin-top: 58px">
+                <%- include('../includes/admin_home/profile') -%>
                 <%- include('../includes/admin_home/test_overview') -%>
                 <%- include('../includes/admin_home/question_paper') -%>
             </main>
@@ -17,5 +19,6 @@
             <script src="/js/home/overview.js"></script>
             <script src="/js/home/question_paper_overview.js"></script>
 
+            <%- include('../includes/admin_home/profile_script') -%>
             <%- include('../partials/mdbfooter'); -%>
                 <%- include('../partials/footer'); -%>
